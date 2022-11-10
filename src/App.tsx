@@ -5,10 +5,10 @@ import { Header } from './components/Header';
 
 export const App: React.FC = () => {
   return (
-    <div>
+    <>
       <Header />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
