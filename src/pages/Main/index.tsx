@@ -1,6 +1,5 @@
-import React from 'react';
 import './style.scss';
 
-export const Main: React.FC = () => {
+export const Main = () => {
   return <h1>Main</h1>;
 };

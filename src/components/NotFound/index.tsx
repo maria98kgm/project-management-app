@@ -1,6 +1,5 @@
-import React from 'react';
 import './style.scss';
 
-export const NotFound: React.FC = () => {
+export const NotFound = () => {
   return <div>NotFound</div>;
 };

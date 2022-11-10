@@ -1,7 +1,6 @@
-import React from 'react';
 import './style.scss';
 
-export const Footer: React.FC = () => {
+export const Footer = () => {
   return (
     <footer>
       <h1>Footer</h1>

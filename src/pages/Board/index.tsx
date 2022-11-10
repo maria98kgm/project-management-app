@@ -1,6 +1,5 @@
-import React from 'react';
 import './style.scss';
 
-export const Board: React.FC = () => {
+export const Board = () => {
   return <h1>Board</h1>;
 };
