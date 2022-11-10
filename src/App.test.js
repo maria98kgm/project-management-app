@@ -3,6 +3,10 @@ import { App } from './App';
 
 test('renders div element', () => {
   render(<App />);
-  const divElement = screen.getByText(/RS manager/i);
-  expect(divElement).toBeInTheDocument();
+
+  const header = screen.getByText(/Header/i);
+  expect(header).toBeInTheDocument();
+
+  const footer = screen.getByText(/Footer/i);
+  expect(footer).toBeInTheDocument();
 });
