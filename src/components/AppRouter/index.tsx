@@ -6,6 +6,7 @@ import { Main } from '../../pages/Main';
 import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
 import { Welcome } from '../../pages/Welcome';
+import { NotFound } from '../NotFound';
 
 export const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
         <Route path={Paths.SIGNIN} element={<SignIn />} />
         <Route path={Paths.SIGNUP} element={<SignUp />} />
         <Route path={Paths.BOARD} element={<Board />} />
+        <Route path={Paths.NOTFOUND} element={<NotFound />} />
       </Route>
     </Routes>
   );

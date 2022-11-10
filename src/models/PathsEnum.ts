@@ -4,4 +4,5 @@ export enum Paths {
   SIGNUP = '/signup',
   MAIN = '/MAIN',
   BOARD = '/board',
+  NOTFOUND = '*',
 }
