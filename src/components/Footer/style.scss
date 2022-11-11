@@ -1,0 +1,23 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  .git_links {
+    width: 24rem;
+    display: flex;
+    justify-content: space-between;
+
+    .git_link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+
+      &:hover {
+        color: rgb(0, 214, 150);
+        font-weight: bold;
+      }
+    }
+  }
+}
