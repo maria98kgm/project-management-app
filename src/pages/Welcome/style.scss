@@ -1,0 +1,75 @@
+@import 'src/styles/style-import';
+
+.banner-block {
+  min-height: 40vw;
+  color: $white-color;
+  background: url('/assets/main-page/group.png') no-repeat;
+  background-position: center top;
+  background-size: contain;
+
+  .banner-content {
+    @include flex-center-between;
+    position: relative;
+  
+    .cta {
+      max-width: 390px;
+      position: relative;
+      bottom: 80px;
+    
+      h1 {
+        max-width: 350px;
+        margin: 0 0 30px;
+      }
+    }
+
+    .mobiles {
+      position: relative;
+      top: 150px;
+      width: 740px;
+      height: 768px;
+      background: url('/assets/main-page/devices.png') no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+
+.feature-text {
+  position: relative;
+  bottom: 80px;
+}
+
+.feature-title {
+  max-width: 370px;
+  width: auto;
+  display: block;
+
+  .img {
+    height: auto;
+
+    img {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+
+  h3 {
+    position: relative;
+    font-size: 1.6em;
+    padding: 14px 0 10px;
+    margin: 0 0 20px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      left: 0;
+      bottom: 0;
+      background: $primary-color;
+    }
+  }
+}
+
+
+
