@@ -20,31 +20,34 @@ export const Welcome = () => {
   let observer: IntersectionObserver | undefined = undefined;
 
   useEffect(() => {
+    const addAnimation = () => {
+      const options = { threshold: [0.5] };
+      observer = new IntersectionObserver(onEntry, options);
+
+      const animationElements = document.querySelectorAll(`.${ANIMATION_CLASS}`);
+      animationElements.forEach((element) => {
+        observer?.observe(element);
+      });
+    };
+
+    const onEntry = (entry: IntersectionObserverEntry[]) => {
+      entry.forEach((change) => {
+        if (change.isIntersecting) {
+          change.target.classList.add(ANIMATION_SHOW_CLASS);
+        }
+      });
+    };
+
     addAnimation();
+
+    console.log('call');
+
     return () => {
       if (observer) {
         (observer as IntersectionObserver).disconnect();
       }
     };
-  }, []);
-
-  const addAnimation = () => {
-    const options = { threshold: [0.5] };
-    observer = new IntersectionObserver(onEntry, options);
-
-    const animationElements = document.querySelectorAll(`.${ANIMATION_CLASS}`);
-    animationElements.forEach((element) => {
-      observer?.observe(element);
-    });
-  };
-
-  const onEntry = (entry: IntersectionObserverEntry[]) => {
-    entry.forEach((change) => {
-      if (change.isIntersecting) {
-        change.target.classList.add(ANIMATION_SHOW_CLASS);
-      }
-    });
-  };
+  }, [observer]);
 
   return (
     <>
