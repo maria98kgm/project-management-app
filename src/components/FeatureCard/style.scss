@@ -1,0 +1,30 @@
+@import 'src/styles/style-import';
+
+.feature {
+  font-size: 14px;
+
+  p {
+    margin: 0;
+  }
+
+  .letter {
+    width: 85px;
+    height: 85px;
+    color: $white-color;
+    font-size: 48px;
+    font-weight: 600;
+    border-radius: 50%;
+    background-color: $yellow-color;
+
+    span {
+      display: block;
+      margin-top: 2px;
+      line-height: 1;
+    }
+  }
+
+  img,
+  .letter {
+    @include flex-center-center;
+  }
+}
