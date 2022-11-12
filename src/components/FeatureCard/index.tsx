@@ -8,7 +8,7 @@ interface FeatureCardProp {
 
 export const FeatureCard: React.FC<FeatureCardProp> = ({ title, description, imageUrl }) => (
   <div className="feature">
-    <div className="top">
+    <div className="feature-top">
       {imageUrl ? (
         <div className="img">
           <img src={imageUrl} alt="" />

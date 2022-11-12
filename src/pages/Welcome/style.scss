@@ -91,9 +91,9 @@
       @include feature-card;
       color: $white-color;
       margin-bottom: 30px;
-      background: $secondary-color;
+      background: $purple-color;
 
-      .top {
+      .feature-top {
         @include flex-center;
         flex-direction: column;
         text-align: center;
@@ -155,7 +155,7 @@
         background: #FFF;
         color: #000;
 
-        .top {
+        .feature-top {
           @include flex-center;
           flex-direction: column;
           text-align: center;
@@ -174,7 +174,7 @@
             width: 65%;
           }
 
-          .top {
+          .feature-top {
             margin: 0 auto;
           }
         }
@@ -216,13 +216,54 @@
   background-size: cover;
   background-position: center 40%;
 
+  .question-content{
+    @include flex-center-center;
+    position: relative;
+    top: 80px;
+
+    .question-buttons{
+      display: flex;
+      gap: 60px;
+    }
+  }
+
   .feature-title {
     h3 {
       color: $white-color;
 
       &::after {
-        background-color: $yellow-color;
+        background-color: $secondary-color;
       }
     }
   }
+}
+
+.element-animation {
+  opacity: 0;
+  transition: $hover-speed;
+}
+
+.left {
+  transform: translateX(-30%);
+}
+
+.right {
+  transform: translateX(30%);
+}
+
+.top {
+  transform: translateY(-70%);
+}
+
+.bottom {
+  transform: translateY(70%);
+}
+
+.scale {
+  transform: scale(0.3);
+}
+
+.element-show {
+  opacity: 1;
+  transform: translate(0) scale(1);
 }
