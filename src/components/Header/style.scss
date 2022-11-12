@@ -1,0 +1,54 @@
+body {
+  background-color: #6C3ED4;  //удалить когда будет оформлена страница
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 26px 112px 0 112px;
+
+  .control {
+    display: flex;
+    flex-direction: row;
+
+    select {
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    option {
+      color: #000000;
+    }
+
+    .language {
+      padding: 5px 9px;
+      border: 1px solid #ffffff;
+      margin: 0 32px 0 0;
+    }
+
+    .authorization {
+
+      button {
+        display: inline-block;
+        height: 30px;
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+        text-align: center;
+        outline: none;
+        text-decoration: none;
+        padding: 5px 29px;
+        margin: 0 24px 0 0;
+      }
+
+      button:hover {
+        background-color: #EBC20C;
+      }
+    }
+  }
+}
