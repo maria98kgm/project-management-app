@@ -17,9 +17,10 @@ const ANIMATION_SHOW_CLASS = 'element-show';
 
 export const Welcome = () => {
   const navigate = useNavigate();
-  let observer: IntersectionObserver | undefined = undefined;
 
   useEffect(() => {
+    let observer: IntersectionObserver | undefined = undefined;
+
     const addAnimation = () => {
       const options = { threshold: [0.5] };
       observer = new IntersectionObserver(onEntry, options);
@@ -40,14 +41,12 @@ export const Welcome = () => {
 
     addAnimation();
 
-    console.log('call');
-
     return () => {
       if (observer) {
         (observer as IntersectionObserver).disconnect();
       }
     };
-  }, [observer]);
+  }, []);
 
   return (
     <>
