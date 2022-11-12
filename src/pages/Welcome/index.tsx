@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FeatureCard } from 'components/FeatureCard';
-import { AppButton } from 'components/UI/Button';
-import likeImg from 'assets/main-page/like.svg';
-import handsImg from 'assets/main-page/hands.svg';
-import freeImg from 'assets/main-page/free.svg';
-import uiImg from 'assets/main-page/UI.svg';
-import teamImg from 'assets/main-page/team.svg';
-import mobileImg from 'assets/main-page/mobile.svg';
-import teamPurple from 'assets/main-page/team-purple.svg';
-import teamYellow from 'assets/main-page/team-yellow.svg';
+import { FeatureCard } from '../../components/FeatureCard';
+import { AppButton } from '../../components/UI/Button';
+import likeImg from '../../assets/main-page/like.svg';
+import handsImg from '../../assets/main-page/hands.svg';
+import freeImg from '../../assets/main-page/free.svg';
+import uiImg from '../../assets/main-page/UI.svg';
+import teamImg from '../../assets/main-page/team.svg';
+import mobileImg from '../../assets/main-page/mobile.svg';
+import teamPurple from '../../assets/main-page/team-purple.svg';
+import teamYellow from '../../assets/main-page/team-yellow.svg';
 import './style.scss';
 
 const ANIMATION_CLASS = 'element-animation';
