@@ -1,0 +1,23 @@
+@import './constants.scss';
+
+.container {
+  max-width: $width-container;
+  padding: 0 15px;
+  margin: auto;
+
+  @media (max-width: $breakpoint1199) {
+    max-width: $width-container - 200px;
+  }
+
+  @media (max-width: $breakpoint1099) {
+    max-width: $width-container - 400px;
+  }
+
+  @media (max-width: $breakpoint899) {
+    max-width: $width-container - 600px;
+  }
+
+  @media (max-width: $breakpoint670) {
+    max-width: $width-container - 700px;
+  }
+}

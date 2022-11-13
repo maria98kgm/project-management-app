@@ -1,0 +1,60 @@
+@mixin flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin flex-center-between {
+  @include flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-between {
+  @include flex;
+  justify-content: space-between;
+}
+
+@mixin flex-center {
+  @include flex;
+  align-items: center;
+}
+
+@mixin flex-center-center {
+  @include flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin feature-card {
+  @include flex-center;
+  max-width: 250px;
+  flex-direction: column;
+  padding: 33px 29px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@mixin full-teammate {
+  max-width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+
+  head {
+    width: 30%;
+  }
+
+  p {
+    width: 65%;
+
+    @media (max-width: $breakpoint735) {
+      width: 100%;
+    }
+
+    @media (max-width: $breakpoint550) {
+      width: 70%;
+    }
+  }
+
+  .feature-top {
+    margin: 0 auto;
+  }
+}
