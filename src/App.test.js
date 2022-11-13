@@ -6,7 +6,4 @@ test('renders div element', () => {
 
   const header = screen.getByText(/Header/i);
   expect(header).toBeInTheDocument();
-
-  const footer = screen.getByText(/Footer/i);
-  expect(footer).toBeInTheDocument();
 });
