@@ -4,11 +4,27 @@
   @include flex-row-center-around;
   background-color: $purple-color-footer;
   color: #ffffff;
+
+  @media (max-width: $breakpoint550) {
+    flex-direction: column;
+  }
+
   .git_links {
     width: 24rem;
     @include flex-between;
+
+    @media (max-width: $breakpoint550) {
+      flex-direction: column;
+    }
+
     .git_link {
       @include flex-center;
+
+      @media (max-width: $breakpoint550) {
+        padding: 10px 0;
+        justify-content: center;
+      }
+
       text-decoration: none;
       color: #ffffff;
 
