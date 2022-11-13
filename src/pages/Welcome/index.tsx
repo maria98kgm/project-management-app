@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FeatureCard } from '../../components/FeatureCard';
-import { AppButton } from '../../components/UI/Button';
+import Button from '@mui/material/Button';
 import likeImg from '../../assets/main-page/like.svg';
 import handsImg from '../../assets/main-page/hands.svg';
 import freeImg from '../../assets/main-page/free.svg';
@@ -49,7 +49,7 @@ export const Welcome = () => {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <section className="banner-block">
         <div className="container banner-content">
           <div className="cta element-animation top">
@@ -69,12 +69,9 @@ export const Welcome = () => {
             title="A complete feature stack ready to help you"
             description="This application will help you to achieve the set goals for an individual in a team or group of developers."
           />
-          <AppButton
-            text="Sign up for free"
-            variant="contained"
-            color="primary"
-            handleClick={() => navigate('/signup')}
-          />
+          <Button variant="contained" color="primary" onClick={() => navigate('/signup')}>
+            Sign up for free
+          </Button>
         </div>
       </section>
       <section className="feature-content">
@@ -128,12 +125,9 @@ export const Welcome = () => {
               title="Our perspective team"
               description="A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox"
             />
-            <AppButton
-              text="Contact us"
-              variant="contained"
-              color="primary"
-              href={`mailto:solesytto@gmail.com`}
-            />
+            <Button variant="contained" color="primary" href={`mailto:solesytto@gmail.com`}>
+              Contact us
+            </Button>
           </div>
         </div>
       </section>
@@ -141,22 +135,20 @@ export const Welcome = () => {
         <div className="container feature-title question-content element-animation left">
           <FeatureCard imageUrl={teamYellow} title="Are you ready?" />
           <div className="question-buttons">
-            <AppButton
-              text="Sign in"
-              variant="contained"
-              color="secondary"
-              handleClick={() => navigate('/signin')}
-            />
-            <AppButton
-              text="Join now"
+            <Button variant="contained" color="secondary" onClick={() => navigate('/signin')}>
+              Sign in
+            </Button>
+            <Button
               variant="contained"
               color="secondary"
               size="large"
-              handleClick={() => navigate('/signup')}
-            />
+              onClick={() => navigate('/signup')}
+            >
+              Join now
+            </Button>
           </div>
         </div>
       </section>
-    </>
+    </React.Fragment>
   );
 };
