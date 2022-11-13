@@ -1,18 +1,16 @@
-.footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+@import 'src/styles/style-import';
 
+.footer {
+  @include flex-row-center-around;
+  background-color: $purple-color-footer;
+  color: #ffffff;
   .git_links {
     width: 24rem;
-    display: flex;
-    justify-content: space-between;
-
+    @include flex-between;
     .git_link {
-      display: flex;
-      align-items: center;
+      @include flex-center;
       text-decoration: none;
+      color: #ffffff;
 
       &:hover {
         color: rgb(0, 214, 150);
