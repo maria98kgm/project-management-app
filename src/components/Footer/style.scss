@@ -1,18 +1,40 @@
+@import 'src/styles/style-import';
+
 .footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  @include flex-row-center-around;
+  background-color: $purple-color-footer;
+  color: #ffffff;
+
+  @media (max-width: $breakpoint550) {
+    flex-direction: column;
+  }
 
   .git_links {
     width: 24rem;
-    display: flex;
-    justify-content: space-between;
+    @include flex-between;
+
+    @media (max-width: $breakpoint550) {
+      flex-direction: column;
+    }
 
     .git_link {
-      display: flex;
-      align-items: center;
+      @include flex-center;
+
+      @media (max-width: $breakpoint550) {
+        padding: 10px 0;
+        justify-content: center;
+      }
+
       text-decoration: none;
+      color: #ffffff;
+
+      &:hover {
+        color: rgb(0, 214, 150);
+        font-weight: bold;
+      }
+    }
+  }
+}
 
       &:hover {
         color: rgb(0, 214, 150);

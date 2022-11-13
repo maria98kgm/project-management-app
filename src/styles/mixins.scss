@@ -25,6 +25,13 @@
   align-items: center;
 }
 
+@mixin flex-row-center-around {
+  @include flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
 @mixin feature-card {
   @include flex-center;
   max-width: 250px;
