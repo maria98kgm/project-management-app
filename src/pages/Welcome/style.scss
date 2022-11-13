@@ -1,0 +1,408 @@
+@import 'src/styles/style-import';
+
+.banner-block {
+  min-height: 40vw;
+  color: $white-color;
+  background: url('/assets/main-page/group.png') no-repeat;
+  background-position: center top;
+  background-size: contain;
+
+  @media (max-width: $breakpoint1199) {
+    min-height: 44vw;
+    background-size: cover;
+  }
+
+  @media (max-width: $breakpoint670) {
+    min-height: 65vw;
+  }
+
+  .banner-content {
+    @include flex-center-between;
+    position: relative;
+
+    @media (max-width: $breakpoint550) {
+      justify-content: center;
+      padding-top: 20px;
+    }
+  
+    .cta {
+      max-width: 390px;
+      position: relative;
+      bottom: 80px;
+
+      @media (max-width: $breakpoint1199) {
+        bottom: 0;
+      }
+
+      @media (max-width: $breakpoint899) {
+        max-width: 48%;
+      }
+
+      @media (max-width: $breakpoint550) {
+        max-width: 80%;
+      }
+    
+      h1 {
+        max-width: 350px;
+        margin: 0 0 30px;
+      }
+    }
+
+    .mobiles {
+      position: relative;
+      z-index: 2;
+      top: 150px;
+      width: 740px;
+      height: 768px;
+      background: url('/assets/main-page/devices.png') no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      @media (max-width: $breakpoint1199) {
+        width: 370px;
+        height: 384px;
+        background-size: contain;
+      }
+
+      @media (max-width: $breakpoint899) {
+        width: 270px;
+        height: 284px;
+      }
+
+      @media (max-width: $breakpoint550) {
+        top: 0;
+      }
+    }
+  }
+}
+
+.feature-text {
+  position: relative;
+  bottom: 80px;
+  z-index: 3;
+
+  @media (max-width: $breakpoint1199) {
+    bottom: 0;
+  }
+}
+
+.feature-title {
+  max-width: 370px;
+  width: auto;
+  display: block;
+
+  @media (max-width: $breakpoint899) {
+    max-width: 40%;
+  }
+
+  @media (max-width: $breakpoint735) {
+    max-width: 50%;
+  }
+
+  @media (max-width: $breakpoint550) {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .img {
+    height: auto;
+
+    img {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+
+  h3 {
+    position: relative;
+    font-size: 1.6em;
+    padding: 14px 0 10px;
+    margin: 0 0 20px;
+
+    @media (max-width: $breakpoint550) {
+      font-size: 1.4em;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      left: 0;
+      bottom: 0;
+      background: $primary-color;
+    }
+  }
+}
+
+
+.feature-content {
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: $breakpoint899) {
+    margin-top: 20px;
+  }
+
+  .feature-title{
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+
+  .advantages {
+    @include flex-between;
+    padding-top: 20px;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: $breakpoint480) {
+      justify-content: center;
+    }
+  
+    .feature {
+      @include feature-card;
+      color: $white-color;
+      margin-bottom: 30px;
+      background: $purple-color;
+
+      @media (max-width: $breakpoint1099) {
+        max-width: 370px;
+      }
+
+      @media (max-width: $breakpoint899) {
+        max-width: 250px;
+      }
+
+      @media (max-width: $breakpoint550) {
+        max-width: 220px;
+      }
+
+      @media (max-width: $breakpoint480) {
+        max-width: 80%;
+      }
+
+      .feature-top {
+        @include flex-center;
+        flex-direction: column;
+        text-align: center;
+        min-height: 138px;
+
+        @media (max-width: $breakpoint1099) {
+          min-height: 100px;
+        }
+      }
+  
+      h3 {
+        font-size: 1.4em;
+        margin: 20px 0;
+      }
+    }
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -30px;
+    width: 50%;
+    height: 145%;
+    background: url('/assets/main-page/features-before.svg') no-repeat;
+    background-size: contain;
+    background-position: left top;
+    z-index: 1;
+  }
+
+  &::after {
+    left: auto;
+    right: 0;
+    top: -65%;
+    width: 16%;
+    background: url('/assets/main-page/features-after.svg') no-repeat;
+    background-size: contain;
+    background-position: right top;
+
+    @media (max-width: $breakpoint899) {
+      top: -15%;
+    }
+  }
+}
+
+.block-teams {
+  position: relative;
+  padding-top: 50px;
+  margin: 90px 0;
+
+  @media (max-width: $breakpoint1099) {
+    margin: 0;
+  }
+
+  .teams-items {
+    @include flex-between;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: $breakpoint550) {
+      align-items: center;
+      flex-direction: column-reverse;
+    }
+
+    .teams {
+      @include flex-between;
+      width: 46%;
+      margin-top: 45px;
+      margin-left: 54px;
+      transform: rotate(-9.9deg);
+
+      @media (max-width: $breakpoint1099) {
+        transform: rotate(0);
+        margin-left: 0;
+      }
+
+      @media (max-width: $breakpoint735) {
+        width: 250px;
+      }
+
+      @media (max-width: $breakpoint550) {
+        width: 80%;
+      }
+
+      .feature {
+        @include feature-card;
+        margin-bottom: 60px;
+        background: #FFF;
+        color: #000;
+
+        @media (max-width: $breakpoint550) {
+          padding: 20px 15px;
+        }
+
+        .feature-top {
+          @include flex-center;
+          flex-direction: column;
+          text-align: center;
+        }
+
+        @media (max-width: $breakpoint1199) {
+          @include full-teammate;
+        }
+
+        @media (max-width: $breakpoint550) {
+          @include full-teammate;
+        }
+
+        &:last-child {
+          @include full-teammate;
+        }
+      }
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: calc((100vw - $width-container) / 2);
+    top: -30px;
+    width: 12vw;
+    height: 5.5vw;
+    background: url('/assets/main-page/teams-before.svg') no-repeat;
+    background-size: contain;
+    background-position: right top;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 6vw;
+    width: 30vw;
+    height: 30vw;
+    background: url('/assets/main-page/teams-after.svg') no-repeat;
+    background-size: contain;
+    background-position: right bottom;
+    z-index: 1;
+  }
+}
+
+.question-block {
+  min-height: 500px;
+  padding: 45px 0;
+  background: url('/assets/main-page/question.jpg') no-repeat;
+  background-size: cover;
+  background-position: center 40%;
+
+  @media (max-width: $breakpoint1099) {
+    min-height: 430px;
+  }
+
+  @media (max-width: $breakpoint735) {
+    min-height: 330px;
+  }
+
+  .question-content{
+    @include flex-center-center;
+    position: relative;
+    top: 80px;
+
+    @media (max-width: $breakpoint735) {
+      top: 0;
+    }
+
+    @media (max-width: $breakpoint550) {
+      gap: 20px;
+    }
+
+    .question-buttons{
+      display: flex;
+      gap: 60px;
+
+      @media (max-width: $breakpoint370) {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  }
+
+  .feature-title {
+    h3 {
+      color: $white-color;
+
+      &::after {
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
+
+.element-animation {
+  opacity: 0;
+  transition: $hover-speed;
+}
+
+.left {
+  transform: translateX(-30%);
+}
+
+.right {
+  transform: translateX(30%);
+}
+
+.top {
+  transform: translateY(-70%);
+}
+
+.bottom {
+  transform: translateY(70%);
+}
+
+.scale {
+  transform: scale(0.3);
+}
+
+.element-show {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
