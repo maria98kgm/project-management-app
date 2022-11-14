@@ -6,7 +6,7 @@ import { Main } from '../../pages/Main';
 import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
 import { Welcome } from '../../pages/Welcome';
-import { NotFound } from '../NotFound';
+import { NotFound } from '../../pages/NotFound';
 
 export const AppRouter = () => {
   return (
