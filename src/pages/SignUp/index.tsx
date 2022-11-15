@@ -15,14 +15,70 @@ export const SignUp = () => {
     formState: { errors },
     handleSubmit,
     getValues,
+    getFieldState,
+    trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
   const onSubmit = (data: FormInputs) => {
-    console.log(data);
+    signUp(data)
+      .then((res) => res)
+      .then((res: { login: string }) => logIn(res.login, data.password))
+      .then((res) => {
+        document.cookie = `Bearer=${res.token}`;
+      });
+  };
+
+  const validatePassword = (password: string) => {
+    const repeatPasswordState = getFieldState('repeatPassword');
+
+    if (repeatPasswordState.isTouched) {
+      trigger('repeatPassword');
+    }
+
+    return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
   };
 
   const validateRepeatPassword = (password: string) => {
     return password === getValues('password') || 'Password is not the same!';
+  };
+
+  const signUp = async (data: FormInputs) => {
+    const reqData = {
+      name: data.userName,
+      login: data.login,
+      password: data.password,
+    };
+    const res = await fetch(
+      'https://final-task-backend-production-b68c.up.railway.app/auth/signup',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }
+    );
+
+    return res.json();
+  };
+
+  const logIn = async (login: string, password: string) => {
+    const reqData = {
+      login: login,
+      password: password,
+    };
+    const res = await fetch(
+      'https://final-task-backend-production-b68c.up.railway.app/auth/signin',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }
+    );
+
+    return res.json();
   };
 
   return (
@@ -56,10 +112,7 @@ export const SignUp = () => {
           {...register('password', {
             required: 'This field is required!',
             minLength: { value: 6, message: 'Min length is 6!' },
-            pattern: {
-              value: /^[a-z0-9]*$/i,
-              message: 'The password should contain only numbers and letters!',
-            },
+            validate: validatePassword,
           })}
           autoComplete="new-password"
           placeholder="Password"
