@@ -18,8 +18,10 @@
     }
 
     .git_link {
-      @include flex-center;
-
+      @include flex;
+      img {
+        padding: 0 5px;
+      }
       @media (max-width: $breakpoint550) {
         padding: 10px 0;
         justify-content: center;
@@ -29,8 +31,7 @@
       color: #ffffff;
 
       &:hover {
-        color: rgb(0, 214, 150);
-        font-weight: bold;
+        color: $secondary-color;
       }
     }
   }
