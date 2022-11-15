@@ -47,7 +47,7 @@
     @media (max-width: $breakpoint735) {
       padding-top: 10px;
     }
-    
+
     select {
       border: none;
       background: transparent;
@@ -70,6 +70,9 @@
     }
 
     .authorization {
+      a {
+        text-decoration: none;
+      }
 
       button {
         text-transform: capitalize;
