@@ -32,7 +32,7 @@
 
   @include flex-between;
   padding: 26px 112px;
-  background: linear-gradient(140.77deg, #BE92E8 -20.7%, #6C3ED4 46.22%, #261436 100.74%);
+  background: linear-gradient(140.77deg, $purple-color -20.7%, $primary-color 46.22%, $purple-color-footer 100.74%);
 
   @media (max-width: $breakpoint735) {
     flex-direction: column;
@@ -47,11 +47,11 @@
     @media (max-width: $breakpoint735) {
       padding-top: 10px;
     }
-
+    
     select {
       border: none;
       background: transparent;
-      color: #ffffff;
+      color: $white-color;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
@@ -64,21 +64,18 @@
     .language {
       width: 38px;
       padding: 3px 9px;
-      border: 1px solid #ffffff;
+      border: 1px solid $white-color;
+      border-radius: 4px;
       margin: 0 32px 10px 0;
     }
 
     .authorization {
 
       button {
-        display: inline-block;
+        text-transform: capitalize;
         height: 30px;
-        background: transparent;
-        color: #ffffff;
-        border: 1px solid #ffffff;
-        text-align: center;
-        outline: none;
-        text-decoration: none;
+        color: $white-color;
+        border: 1px solid $white-color;
         padding: 5px 29px;
         margin: 0 24px 0 0;
 
@@ -88,7 +85,7 @@
       }
 
       button:hover {
-        background-color: #EBC20C;
+        background-color: $secondary-color;
       }
     }
   }
