@@ -1,9 +1,12 @@
 import './style.scss';
 import appLogo from '../../assets/img/app_logo.png';
 import { useState } from 'react';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const [header, setHeader] = useState(false);
+  const navigate = useNavigate();
 
   const changeHeader = () => {
     if (window.scrollY >= 80) {
@@ -27,8 +30,12 @@ export const Header = () => {
             </select>
           </div>
           <div className="authorization">
-            <button>Sign in</button>
-            <button>Sign up</button>
+            <Button variant="outlined" onClick={() => navigate('/signin')}>
+              Sign in
+            </Button>
+            <Button variant="outlined" onClick={() => navigate('/signup')}>
+              Sign up
+            </Button>
           </div>
         </div>
       </div>
