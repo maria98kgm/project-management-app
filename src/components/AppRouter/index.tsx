@@ -18,7 +18,7 @@ export const AppRouter = () => {
         <Route path={Paths.SIGNIN} element={<SignIn />} />
         <Route path={Paths.SIGNUP} element={<SignUp />} />
         <Route path={Paths.BOARD} element={<Board />} />
-        <Route path={Paths.NOTFOUND} element={<NotFound />} />
+        <Route path={Paths.NOT_FOUND} element={<NotFound />} />
       </Route>
     </Routes>
   );

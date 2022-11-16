@@ -2,7 +2,7 @@ export enum Paths {
   WELCOME = '/welcome',
   SIGNIN = '/signin',
   SIGNUP = '/signup',
-  MAIN = '/MAIN',
+  MAIN = '/main',
   BOARD = '/board',
-  NOTFOUND = '*',
+  NOT_FOUND = '*',
 }

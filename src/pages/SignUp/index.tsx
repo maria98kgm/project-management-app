@@ -88,57 +88,84 @@ export const SignUp = () => {
   };
 
   return (
-    <section>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-      >
-        <input
-          type="text"
-          {...register('userName', {
-            required: 'This field is required!',
-            minLength: { value: 2, message: 'Min length is 2!' },
-          })}
-          autoComplete="nickname"
-          placeholder="Name"
-        />
-        <ErrorMessage errors={errors} name="userName" render={({ message }) => <p>{message}</p>} />
-        <input
-          type="text"
-          {...register('login', {
-            required: 'This field is required!',
-            minLength: { value: 2, message: 'Min length is 2!' },
-          })}
-          autoComplete="username"
-          placeholder="Login"
-        />
-        <ErrorMessage errors={errors} name="login" render={({ message }) => <p>{message}</p>} />
-        <input
-          type="password"
-          {...register('password', {
-            required: 'This field is required!',
-            minLength: { value: 6, message: 'Min length is 6!' },
-            validate: validatePassword,
-          })}
-          autoComplete="new-password"
-          placeholder="Password"
-        />
-        <ErrorMessage errors={errors} name="password" render={({ message }) => <p>{message}</p>} />
-        <input
-          type="password"
-          {...register('repeatPassword', {
-            required: 'This field is required!',
-            validate: validateRepeatPassword,
-          })}
-          autoComplete="new-password"
-          placeholder="Repeat Password"
-        />
-        <ErrorMessage
-          errors={errors}
-          name="repeatPassword"
-          render={({ message }) => <p>{message}</p>}
-        />
-        <input type="submit" />
+    <section className="signUp-content">
+      <form onSubmit={handleSubmit(onSubmit)} className="signUp-form">
+        <h2>Create an account</h2>
+        <label className="signUp-field-container">
+          <input
+            type="text"
+            {...register('userName', {
+              required: 'This field is required!',
+              minLength: { value: 2, message: 'Min length is 2!' },
+              maxLength: { value: 20, message: 'Max length is 20!' },
+            })}
+            autoComplete="nickname"
+            placeholder="Name*"
+            className="signUp-field"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="userName"
+            render={({ message }) => <p className="errorMessage">{message}</p>}
+          />
+        </label>
+        <label className="signUp-field-container">
+          <input
+            type="text"
+            {...register('login', {
+              required: 'This field is required!',
+              minLength: { value: 2, message: 'Min length is 2!' },
+              maxLength: { value: 20, message: 'Max length is 20!' },
+            })}
+            autoComplete="username"
+            placeholder="Login*"
+            className="signUp-field"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="login"
+            render={({ message }) => <p className="errorMessage">{message}</p>}
+          />
+        </label>
+        <label className="signUp-field-container">
+          <input
+            type="password"
+            {...register('password', {
+              required: 'This field is required!',
+              minLength: { value: 6, message: 'Min length is 6!' },
+              maxLength: { value: 20, message: 'Max length is 20!' },
+              validate: validatePassword,
+            })}
+            autoComplete="new-password"
+            placeholder="Password*"
+            className="signUp-field"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({ message }) => <p className="errorMessage">{message}</p>}
+          />
+        </label>
+        <label className="signUp-field-container">
+          <input
+            type="password"
+            {...register('repeatPassword', {
+              required: 'This field is required!',
+              validate: validateRepeatPassword,
+            })}
+            autoComplete="new-password"
+            placeholder="Repeat Password*"
+            className="signUp-field"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="repeatPassword"
+            render={({ message }) => <p className="errorMessage">{message}</p>}
+          />
+        </label>
+        <button type="submit" className="signUp-button">
+          Sign Up
+        </button>
       </form>
     </section>
   );
