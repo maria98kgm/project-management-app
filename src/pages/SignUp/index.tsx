@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthData, Paths } from '../../models';
 import { setCookie } from '../../share/setCookie';
+import { URL_BASE } from '../../constants';
 
 interface FormInputs {
   userName: string;
@@ -54,16 +55,13 @@ export const SignUp = () => {
       login: data.login,
       password: data.password,
     };
-    const res = await fetch(
-      'https://final-task-backend-production-b68c.up.railway.app/auth/signup',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      }
-    );
+    const res = await fetch(`${URL_BASE}/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
 
     return res.json();
   };
@@ -73,16 +71,13 @@ export const SignUp = () => {
       login: login,
       password: password,
     };
-    const res = await fetch(
-      'https://final-task-backend-production-b68c.up.railway.app/auth/signin',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      }
-    );
+    const res = await fetch(`${URL_BASE}/auth/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
 
     return res.json();
   };
