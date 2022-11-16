@@ -2,7 +2,7 @@ import './style.scss';
 import appLogo from '../../assets/img/app_logo.png';
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
-import { BrowserRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const Header = () => {
   const [header, setHeader] = useState(false);
@@ -30,14 +30,12 @@ export const Header = () => {
               </select>
             </div>
             <div className="authorization">
-              <BrowserRouter>
-                <NavLink to="/signin">
-                  <Button variant="outlined">Sign in</Button>
-                </NavLink>
-                <NavLink to="/signup">
-                  <Button variant="outlined">Sign up</Button>
-                </NavLink>
-              </BrowserRouter>
+              <NavLink to="/signin">
+                <Button variant="outlined">Sign in</Button>
+              </NavLink>
+              <NavLink to="/signup">
+                <Button variant="outlined">Sign up</Button>
+              </NavLink>
             </div>
           </div>
         </div>
