@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { App } from './App';
+import { Header } from './components/Header';
 
-test('renders div element', () => {
-  render(<App />);
-
-  const header = screen.getByText(/Header/i);
-  expect(header).toBeInTheDocument();
+test('renders element', () => {
+  render(<Header />);
+  expect(screen.getByText(/Sign up/i)).toBeInTheDocument();
 });
