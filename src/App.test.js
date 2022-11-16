@@ -1,7 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { Header } from './components/Header';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { App } from './App';
 
-test('renders element', () => {
-  render(<Header />);
-  expect(screen.getByText(/Sign up/i)).toBeInTheDocument();
+describe('App', () => {
+  test('Test for app presence', () => {
+    render(
+      <Router>
+        <App />
+      </Router>
+    );
+
+    expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
+  });
 });
