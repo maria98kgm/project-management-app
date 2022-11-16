@@ -3,7 +3,7 @@
 .footer {
   @include flex-row-center-around;
   background-color: $purple-color-footer;
-  color: $white-color;
+  color: #ffffff;
 
   @media (max-width: $breakpoint550) {
     flex-direction: column;
@@ -28,7 +28,7 @@
       }
 
       text-decoration: none;
-      color: $white-color;
+      color: #ffffff;
 
       &:hover {
         color: $secondary-color;
