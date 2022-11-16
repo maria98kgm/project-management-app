@@ -2,12 +2,16 @@
 
 
 .header {
+  @include flex-center-between;
+  padding: 26px 112px;
+  background: linear-gradient(140.77deg, $purple-color -20.7%, $primary-color 46.22%, $purple-color-footer 100.74%);
+
   &.sticky {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 9;
-    padding-top: 5px;
+    padding: 5px 112px;
 
     @media (max-width: 1920px) {
       height: 60px;
@@ -30,10 +34,6 @@
     }
   }
 
-  @include flex-between;
-  padding: 26px 112px;
-  background: linear-gradient(140.77deg, $purple-color -20.7%, $primary-color 46.22%, $purple-color-footer 100.74%);
-
   @media (max-width: $breakpoint735) {
     flex-direction: column;
     padding: 26px 50px;
@@ -41,62 +41,37 @@
 
   .control {
     @include flex;
-    flex-direction: row;
-    padding-top: 10px;
+    align-items: center;
+    gap: 24px;
 
     @media (max-width: $breakpoint735) {
       padding-top: 10px;
     }
 
-    select {
-      border: none;
-      background: transparent;
-      color: $white-color;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+    .css-14hqyj3-MuiFormControl-root {
+      margin: 0;
     }
 
-    option {
-      color: #000000;
+    .css-vvnip8-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+      color: $secondary-color;
     }
 
-    .language {
-      width: 38px;
-      padding: 3px 9px;
-      border: 1px solid $white-color;
-      border-radius: 4px;
-      margin: 0 32px 10px 0;
+    .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+      border-color: $secondary-color;
+      top: -8px;
+      bottom: 2px;
     }
 
     .authorization {
-      a {
-        text-decoration: none;
-      }
 
       button {
-        text-transform: capitalize;
-        height: 30px;
-        color: $white-color;
-        border: 1px solid $white-color;
-        padding: 5px 29px;
         margin: 0 24px 0 0;
 
         @media (max-width: $breakpoint370) {
           margin-top: 10px;
         }
       }
-
-      button:hover {
-        background-color: $secondary-color;
-      }
     }
-  }
-
-  img {
-    width: 150px;
-    height: 40px;
-    padding-top: 10px;
   }
 }
 

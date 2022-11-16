@@ -1,0 +1,64 @@
+{
+  "MAINPAGE": {
+    "BANNER": {
+      "TITLE": "Упростите бизнес-процесс вместе с нами",
+      "DESCRIPTION": "Ваш удивительный продукт заслуживает простого способа управления им. Наше приложение предоставит вам необходимые инструменты, независимо от того, о чем ваша идея."
+    },
+    "FEATURETEXT": {
+      "TITLE": "Полный стек функций готов помочь вам",
+      "DESCRIPTION": "Это приложение поможет вам достичь поставленных целей индивидуально в команде или группе разработчиков.",
+      "BUTTON": "Бесплатная регистрация"
+    },
+    "FEATURES": {
+      "TITLE": "Одна платформа для управления всем",
+      "CARDS": [
+        {
+          "TITLE": "Бесплатно",
+          "DESCRIPTION": "Пользоваться всеми функциями приложения можно абсолютно бесплатно: никаких пробных периодов и привязки банковских карт."
+        },
+        {
+          "TITLE": "Простой интерфейс",
+          "DESCRIPTION": "Интерфейс приложения разработан так, чтобы максимально упростить взаимодействие с ним и сделать все интуитивно понятным."
+        },
+        {
+          "TITLE": "Доступно для всей команды",
+          "DESCRIPTION": "Всем участникам вашей команды доступны все данные о текущем состоянии разработки вашего проекта. Кроме того, каждый участник имеет возможность их отредактировать."
+        },
+        {
+          "TITLE": "Для любых устройств",
+          "DESCRIPTION": "Приложение адаптировано для экранов планшетов и мобильных телефонов, поэтому вы можете узнать о том, чем сейчас занята ваша команда в любое время и в любом месте."
+        }
+      ]
+    },
+    "VIDEO": {
+      "TITLE": "Посмотрите, как использовать приложение"
+    },
+    "TEAMS": {
+      "TITLE": "Наша перспективная команда",
+      "DESCRIPTION": "Над разработкой приложения трудилась команда из трех человек - студентов курса по фреймворку Angular от RSSchool под блительным надзором куратора - LostFox.",
+      "BUTTON":"Связаться с нами",
+      "TEAMMATE": [
+        {
+          "NAME": "Таня",
+          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+        },
+        {
+          "NAME": "Алексей",
+          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+        },
+        {
+          "NAME": "Мария",
+          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+        }
+      ]
+    },
+    "QUESTIONBLOCK": {
+      "TITLE": "Вы готовы?",
+      "BUTTONS": ["Вход", "Регистрация"]
+    }
+  },
+  "BUTTONS": {
+    "SIGNIN": "Войти",
+    "SIGNUP": "Зарегистрироваться"
+  }
+}

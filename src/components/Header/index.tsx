@@ -1,11 +1,18 @@
-import './style.scss';
-import appLogo from '../../assets/img/app_logo.png';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
-import { BrowserRouter, NavLink } from 'react-router-dom';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import appLogo from '../../assets/img/app_logo.png';
+import './style.scss';
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [header, setHeader] = useState(false);
+  const [lang, setLang] = useState('en');
+  const { t, i18n } = useTranslation();
 
   const changeHeader = () => {
     if (window.scrollY >= 80) {
@@ -13,6 +20,12 @@ export const Header = () => {
     } else {
       setHeader(false);
     }
+  };
+
+  const changeLanguage = (event: SelectChangeEvent) => {
+    const lng = event.target.value as string;
+    setLang(lng);
+    i18n.changeLanguage(lng);
   };
 
   window.addEventListener('scroll', changeHeader);
@@ -24,20 +37,24 @@ export const Header = () => {
           <img src={appLogo} />
           <div className="control">
             <div className="language">
-              <select>
-                <option>En</option>
-                <option>Ru</option>
-              </select>
+              <FormControl sx={{ m: 1, minWidth: 70 }} size="small" color="secondary">
+                <Select
+                  value={lang}
+                  onChange={changeLanguage}
+                  inputProps={{ MenuProps: { disableScrollLock: true } }}
+                >
+                  <MenuItem value={'en'}>En</MenuItem>
+                  <MenuItem value={'ru'}>Ru</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <div className="authorization">
-              <BrowserRouter>
-                <NavLink to="/signin">
-                  <Button variant="outlined">Sign in</Button>
-                </NavLink>
-                <NavLink to="/signup">
-                  <Button variant="outlined">Sign up</Button>
-                </NavLink>
-              </BrowserRouter>
+              <Button variant="outlined" color="secondary" onClick={() => navigate('/signin')}>
+                {t('BUTTONS.SIGNIN')}
+              </Button>
+              <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
+                {t('BUTTONS.SIGNUP')}
+              </Button>
             </div>
           </div>
         </div>
