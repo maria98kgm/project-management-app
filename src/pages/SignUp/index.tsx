@@ -25,7 +25,7 @@ export const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const validatePassword = (password: string) => {
+  const validatePassword = (password: string): string | boolean => {
     const repeatPasswordState = getFieldState('repeatPassword');
 
     if (repeatPasswordState.isTouched) {
@@ -35,11 +35,11 @@ export const SignUp = () => {
     return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
   };
 
-  const validateRepeatPassword = (password: string) => {
+  const validateRepeatPassword = (password: string): string | boolean => {
     return password === getValues('password') || 'Password is not the same!';
   };
 
-  const onSubmit = (data: FormInputs) => {
+  const onSubmit = (data: FormInputs): void => {
     signUp(data)
       .then((res: { login: string }) => logIn(res.login, data.password))
       .then((res: { token: string }) => {
@@ -49,7 +49,7 @@ export const SignUp = () => {
       .catch((err: Error) => console.error(err.message || err));
   };
 
-  const signUp = async (data: FormInputs) => {
+  const signUp = async (data: FormInputs): Promise<{ login: string }> => {
     const postData: AuthData = {
       name: data.userName,
       login: data.login,
@@ -66,7 +66,7 @@ export const SignUp = () => {
     return res.json();
   };
 
-  const logIn = async (login: string, password: string) => {
+  const logIn = async (login: string, password: string): Promise<{ token: string }> => {
     const postData: AuthData = {
       login: login,
       password: password,
