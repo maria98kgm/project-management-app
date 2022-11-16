@@ -101,6 +101,58 @@ export const Main = () => {
             <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
+        <div className="boardItem">
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
+            </div>
+          </div>
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">Lorem ipsum dolor sit amet</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
+          </div>
+        </div>
+        <div className="boardItem">
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
+            </div>
+          </div>
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">Lorem ipsum dolor sit amet</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
+          </div>
+        </div>
+        <div className="boardItem">
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
+            </div>
+          </div>
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">Lorem ipsum dolor sit amet</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
+          </div>
+        </div>
+        <div className="boardItem">
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
+            </div>
+          </div>
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">Lorem ipsum dolor sit amet</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
+          </div>
+        </div>
       </div>
     </section>
   );
