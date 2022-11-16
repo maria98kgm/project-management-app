@@ -45,7 +45,7 @@ export const SignUp = () => {
         setCookie(res.token);
         navigate(Paths.MAIN);
       })
-      .catch((err: Error) => console.log(err.message || err));
+      .catch((err: Error) => console.error(err.message || err));
   };
 
   const signUp = async (data: FormInputs) => {
