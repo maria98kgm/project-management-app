@@ -10,9 +10,9 @@ import './style.scss';
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t, i18n, ready } = useTranslation();
   const [header, setHeader] = useState(false);
-  const [lang, setLang] = useState(i18n.language);
+  const [lang, setLang] = useState(ready ? i18n.language : 'en');
 
   const changeHeader = () => {
     if (window.scrollY >= 80) {
