@@ -7,15 +7,15 @@ import { NavLink } from 'react-router-dom';
 export const Header = () => {
   const [header, setHeader] = useState(false);
 
-  const changeHeader = () => {
-    if (window.scrollY >= 80) {
-      setHeader(true);
-    } else {
-      setHeader(false);
-    }
-  };
+  // const changeHeader = () => {
+  //   if (window.scrollY >= 80) {
+  //     setHeader(true);
+  //   } else {
+  //     setHeader(false);
+  //   }
+  // };
 
-  window.addEventListener('scroll', changeHeader);
+  // window.addEventListener('scroll', changeHeader);
 
   return (
     <React.Fragment>
