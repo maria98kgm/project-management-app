@@ -9,96 +9,96 @@ export const Main = () => {
       <button className="newBoard-button">+ New Board</button>
       <div className="allBoards">
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
         <div className="boardItem">
-          <div className="boardTitle">
-            <h2 className="title">Title</h2>
-            <div className="boardTools">
-              <EditPencil className="boardIcon" />
-              <TrashCan className="boardIcon" />
+          <div className="boardItem-top">
+            <h2 className="boardItem-title">Title</h2>
+            <div className="boardItem-tools">
+              <EditPencil className="boardItem-icon" />
+              <TrashCan className="boardItem-icon" />
             </div>
           </div>
-          <div className="board-bottom">
-            <p className="board-description">Lorem ipsum dolor sit amet</p>
-            <p className="board-columns-tasks">Columns: 4, Tasks: 10</p>
+          <div className="boardItem-bottom">
+            <p className="boardItem-description">Lorem ipsum dolor sit amet</p>
+            <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
           </div>
         </div>
       </div>

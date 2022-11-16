@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './themes/theme';
 import './styles/style.scss';
+import './App.scss';
 
 export const App = () => {
   return (
