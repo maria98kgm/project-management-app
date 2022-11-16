@@ -1,6 +1,9 @@
+import './style.scss';
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
-import './style.scss';
+import { useNavigate } from 'react-router-dom';
+import { AuthData, Paths } from '../../models';
+import { setCookie } from '../../share/setCookie';
 
 interface FormInputs {
   userName: string;
@@ -19,14 +22,7 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
-  const onSubmit = (data: FormInputs) => {
-    signUp(data)
-      .then((res) => res)
-      .then((res: { login: string }) => logIn(res.login, data.password))
-      .then((res) => {
-        document.cookie = `Bearer=${res.token}`;
-      });
-  };
+  const navigate = useNavigate();
 
   const validatePassword = (password: string) => {
     const repeatPasswordState = getFieldState('repeatPassword');
@@ -42,8 +38,18 @@ export const SignUp = () => {
     return password === getValues('password') || 'Password is not the same!';
   };
 
+  const onSubmit = (data: FormInputs) => {
+    signUp(data)
+      .then((res: { login: string }) => logIn(res.login, data.password))
+      .then((res: { token: string }) => {
+        setCookie(res.token);
+        navigate(Paths.MAIN);
+      })
+      .catch((err: Error) => console.log(err.message || err));
+  };
+
   const signUp = async (data: FormInputs) => {
-    const reqData = {
+    const postData: AuthData = {
       name: data.userName,
       login: data.login,
       password: data.password,
@@ -55,7 +61,7 @@ export const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reqData),
+        body: JSON.stringify(postData),
       }
     );
 
@@ -63,7 +69,7 @@ export const SignUp = () => {
   };
 
   const logIn = async (login: string, password: string) => {
-    const reqData = {
+    const postData: AuthData = {
       login: login,
       password: password,
     };
@@ -74,7 +80,7 @@ export const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reqData),
+        body: JSON.stringify(postData),
       }
     );
 
