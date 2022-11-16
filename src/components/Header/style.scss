@@ -48,15 +48,15 @@
       padding-top: 10px;
     }
 
-    .css-14hqyj3-MuiFormControl-root {
+    .MuiFormControl-root {
       margin: 0;
     }
 
-    .css-vvnip8-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+    .MuiInputBase-root.MuiOutlinedInput {
       color: $secondary-color;
     }
 
-    .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    .MuiOutlinedInput-notchedOutline {
       border-color: $secondary-color;
       top: -8px;
       bottom: 2px;
