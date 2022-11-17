@@ -1,7 +1,7 @@
 import './style.scss';
-import { ReactComponent as EditPencil } from '../../assets/editPencil.svg';
-import { ReactComponent as TrashCan } from '../../assets/trashCan.svg';
-import { ReactComponent as Loupe } from '../../assets/loupe.svg';
+import { ReactComponent as EditPencil } from '../../assets/main/editPencil.svg';
+import { ReactComponent as TrashCan } from '../../assets/main/trashCan.svg';
+import { ReactComponent as Loupe } from '../../assets/main/loupe.svg';
 
 export const Main = () => {
   return (
