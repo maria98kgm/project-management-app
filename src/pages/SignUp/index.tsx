@@ -1,9 +1,10 @@
 import './style.scss';
-import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { Button, TextField } from '@mui/material';
 import { AuthData, Paths } from '../../models';
 import { setCookie } from '../../share/setCookie';
+import { URL_BASE } from '../../constants';
 
 interface FormInputs {
   userName: string;
@@ -24,7 +25,7 @@ export const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const validatePassword = (password: string) => {
+  const validatePassword = (password: string): string | boolean => {
     const repeatPasswordState = getFieldState('repeatPassword');
 
     if (repeatPasswordState.isTouched) {
@@ -34,11 +35,11 @@ export const SignUp = () => {
     return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
   };
 
-  const validateRepeatPassword = (password: string) => {
+  const validateRepeatPassword = (password: string): string | boolean => {
     return password === getValues('password') || 'Password is not the same!';
   };
 
-  const onSubmit = (data: FormInputs) => {
+  const onSubmit = (data: FormInputs): void => {
     signUp(data)
       .then((res: { login: string }) => logIn(res.login, data.password))
       .then((res: { token: string }) => {
@@ -48,41 +49,35 @@ export const SignUp = () => {
       .catch((err: Error) => console.error(err.message || err));
   };
 
-  const signUp = async (data: FormInputs) => {
+  const signUp = async (data: FormInputs): Promise<{ login: string }> => {
     const postData: AuthData = {
       name: data.userName,
       login: data.login,
       password: data.password,
     };
-    const res = await fetch(
-      'https://final-task-backend-production-b68c.up.railway.app/auth/signup',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      }
-    );
+    const res = await fetch(`${URL_BASE}/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
 
     return res.json();
   };
 
-  const logIn = async (login: string, password: string) => {
+  const logIn = async (login: string, password: string): Promise<{ token: string }> => {
     const postData: AuthData = {
       login: login,
       password: password,
     };
-    const res = await fetch(
-      'https://final-task-backend-production-b68c.up.railway.app/auth/signin',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      }
-    );
+    const res = await fetch(`${URL_BASE}/auth/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
 
     return res.json();
   };
@@ -91,81 +86,67 @@ export const SignUp = () => {
     <section className="signUp-content">
       <form onSubmit={handleSubmit(onSubmit)} className="signUp-form">
         <h2>Create an account</h2>
-        <label className="signUp-field-container">
-          <input
-            type="text"
-            {...register('userName', {
-              required: 'This field is required!',
-              minLength: { value: 2, message: 'Min length is 2!' },
-              maxLength: { value: 20, message: 'Max length is 20!' },
-            })}
-            autoComplete="nickname"
-            placeholder="Name*"
-            className="signUp-field"
-          />
-          <ErrorMessage
-            errors={errors}
-            name="userName"
-            render={({ message }) => <p className="errorMessage">{message}</p>}
-          />
-        </label>
-        <label className="signUp-field-container">
-          <input
-            type="text"
-            {...register('login', {
-              required: 'This field is required!',
-              minLength: { value: 2, message: 'Min length is 2!' },
-              maxLength: { value: 20, message: 'Max length is 20!' },
-            })}
-            autoComplete="username"
-            placeholder="Login*"
-            className="signUp-field"
-          />
-          <ErrorMessage
-            errors={errors}
-            name="login"
-            render={({ message }) => <p className="errorMessage">{message}</p>}
-          />
-        </label>
-        <label className="signUp-field-container">
-          <input
-            type="password"
-            {...register('password', {
-              required: 'This field is required!',
-              minLength: { value: 6, message: 'Min length is 6!' },
-              maxLength: { value: 20, message: 'Max length is 20!' },
-              validate: validatePassword,
-            })}
-            autoComplete="new-password"
-            placeholder="Password*"
-            className="signUp-field"
-          />
-          <ErrorMessage
-            errors={errors}
-            name="password"
-            render={({ message }) => <p className="errorMessage">{message}</p>}
-          />
-        </label>
-        <label className="signUp-field-container">
-          <input
-            type="password"
-            {...register('repeatPassword', {
-              required: 'This field is required!',
-              validate: validateRepeatPassword,
-            })}
-            autoComplete="new-password"
-            placeholder="Repeat Password*"
-            className="signUp-field"
-          />
-          <ErrorMessage
-            errors={errors}
-            name="repeatPassword"
-            render={({ message }) => <p className="errorMessage">{message}</p>}
-          />
-        </label>
-        <button type="submit" className="signUp-button">
+        <TextField
+          {...register('userName', {
+            required: 'This field is required!',
+            minLength: { value: 2, message: 'Min length is 2!' },
+            maxLength: { value: 20, message: 'Max length is 20!' },
+          })}
+          label="Name"
+          variant="standard"
+          error={!!getFieldState('userName').error}
+          helperText={errors['userName']?.message}
+          autoComplete="nickname"
+          required
+          fullWidth
+        />
+        <TextField
+          {...register('login', {
+            required: 'This field is required!',
+            minLength: { value: 2, message: 'Min length is 2!' },
+            maxLength: { value: 20, message: 'Max length is 20!' },
+          })}
+          label="Login"
+          variant="standard"
+          error={!!getFieldState('login').error}
+          helperText={errors['login']?.message}
+          autoComplete="username"
+          required
+          fullWidth
+        />
+        <TextField
+          {...register('password', {
+            required: 'This field is required!',
+            minLength: { value: 6, message: 'Min length is 6!' },
+            maxLength: { value: 20, message: 'Max length is 20!' },
+            validate: validatePassword,
+          })}
+          label="Password"
+          variant="standard"
+          error={!!getFieldState('password').error}
+          helperText={errors['password']?.message}
+          type="password"
+          autoComplete="new-password"
+          required
+          fullWidth
+        />
+        <TextField
+          {...register('repeatPassword', {
+            required: 'This field is required!',
+            validate: validateRepeatPassword,
+          })}
+          label="Repeat Password"
+          variant="standard"
+          error={!!getFieldState('repeatPassword').error}
+          helperText={errors['repeatPassword']?.message}
+          type="password"
+          autoComplete="new-password"
+          required
+          fullWidth
+        />
+        <Button variant="contained" type="submit">
           Sign Up
-        </button>
+        </Button>
       </form>
     </section>
   );
