@@ -1,0 +1,35 @@
+@import 'src/styles/style-import';
+
+.boardTask {
+  display: block;
+  padding: 7.5px;
+  margin-bottom: 10px;
+  background-color: $white-color;
+  cursor: pointer;
+
+  .top {
+    margin: 0 0 10px;
+
+    .title {
+      font-size: 15px;
+      margin: 0;
+    }
+
+    i {
+      height: 18px;
+      color: $red-color;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+
+  .description {
+    width: 100%;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+}
