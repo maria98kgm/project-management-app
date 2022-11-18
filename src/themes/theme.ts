@@ -11,6 +11,9 @@ export const theme = createTheme({
     background: {
       default: '#F1E6EA',
     },
+    info: {
+      main: '#fff',
+    },
   },
   typography: {
     fontFamily: 'Lato, sans-serif',
