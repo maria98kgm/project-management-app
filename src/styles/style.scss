@@ -12,6 +12,13 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 4rem;
+}
 
 ::-webkit-scrollbar {
   width: 7px;
