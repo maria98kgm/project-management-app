@@ -26,29 +26,12 @@ export const SignIn = () => {
   };
 
   const onSubmit = (data: FormInputs): void => {
-    signUp(data)
-      .then((res: { login: string }) => logIn(res.login, data.password))
+    logIn(data.login, data.password)
       .then((res: { token: string }) => {
         setCookie(res.token);
         navigate(Paths.MAIN);
       })
       .catch((err: Error) => console.error(err.message || err));
-  };
-
-  const signUp = async (data: FormInputs): Promise<{ login: string }> => {
-    const postData: AuthData = {
-      login: data.login,
-      password: data.password,
-    };
-    const res = await fetch(`${URL_BASE}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
-
-    return res.json();
   };
 
   const logIn = async (login: string, password: string): Promise<{ token: string }> => {
