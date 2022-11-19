@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { App } from '../App';
+import { Header } from '../components/Header';
 
-describe('App', () => {
-  test('Test for app presence', () => {
-    render(
-      <Router>
-        <App />
-      </Router>
-    );
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
 
-    expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
-  });
+test('renders element', () => {
+  render(
+    <Router>
+      <Header />
+    </Router>
+  );
+  expect(screen.getByText(/En/i)).toBeInTheDocument();
 });

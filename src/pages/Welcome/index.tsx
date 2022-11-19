@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FeatureCard } from '../../components/FeatureCard';
 import Button from '@mui/material/Button';
 import likeImg from '../../assets/main-page/like.svg';
@@ -17,6 +18,7 @@ const ANIMATION_SHOW_CLASS = 'element-show';
 
 export const Welcome = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     let observer: IntersectionObserver | undefined = undefined;
@@ -53,11 +55,8 @@ export const Welcome = () => {
       <section className="banner-block">
         <div className="container banner-content">
           <div className="cta element-animation top">
-            <h1>Make Business Flow Easyer With Us</h1>
-            <p>
-              Your amazing product deserves an easy way to manage it. Our app will provide you with
-              a nessesary instruments no matter what your idea is about.
-            </p>
+            <h1>{t('MAINPAGE.BANNER.TITLE')}</h1>
+            <p>{t('MAINPAGE.BANNER.DESCRIPTION')}</p>
           </div>
           <div className="mobiles element-animation right"></div>
         </div>
@@ -66,39 +65,39 @@ export const Welcome = () => {
         <div className="feature-title">
           <FeatureCard
             imageUrl={likeImg}
-            title="A complete feature stack ready to help you"
-            description="This application will help you to achieve the set goals for an individual in a team or group of developers."
+            title={t('MAINPAGE.FEATURETEXT.TITLE')}
+            description={t('MAINPAGE.FEATURETEXT.DESCRIPTION')}
           />
           <Button variant="contained" color="primary" onClick={() => navigate('/signup')}>
-            Sign up for free
+            {t('MAINPAGE.FEATURETEXT.BUTTON')}
           </Button>
         </div>
       </section>
       <section className="feature-content">
         <div className="container feature-items">
           <div className="feature-title element-animation top">
-            <FeatureCard imageUrl={handsImg} title="One platform to manage work" />
+            <FeatureCard imageUrl={handsImg} title={t('MAINPAGE.FEATURES.TITLE')} />
           </div>
           <div className="advantages element-animation scale">
             <FeatureCard
               imageUrl={freeImg}
-              title="It’s free"
-              description="You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+              title={t('MAINPAGE.FEATURES.CARDS.0.TITLE')}
+              description={t('MAINPAGE.FEATURES.CARDS.0.DESCRIPTION')}
             />
             <FeatureCard
               imageUrl={uiImg}
-              title="Easy UI"
-              description="The application interface is designed to make it as easy as possible to interact with it and make everything intuitive."
+              title={t('MAINPAGE.FEATURES.CARDS.1.TITLE')}
+              description={t('MAINPAGE.FEATURES.CARDS.1.DESCRIPTION')}
             />
             <FeatureCard
               imageUrl={teamImg}
-              title="Available for all team"
-              description="All of your teammates have access to all data on the current state of development of your project. In addition, each participant has the opportunity to edit them."
+              title={t('MAINPAGE.FEATURES.CARDS.2.TITLE')}
+              description={t('MAINPAGE.FEATURES.CARDS.2.DESCRIPTION')}
             />
             <FeatureCard
               imageUrl={mobileImg}
-              title="For all devices"
-              description="The application is adapted for the screens of tablets and mobile phones, so you can find out what your team is doing at any time and in any place."
+              title={t('MAINPAGE.FEATURES.CARDS.3.TITLE')}
+              description={t('MAINPAGE.FEATURES.CARDS.3.DESCRIPTION')}
             />
           </div>
         </div>
@@ -107,36 +106,36 @@ export const Welcome = () => {
         <div className="container teams-items">
           <div className="teams element-animation left">
             <FeatureCard
-              title="Tanya"
-              description="You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+              title={t('MAINPAGE.TEAMS.TEAMMATE.0.NAME')}
+              description={t('MAINPAGE.TEAMS.TEAMMATE.0.DESCRIPTION')}
             />
             <FeatureCard
-              title="Aliaksei"
-              description="You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+              title={t('MAINPAGE.TEAMS.TEAMMATE.1.NAME')}
+              description={t('MAINPAGE.TEAMS.TEAMMATE.1.DESCRIPTION')}
             />
             <FeatureCard
-              title="Maria"
-              description="You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+              title={t('MAINPAGE.TEAMS.TEAMMATE.2.NAME')}
+              description={t('MAINPAGE.TEAMS.TEAMMATE.2.DESCRIPTION')}
             />
           </div>
           <div className="text feature-title element-animation right">
             <FeatureCard
               imageUrl={teamPurple}
-              title="Our perspective team"
-              description="A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox"
+              title={t('MAINPAGE.TEAMS.TITLE')}
+              description={t('MAINPAGE.TEAMS.DESCRIPTION')}
             />
             <Button variant="contained" color="primary" href={`mailto:solesytto@gmail.com`}>
-              Contact us
+              {t('MAINPAGE.TEAMS.BUTTON')}
             </Button>
           </div>
         </div>
       </section>
       <section className="question-block">
         <div className="container feature-title question-content element-animation left">
-          <FeatureCard imageUrl={teamYellow} title="Are you ready?" />
+          <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
           <div className="question-buttons">
             <Button variant="contained" color="secondary" onClick={() => navigate('/signin')}>
-              Sign in
+              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
             </Button>
             <Button
               variant="contained"
@@ -144,7 +143,7 @@ export const Welcome = () => {
               size="large"
               onClick={() => navigate('/signup')}
             >
-              Join now
+              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
             </Button>
           </div>
         </div>

@@ -1,0 +1,61 @@
+{
+  "MAINPAGE": {
+    "BANNER": {
+      "TITLE": "Make Business Flow Easyer With Us",
+      "DESCRIPTION": "Your amazing product deserves an easy way to manage it. Our app will provide you with a nessesary instruments no matter what your idea is about."
+    },
+    "FEATURETEXT": {
+      "TITLE": "A complete feature stack ready to help you",
+      "DESCRIPTION": "This application will help you to achieve the set goals for an individual in a team or group of developers.",
+      "BUTTON": "Sign up for free"
+    },
+    "FEATURES": {
+      "TITLE": "One platform to manage work",
+      "CARDS": [
+        {
+          "TITLE": "It’s free",
+          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+        },
+        {
+          "TITLE": "Easy UI",
+          "DESCRIPTION": "The application interface is designed to make it as easy as possible to interact with it and make everything intuitive."
+        },
+        {
+          "TITLE": "Available for all team",
+          "DESCRIPTION": "All of your teammates have access to all data on the current state of development of your project. In addition, each participant has the opportunity to edit them."
+        },
+        {
+          "TITLE": "For all devices",
+          "DESCRIPTION": "The application is adapted for the screens of tablets and mobile phones, so you can find out what your team is doing at any time and in any place."
+        }
+      ]
+    },
+    "TEAMS": {
+      "TITLE": "Our perspective team",
+      "DESCRIPTION": "A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox",
+      "BUTTON":"Contact us",
+      "TEAMMATE": [
+        {
+          "NAME": "Tanya",
+          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+        },
+        {
+          "NAME": "Aliaksei",
+          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+        },
+        {
+          "NAME": "Maria",
+          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+        }
+      ]
+    },
+    "QUESTIONBLOCK": {
+      "TITLE": "Are you ready?",
+      "BUTTONS": ["Sign in", "Join now"]
+    }
+  },
+  "BUTTONS": {
+    "SIGNIN": "Sign in",
+    "SIGNUP": "Sign up"
+  }
+}
