@@ -1,3 +1,3 @@
 export * from './PathsEnum';
-export * from './AuthDataInterface.type';
-export * from './UserDataInterface.type';
+export * from './AuthData.interface';
+export * from './UserData.interface';
