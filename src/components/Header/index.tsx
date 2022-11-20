@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
+import { Paths } from '../../models/PathsEnum';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import appLogo from '../../assets/img/app_logo.png';
+import appLogo from '../../assets/img/logo.png';
 import './style.scss';
 
 export const Header = () => {
@@ -49,10 +50,10 @@ export const Header = () => {
               </FormControl>
             </div>
             <div className="authorization">
-              <Button variant="outlined" color="secondary" onClick={() => navigate('/signin')}>
+              <Button variant="outlined" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
                 {t('BUTTONS.SIGNIN')}
               </Button>
-              <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
+              <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNUP)}>
                 {t('BUTTONS.SIGNUP')}
               </Button>
             </div>

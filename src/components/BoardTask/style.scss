@@ -2,27 +2,30 @@
 
 .boardTask {
   display: block;
-  padding: 7.5px;
+  padding: 7px;
   margin-bottom: 10px;
   background-color: $white-color;
+  border-radius: 5px;
   cursor: pointer;
 
-  .top {
+  .task-header {
+    @include flex-center-between;
     margin: 0 0 10px;
 
     .title {
       font-size: 15px;
       margin: 0;
+      max-width: 75%;
+      max-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    i {
-      height: 18px;
-      color: $red-color;
-      margin-left: 5px;
-      cursor: pointer;
+    button {
+      padding: 0;
+      font-size: 1.5em;
     }
   }
-
 
   .description {
     width: 100%;

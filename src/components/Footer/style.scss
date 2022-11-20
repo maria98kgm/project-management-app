@@ -4,6 +4,7 @@
   @include flex-row-center-around;
   background-color: $purple-color-footer;
   color: $white-color;
+  height: $footer-height;
 
   @media (max-width: $breakpoint550) {
     flex-direction: column;

@@ -21,3 +21,7 @@
     max-width: $width-container - 700px;
   }
 }
+
+.content {
+  min-height: calc(100vh - $footer-height);
+}
