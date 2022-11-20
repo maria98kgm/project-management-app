@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { Toast } from './components/Toast';
 import { ThemeProvider, CssBaseline, CircularProgress, Box } from '@mui/material';
 import { theme } from './themes/theme';
 import './styles/style.scss';
@@ -29,7 +28,6 @@ export const App = () => {
         <Header />
         <Outlet />
         <Footer />
-        <Toast />
       </Suspense>
     </ThemeProvider>
   );
