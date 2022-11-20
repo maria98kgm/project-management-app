@@ -16,9 +16,20 @@
     padding: 10px 10px;
     background-color: $primary-color;
 
+    svg:hover {
+      cursor: pointer;
+    }
+
+    input {
+      border-radius: 4px;
+      padding: 2px 4px;
+      border: none;
+      outline: none;
+    }
+
     .title {
       color: $white-color;
-      max-width: 75%;
+      width: 75%;
       max-height: 40px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -27,10 +38,6 @@
     .buttons {
       display: flex;
       gap: 10px;
-
-      svg:hover {
-        cursor: pointer;
-      }
     }
   }
 
