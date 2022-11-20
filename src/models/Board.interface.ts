@@ -11,7 +11,7 @@ export interface Column {
   boardId: string;
   title: string;
   order: number;
-  tasks: Task[];
+  tasks: Partial<Task>[];
 }
 
 export interface Task {

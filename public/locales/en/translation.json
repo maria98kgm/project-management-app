@@ -56,6 +56,13 @@
   },
   "BUTTONS": {
     "SIGNIN": "Sign in",
-    "SIGNUP": "Sign up"
+    "SIGNUP": "Sign up",
+    "ADD_BOARD": "Add board",
+    "ADD_COLUMN": "Add column",
+    "ADD_TASK": "Add task"
+  },
+  "INFO": {
+    "NO_COLUMNS": "There are no columns on the board",
+    "NO_TASKS": "There are no tasks in the column"
   }
 }

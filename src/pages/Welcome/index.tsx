@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FeatureCard } from '../../components/FeatureCard';
 import Button from '@mui/material/Button';
+import { FeatureCard } from '../../components/FeatureCard';
+import { Paths } from '../../models/PathsEnum';
 import likeImg from '../../assets/main-page/like.svg';
 import handsImg from '../../assets/main-page/hands.svg';
 import freeImg from '../../assets/main-page/free.svg';
@@ -68,7 +69,7 @@ export const Welcome = () => {
             title={t('MAINPAGE.FEATURETEXT.TITLE')}
             description={t('MAINPAGE.FEATURETEXT.DESCRIPTION')}
           />
-          <Button variant="contained" color="primary" onClick={() => navigate('/signup')}>
+          <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
             {t('MAINPAGE.FEATURETEXT.BUTTON')}
           </Button>
         </div>
@@ -134,14 +135,14 @@ export const Welcome = () => {
         <div className="container feature-title question-content element-animation left">
           <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
           <div className="question-buttons">
-            <Button variant="contained" color="secondary" onClick={() => navigate('/signin')}>
+            <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
               {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
             </Button>
             <Button
               variant="contained"
               color="secondary"
               size="large"
-              onClick={() => navigate('/signup')}
+              onClick={() => navigate(Paths.SIGNUP)}
             >
               {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
             </Button>
