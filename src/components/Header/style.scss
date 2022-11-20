@@ -11,6 +11,11 @@
     padding: 14px 112px;
   }
 
+  img {
+    width: 150px;
+    height: 30px;
+  }
+
   @include flex-between;
   padding: 20px 112px;
   background: linear-gradient(
@@ -58,5 +63,9 @@
         }
       }
     }
+  }
+
+  button {
+    margin-right: 10px;
   }
 }
