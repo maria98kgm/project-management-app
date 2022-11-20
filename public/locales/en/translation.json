@@ -56,6 +56,10 @@
   },
   "BUTTONS": {
     "SIGNIN": "Sign in",
-    "SIGNUP": "Sign up"
+    "SIGNUP": "Sign up",
+    "MAIN": "Go to main page",
+    "NEWBOARD": "Create new board",
+    "EDITPROFILE": "Edit profile",
+    "SIGNOUT": "Sign out"
   }
 }
