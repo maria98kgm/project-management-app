@@ -20,7 +20,7 @@
 }
 @mixin flex-start-center {
   @include flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 
