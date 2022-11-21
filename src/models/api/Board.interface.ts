@@ -3,7 +3,7 @@ export interface Board {
   title: string;
   owner: string;
   users: string[];
-  columns: Column[];
+  columns?: Column[];
 }
 
 export interface Column {
@@ -11,7 +11,7 @@ export interface Column {
   boardId: string;
   title: string;
   order: number;
-  tasks: Partial<Task>[];
+  tasks?: Partial<Task>[];
 }
 
 export interface Task {
