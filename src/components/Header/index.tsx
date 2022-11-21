@@ -22,64 +22,6 @@ export const Header = () => {
 
   window.addEventListener('scroll', changeHeader);
 
-  if (isToken) {
-    if (location.pathname === '/') {
-      return (
-        <React.Fragment>
-          <header>
-            <div className={header ? 'header sticky' : 'header'}>
-              <img src={appLogo} />
-              <div className="control">
-                <LanguageSwitch />
-                <div className="control-button">
-                  <Button
-                    className="main-btn"
-                    variant="contained"
-                    onClick={() => navigate('/main')}
-                  >
-                    {t('BUTTONS.MAIN')}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </header>
-        </React.Fragment>
-      );
-    }
-
-    return (
-      <React.Fragment>
-        <header>
-          <div className={header ? 'header sticky' : 'header'}>
-            <img src={appLogo} />
-            <div className="control">
-              <LanguageSwitch />
-              <div className="control-button">
-                <Button
-                  className="new-board-btn"
-                  variant="contained"
-                  onClick={() => navigate('/modalka open')}
-                >
-                  {t('BUTTONS.NEWBOARD')}
-                </Button>
-                <Button
-                  className="edit-profile-btn"
-                  variant="contained"
-                  onClick={() => navigate('/editprofile')}
-                >
-                  {t('BUTTONS.EDITPROFILE')}
-                </Button>
-                <Button className="sign-out-btn" variant="contained" onClick={() => navigate('/')}>
-                  {t('BUTTONS.SIGNOUT')}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </header>
-      </React.Fragment>
-    );
-  }
-
   return (
     <React.Fragment>
       <header>
@@ -87,13 +29,51 @@ export const Header = () => {
           <img src={appLogo} />
           <div className="control">
             <LanguageSwitch />
-            <div className="authorization">
-              <Button variant="outlined" color="secondary" onClick={() => navigate('/signin')}>
-                {t('BUTTONS.SIGNIN')}
-              </Button>
-              <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
-                {t('BUTTONS.SIGNUP')}
-              </Button>
+            <div className="control-button">
+              {!isToken ? (
+                <div className="authorization">
+                  <Button variant="outlined" color="secondary" onClick={() => navigate('/signin')}>
+                    {t('BUTTONS.SIGNIN')}
+                  </Button>
+                  <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
+                    {t('BUTTONS.SIGNUP')}
+                  </Button>
+                </div>
+              ) : isToken && location.pathname === '/' ? (
+                <React.Fragment>
+                  <Button
+                    className="main-btn"
+                    variant="contained"
+                    onClick={() => navigate('/main')}
+                  >
+                    {t('BUTTONS.MAIN')}
+                  </Button>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <Button
+                    className="new-board-btn"
+                    variant="contained"
+                    onClick={() => navigate('/modalka open')}
+                  >
+                    {t('BUTTONS.NEWBOARD')}
+                  </Button>
+                  <Button
+                    className="edit-profile-btn"
+                    variant="contained"
+                    onClick={() => navigate('/editprofile')}
+                  >
+                    {t('BUTTONS.EDITPROFILE')}
+                  </Button>
+                  <Button
+                    className="sign-out-btn"
+                    variant="contained"
+                    onClick={() => navigate('/')}
+                  >
+                    {t('BUTTONS.SIGNOUT')}
+                  </Button>
+                </React.Fragment>
+              )}
             </div>
           </div>
         </div>
