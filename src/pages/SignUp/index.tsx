@@ -5,6 +5,7 @@ import { Button, TextField } from '@mui/material';
 import { AuthData, Paths } from '../../models';
 import { setCookie } from '../../share/setCookie';
 import { URL_BASE } from '../../constants';
+import { useLoginUserMutation, useRegisterUserMutation } from '../../redux/features/api/authApi';
 
 interface FormInputs {
   userName: string;
@@ -23,6 +24,9 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
+  // const [registerUser, { isLoading, isSuccess, error, isError }] = useRegisterUserMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation();
+
   const navigate = useNavigate();
 
   const validatePassword = (password: string): string | boolean => {
@@ -40,12 +44,18 @@ export const SignUp = () => {
   };
 
   const onSubmit = (data: FormInputs): void => {
+    // const postData: AuthData = {
+    //   name: data.userName,
+    //   login: data.login,
+    //   password: data.password,
+    // };
+    // registerUser(postData);
     signUp(data)
-      .then((res: { login: string }) => logIn(res.login, data.password))
-      .then((res: { token: string }) => {
-        setCookie(res.token);
-        navigate(Paths.MAIN);
-      })
+      .then((res: { login: string }) => loginUser({ login: res.login, password: data.password }))
+      // .then((res: { token: string }) => {
+      //   setCookie(res.token);
+      //   navigate(Paths.MAIN);
+      // })
       .catch((err: Error) => console.error(err.message || err));
   };
 
