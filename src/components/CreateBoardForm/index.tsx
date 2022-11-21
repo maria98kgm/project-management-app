@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '@mui/material';
@@ -9,6 +9,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { Board } from '../../models';
 import './style.scss';
 
@@ -17,7 +18,9 @@ type CreateBoardFormProps = {
 };
 
 export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose }) => {
+  const [names, setNames] = useState<string[]>([]);
   const { t } = useTranslation();
+  const [getUsers] = useGetAllUsersMutation();
   const {
     register,
     formState: { errors },
@@ -25,22 +28,24 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose })
     getFieldState,
   } = useForm<Partial<Board>>({ mode: 'onChange' });
 
+  useEffect(() => {
+    async function fetchUsers() {
+      const users = await getUsers(null).unwrap();
+
+      const nextNames: string[] = [];
+      users.forEach((user) => {
+        nextNames.push(user.name);
+      });
+
+      setNames(nextNames);
+    }
+
+    fetchUsers();
+  }, [getUsers, names]);
+
   const onSubmit = async (data: Partial<Board>): Promise<void> => {
     console.log(data);
   };
-
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ];
 
   const [personName, setPersonName] = useState<string[]>([]);
 
@@ -81,8 +86,8 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose })
           input={<OutlinedInput label={t('HEADERS.USERS')} />}
           renderValue={(selected: string[]) => selected.join(', ')}
         >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
+          {names.map((name, idx) => (
+            <MenuItem key={`${name}-${idx}`} value={name}>
               <Checkbox checked={personName.indexOf(name) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
