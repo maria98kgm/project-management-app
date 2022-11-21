@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { URL_BASE } from '../../../constants';
 import { AuthData, UserData } from '../../../models';
-import { setToken, setUser } from '../userSlice';
+import { setUser } from '../userSlice';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -27,7 +27,7 @@ export const authApi = createApi({
         }
       },
     }),
-    signIn: builder.mutation<{ token: string }, AuthData>({
+    signIn: builder.mutation<string, AuthData>({
       query(data) {
         return {
           url: 'signin',
@@ -35,16 +35,7 @@ export const authApi = createApi({
           body: data,
         };
       },
-      transformResponse: (result: { data: { token: string } }) => result.data,
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(setToken(data.token));
-          // console.log(data, args);
-        } catch (err) {
-          console.error(err);
-        }
-      },
+      transformResponse: (result: { token: string }) => result.token,
     }),
   }),
 });

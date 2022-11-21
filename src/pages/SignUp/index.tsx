@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { AuthData, Paths } from '../../models';
-import { setCookie } from '../../share/setCookie';
-import { URL_BASE } from '../../constants';
-import { useLoginUserMutation, useRegisterUserMutation } from '../../redux/features/api/authApi';
+import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
+import { setCookieToken } from '../../share/cookieToken';
 
 interface FormInputs {
   userName: string;
@@ -24,8 +23,8 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
-  // const [registerUser, { isLoading, isSuccess, error, isError }] = useRegisterUserMutation();
-  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation();
+  const [registerUser] = useSignUpMutation();
+  const [loginUser] = useSignInMutation();
 
   const navigate = useNavigate();
 
@@ -43,53 +42,19 @@ export const SignUp = () => {
     return password === getValues('password') || 'Password is not the same!';
   };
 
-  const onSubmit = (data: FormInputs): void => {
-    // const postData: AuthData = {
-    //   name: data.userName,
-    //   login: data.login,
-    //   password: data.password,
-    // };
-    // registerUser(postData);
-    signUp(data)
-      .then((res: { login: string }) => loginUser({ login: res.login, password: data.password }))
-      // .then((res: { token: string }) => {
-      //   setCookie(res.token);
-      //   navigate(Paths.MAIN);
-      // })
-      .catch((err: Error) => console.error(err.message || err));
-  };
-
-  const signUp = async (data: FormInputs): Promise<{ login: string }> => {
+  const onSubmit = async (data: FormInputs): Promise<void> => {
     const postData: AuthData = {
       name: data.userName,
       login: data.login,
       password: data.password,
     };
-    const res = await fetch(`${URL_BASE}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
 
-    return res.json();
-  };
+    await registerUser(postData);
 
-  const logIn = async (login: string, password: string): Promise<{ token: string }> => {
-    const postData: AuthData = {
-      login: login,
-      password: password,
-    };
-    const res = await fetch(`${URL_BASE}/auth/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
+    const token = await loginUser({ login: data.login, password: data.password }).unwrap();
 
-    return res.json();
+    setCookieToken(token);
+    navigate(Paths.MAIN);
   };
 
   return (
