@@ -21,6 +21,10 @@
 
   img {
     height: fit-content;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   @media (max-width: $breakpoint735) {

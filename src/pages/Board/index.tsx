@@ -38,7 +38,7 @@ export const Board = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="board-columns content container">
+    <div className="board-columns container">
       <div className="boards-header">
         <ArrowBackIosIcon color="primary" onClick={() => navigate(-1)} />
         <h1>Board</h1>

@@ -35,7 +35,7 @@ export const Header = () => {
     <React.Fragment>
       <header>
         <div className={header ? 'header sticky' : 'header'}>
-          <img src={appLogo} />
+          <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
           <div className="control">
             <div className="language">
               <FormControl sx={{ m: 1, minWidth: 70 }} size="small" color="secondary">

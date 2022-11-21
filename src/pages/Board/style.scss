@@ -1,7 +1,9 @@
 @import 'src/styles/style-import';
 
 .board-columns {
-  padding-top: $header-height;
+  @include flex-column-start;
+  width: 100%;
+  min-height: calc(100vh - $footer-height - $header-height);
   overflow-x: auto;
   overflow-y: hidden;
 
