@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Task } from '../../models/Board.interface';
+import { Task } from '../../models/api/Board.interface';
 import './style.scss';
 
 export const BoardTask: React.FC<{ task: Partial<Task> }> = ({ task }) => {

@@ -63,12 +63,19 @@
     "MAIN": "Go to main page",
     "NEWBOARD": "Create new board",
     "EDITPROFILE": "Edit profile",
-    "SIGNOUT": "Sign out"
+    "SIGNOUT": "Sign out",
+    "CREATE": "Create",
+    "CANCEL": "Cancel"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
     "NO_TASKS": "There are no tasks in the column",
     "CANCELLED": "Changes canceled",
     "APPLIED": "Changes applied"
+  },
+  "HEADERS": {
+    "BOARDS": "Boards",
+    "TITLE": "Title",
+    "USERS": "Users"
   }
 }

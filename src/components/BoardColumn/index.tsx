@@ -6,7 +6,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardTask } from '../BoardTask';
-import { Column } from '../../models/Board.interface';
+import { Column } from '../../models/api/Board.interface';
 import { Toast } from '../Toast';
 import './style.scss';
 
