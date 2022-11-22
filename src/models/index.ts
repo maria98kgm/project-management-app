@@ -10,4 +10,5 @@ export * from './api/task/TaskData.interface';
 export * from './api/task/TaskCreateData.interface';
 export * from './api/task/TaskUpdateData.interface';
 export * from './api/task/TasksSetData.interface';
+export * from './api/PointData.interface';
 export * from './api/FileData.interface';

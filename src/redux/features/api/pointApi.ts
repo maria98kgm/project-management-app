@@ -1,14 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
+import { PointData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
-
-interface PointData {
-  _id?: string;
-  title: string;
-  taskId?: number;
-  boardId?: string;
-  done: boolean;
-}
 
 export const pointApi = createApi({
   reducerPath: 'pointApi',
@@ -94,4 +87,12 @@ export const pointApi = createApi({
   }),
 });
 
-export const {} = pointApi;
+export const {
+  useGetPointByIdsListMutation,
+  useGetUserPointsMutation,
+  useCreatePointMutation,
+  useUpdateSetOfPointsMutation,
+  useGetTaskPointsMutation,
+  useUpdatePointMutation,
+  useDeletePointMutation,
+} = pointApi;

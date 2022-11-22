@@ -1,7 +1,7 @@
 export interface TaskCreateData {
   title: string;
-  order: 0;
+  order: number;
   description: string;
-  userId: 0;
+  userId: string;
   users: string[];
 }
