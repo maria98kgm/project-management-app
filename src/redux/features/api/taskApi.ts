@@ -1,19 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import { URL_BASE } from '../../../constants';
+import { TaskCreateData, TaskData, TasksSetData, TaskUpdateData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 
-interface TaskData {
-  _id?: string;
-  title: string;
-  order: number;
-  boardId: string;
-  columnId?: string;
-  description: string;
-  userId: number;
-  users: string[];
-}
-
-const taskApi = createApi({
+export const taskApi = createApi({
   reducerPath: 'taskApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
   endpoints: (builder) => ({
@@ -29,7 +19,7 @@ const taskApi = createApi({
     }),
     createTask: builder.mutation<
       TaskData,
-      { boardId: string; columnId: string; taskInfo: TaskData }
+      { boardId: string; columnId: string; taskInfo: TaskCreateData }
     >({
       query(data) {
         return {
@@ -53,7 +43,7 @@ const taskApi = createApi({
     }),
     updateTask: builder.mutation<
       TaskData,
-      { boardId: string; columnId: string; taskId: string; taskInfo: TaskData }
+      { boardId: string; columnId: string; taskId: string; taskInfo: TaskUpdateData }
     >({
       query(data) {
         return {
@@ -107,7 +97,7 @@ const taskApi = createApi({
         };
       },
     }),
-    updateSetOfTasks: builder.mutation<TaskData[], TaskData[]>({
+    updateTasksSet: builder.mutation<TaskData[], TasksSetData[]>({
       query(tasks) {
         return {
           url: `tasksSet`,

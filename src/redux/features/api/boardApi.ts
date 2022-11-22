@@ -1,13 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
+import { BoardData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
-
-interface BoardData {
-  _id?: string;
-  title: string;
-  owner: string;
-  users: string[];
-}
 
 export const boardApi = createApi({
   reducerPath: 'boardApi',

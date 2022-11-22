@@ -1,13 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
+import { ColumnData, ColumnsSetData, ColumnUpCrData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
-
-interface ColumnData {
-  _id?: string;
-  title: string;
-  order: number;
-  boardId?: string;
-}
 
 export const columnApi = createApi({
   reducerPath: 'columnApi',
@@ -23,7 +17,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    createColumn: builder.mutation<ColumnData, { boardId: string; columnInfo: ColumnData }>({
+    createColumn: builder.mutation<ColumnData, { boardId: string; columnInfo: ColumnUpCrData }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns`,
@@ -47,7 +41,7 @@ export const columnApi = createApi({
     }),
     updateColumn: builder.mutation<
       ColumnData,
-      { boardId: string; columnId: string; columnInfo: ColumnData }
+      { boardId: string; columnId: string; columnInfo: ColumnUpCrData }
     >({
       query(data) {
         return {
@@ -91,7 +85,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    updateSetOfColumns: builder.mutation<ColumnData[], ColumnData[]>({
+    updateSetOfColumns: builder.mutation<ColumnData[], ColumnsSetData[]>({
       query(columns) {
         return {
           url: `columnsSet`,
