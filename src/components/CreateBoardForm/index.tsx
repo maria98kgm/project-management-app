@@ -17,7 +17,7 @@ import { Board } from '../../models';
 import './style.scss';
 
 type CreateBoardFormProps = {
-  onCreateBoard: (newBoard: Board) => void;
+  onCreateBoard: () => void;
   handleClose: () => void;
 };
 
@@ -74,7 +74,7 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
     };
 
     await createBoard(newBoard);
-    onCreateBoard(newBoard);
+    onCreateBoard();
   };
 
   const [personName, setPersonName] = useState<string[]>([]);

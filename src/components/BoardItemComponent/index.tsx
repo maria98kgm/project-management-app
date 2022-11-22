@@ -1,19 +1,22 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoupeIcon from '@mui/icons-material/Loupe';
 import './style.scss';
 
 type BoardItemProp = {
+  boardId: string;
   title: string;
   users: string[];
 };
 
-export const BoardItem: React.FC<BoardItemProp> = ({ title, users }) => {
+export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
-    <div className="boardItem">
+    <div className="boardItem" onClick={() => navigate(`/board/${boardId}`)}>
       <div className="boardItem-top">
         <h2 className="boardItem-title">{title}</h2>
         <div className="boardItem-tools">
