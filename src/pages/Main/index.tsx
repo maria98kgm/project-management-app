@@ -28,6 +28,10 @@ export const Main = () => {
       </div>
       <BasicModal isOpen={modalState}>
         <CreateBoardForm
+          onCreateBoard={() => {
+            setModalState(false);
+            setToastState({ isOpen: true, message: t('INFO.APPLIED'), severity: 'success' });
+          }}
           handleClose={() => {
             setModalState(false);
             setToastState({ isOpen: true, message: t('INFO.CANCELLED'), severity: 'warning' });

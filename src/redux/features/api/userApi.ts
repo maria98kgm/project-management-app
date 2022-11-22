@@ -16,6 +16,7 @@ export const userApi = createApi({
           },
         };
       },
+      transformResponse: (response: UserData[]) => response,
     }),
     getUser: builder.mutation<UserData, string>({
       query(userId) {
