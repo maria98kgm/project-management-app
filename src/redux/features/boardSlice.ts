@@ -13,18 +13,21 @@ const initialState: IBoardState = {
 export const boardSlice = createSlice({
   initialState,
   name: 'boardSlice',
-  reducers: {
-    setBoards: (state, action: PayloadAction<Board[]>) => {
-      state.boards = [...action.payload];
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(boardApi.endpoints.createBoard.matchFulfilled, (state, action) => {
-      state.boards = [...state.boards, action.payload];
-    });
+    builder.addMatcher(
+      boardApi.endpoints.createBoard.matchFulfilled,
+      (state, action: PayloadAction<Board>) => {
+        state.boards = [...state.boards, action.payload];
+      }
+    );
+    builder.addMatcher(
+      boardApi.endpoints.getAllUserBoards.matchFulfilled,
+      (state, action: PayloadAction<Board[]>) => {
+        state.boards = [...action.payload];
+      }
+    );
   },
 });
 
 export default boardSlice.reducer;
-
-export const { setBoards } = boardSlice.actions;

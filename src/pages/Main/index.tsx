@@ -1,21 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardItem } from '../../components/BoardItemComponent';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
+import { useGetAllUserBoardsMutation } from '../../redux/features/api/boardApi';
+import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
+import { useAppSelector } from '../../redux/hooks';
+import { RootState } from '../../redux/store';
 import { BasicModal } from '../../components/Modal/Modal';
 import { Toast } from '../../components/Toast';
+import { Board, UserData } from '../../models';
 import './style.scss';
 
 export const Main = () => {
   const { t } = useTranslation();
+  const [mount, setMount] = useState(false);
+  const [getBoards] = useGetAllUserBoardsMutation();
+  const [getUsers] = useGetAllUsersMutation();
+  const [allUsers, setAllUsers] = useState<UserData[]>([]);
+  const user = useAppSelector((state: RootState) => state.user);
+  const [bords, setBoards] = useState<Board[]>([]);
   const [modalState, setModalState] = useState(false);
   const [toastState, setToastState] = useState({
     isOpen: false,
     severity: 'info' as AlertColor,
     message: '',
   });
+
+  const fetchBoards = useCallback(async () => {
+    if (user.user && user.user._id) {
+      const userBords = await getBoards(user.user._id).unwrap();
+      setBoards(userBords);
+    }
+  }, [getBoards, user]);
+
+  const fetchUsers = useCallback(async () => {
+    const usersResp: UserData[] = await getUsers(null).unwrap();
+    setAllUsers(usersResp);
+  }, [getUsers]);
+
+  useEffect(() => {
+    if (!mount) {
+      setMount(true);
+      fetchBoards();
+      fetchUsers();
+    }
+  }, [fetchBoards, fetchUsers, mount]);
 
   return (
     <section className="main">
@@ -24,7 +55,16 @@ export const Main = () => {
         {t('BUTTONS.ADD_BOARD')}
       </Button>
       <div className="allBoards">
-        <BoardItem />
+        {bords.length !== 0 && allUsers.length !== 0 ? (
+          bords.map((board) => {
+            const foundBoardUsers = allUsers
+              .filter((user) => board.users.includes(user._id))
+              .map((user) => user.name);
+            return <BoardItem key={board._id} title={board.title} users={foundBoardUsers} />;
+          })
+        ) : (
+          <p className="no-boards">{t('INFO.NO_BOARDS')}</p>
+        )}
       </div>
       <BasicModal isOpen={modalState}>
         <CreateBoardForm
