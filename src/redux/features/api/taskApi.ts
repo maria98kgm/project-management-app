@@ -1,13 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { URL_BASE } from '../../../constants';
 import { TaskCreateData, TaskData, TasksSetData, TaskUpdateData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 
-export const taskApi = createApi({
-  reducerPath: 'taskApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
-  endpoints: (builder) => ({
-    getColumnTasks: builder.mutation<TaskData[], { boardId: string; columnId: string }>({
+export const taskApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    getColumnTasks: build.mutation<TaskData[], { boardId: string; columnId: string }>({
       query(data) {
         return {
           url: `/boards/${data.boardId}/columns/${data.columnId}/tasks`,
@@ -17,7 +14,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    createTask: builder.mutation<
+    createTask: build.mutation<
       TaskData,
       { boardId: string; columnId: string; taskInfo: TaskCreateData }
     >({
@@ -32,7 +29,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    getTask: builder.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
+    getTask: build.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}/tasks/${data.taskId}`,
@@ -42,7 +39,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    updateTask: builder.mutation<
+    updateTask: build.mutation<
       TaskData,
       { boardId: string; columnId: string; taskId: string; taskInfo: TaskUpdateData }
     >({
@@ -57,7 +54,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    deleteTask: builder.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
+    deleteTask: build.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}/tasks/${data.taskId}`,
@@ -68,7 +65,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    getTasksByIdsList: builder.mutation<TaskData[], string[]>({
+    getTasksByIdsList: build.mutation<TaskData[], string[]>({
       query(idsList) {
         return {
           url: `tasksSet?ids=${idsList}`,
@@ -78,7 +75,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    getUserTasks: builder.mutation<TaskData[], string>({
+    getUserTasks: build.mutation<TaskData[], string>({
       query(userId) {
         return {
           url: `tasksSet?userId=${userId}`,
@@ -88,7 +85,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    getTasksBySearch: builder.mutation<TaskData[], string>({
+    getTasksBySearch: build.mutation<TaskData[], string>({
       query(search) {
         return {
           url: `tasksSet?search=${search}`,
@@ -98,7 +95,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    updateTasksSet: builder.mutation<TaskData[], TasksSetData[]>({
+    updateTasksSet: build.mutation<TaskData[], TasksSetData[]>({
       query(tasks) {
         return {
           url: `tasksSet`,
@@ -110,7 +107,7 @@ export const taskApi = createApi({
         };
       },
     }),
-    getBoardTasks: builder.mutation<TaskData[], string>({
+    getBoardTasks: build.mutation<TaskData[], string>({
       query(boardId) {
         return {
           url: `tasksSet/${boardId}`,

@@ -1,16 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { URL_BASE } from '../../../constants';
 import { AuthData, UserData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 
-export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/users/` }),
-  endpoints: (builder) => ({
-    getAllUsers: builder.mutation<UserData[], null>({
+export const userApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    getAllUsers: build.mutation<UserData[], null>({
       query() {
         return {
-          url: '',
+          url: 'users',
           headers: {
             Authorization: getCookieToken(),
           },
@@ -18,20 +15,20 @@ export const userApi = createApi({
       },
       transformResponse: (result: UserData[]) => result,
     }),
-    getUser: builder.mutation<UserData, string>({
+    getUser: build.mutation<UserData, string>({
       query(userId) {
         return {
-          url: userId,
+          url: `users/${userId}`,
           headers: {
             Authorization: getCookieToken(),
           },
         };
       },
     }),
-    updateUser: builder.mutation<UserData, { userId: string; userInfo: AuthData }>({
+    updateUser: build.mutation<UserData, { userId: string; userInfo: AuthData }>({
       query(data) {
         return {
-          url: data.userId,
+          url: `users/${data.userId}`,
           method: 'PUT',
           headers: {
             Authorization: getCookieToken(),
@@ -40,10 +37,10 @@ export const userApi = createApi({
         };
       },
     }),
-    deleteUser: builder.mutation<UserData, string>({
+    deleteUser: build.mutation<UserData, string>({
       query(userId) {
         return {
-          url: userId,
+          url: `users/${userId}`,
           method: 'DELETE',
           headers: {
             Authorization: getCookieToken(),

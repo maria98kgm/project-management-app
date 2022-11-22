@@ -1,13 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { URL_BASE } from '../../../constants';
 import { ColumnData, ColumnsSetData, ColumnUpCrData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 
-export const columnApi = createApi({
-  reducerPath: 'columnApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
-  endpoints: (builder) => ({
-    getBoardColumns: builder.mutation<ColumnData[], string>({
+export const columnApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    getBoardColumns: build.mutation<ColumnData[], string>({
       query(boardId) {
         return {
           url: `boards/${boardId}/columns`,
@@ -17,7 +14,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    createColumn: builder.mutation<ColumnData, { boardId: string; columnInfo: ColumnUpCrData }>({
+    createColumn: build.mutation<ColumnData, { boardId: string; columnInfo: ColumnUpCrData }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns`,
@@ -29,7 +26,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    getColumn: builder.mutation<ColumnData, { boardId: string; columnId: string }>({
+    getColumn: build.mutation<ColumnData, { boardId: string; columnId: string }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}`,
@@ -39,7 +36,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    updateColumn: builder.mutation<
+    updateColumn: build.mutation<
       ColumnData,
       { boardId: string; columnId: string; columnInfo: ColumnUpCrData }
     >({
@@ -54,7 +51,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    deleteColumn: builder.mutation<ColumnData, { boardId: string; columnId: string }>({
+    deleteColumn: build.mutation<ColumnData, { boardId: string; columnId: string }>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}`,
@@ -65,7 +62,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    getColumnsByIdsList: builder.mutation<ColumnData[], string[]>({
+    getColumnsByIdsList: build.mutation<ColumnData[], string[]>({
       query(idsList) {
         return {
           url: `columnsSet?ids=${idsList}`,
@@ -75,7 +72,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    getUserColumns: builder.mutation<ColumnData[], string>({
+    getUserColumns: build.mutation<ColumnData[], string>({
       query(userId) {
         return {
           url: `columnsSet?userId=${userId}`,
@@ -85,7 +82,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    updateSetOfColumns: builder.mutation<ColumnData[], ColumnsSetData[]>({
+    updateSetOfColumns: build.mutation<ColumnData[], ColumnsSetData[]>({
       query(columns) {
         return {
           url: `columnsSet`,
@@ -97,7 +94,7 @@ export const columnApi = createApi({
         };
       },
     }),
-    createSetOfColumns: builder.mutation<ColumnData[], ColumnData[]>({
+    createSetOfColumns: build.mutation<ColumnData[], ColumnData[]>({
       query(columns) {
         return {
           url: `columnsSet`,

@@ -1,13 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { URL_BASE } from '../../../constants';
 import { PointData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 
-export const pointApi = createApi({
-  reducerPath: 'pointApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
-  endpoints: (builder) => ({
-    getPointByIdsList: builder.mutation<PointData[], string[]>({
+export const pointApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    getPointByIdsList: build.mutation<PointData[], string[]>({
       query(idsList) {
         return {
           url: `points?ids=${idsList}`,
@@ -17,7 +14,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    getUserPoints: builder.mutation<PointData[], string>({
+    getUserPoints: build.mutation<PointData[], string>({
       query(userId) {
         return {
           url: `points?userId=${userId}`,
@@ -27,7 +24,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    createPoint: builder.mutation<PointData, PointData>({
+    createPoint: build.mutation<PointData, PointData>({
       query(data) {
         return {
           url: `points`,
@@ -39,7 +36,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    updateSetOfPoints: builder.mutation<PointData[], PointData[]>({
+    updateSetOfPoints: build.mutation<PointData[], PointData[]>({
       query(points) {
         return {
           url: `points`,
@@ -51,7 +48,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    getTaskPoints: builder.mutation<PointData[], string>({
+    getTaskPoints: build.mutation<PointData[], string>({
       query(taskId) {
         return {
           url: `points/${taskId}`,
@@ -61,7 +58,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    updatePoint: builder.mutation<PointData, { pointId: string; pointInfo: PointData }>({
+    updatePoint: build.mutation<PointData, { pointId: string; pointInfo: PointData }>({
       query(data) {
         return {
           url: `points/${data.pointId}`,
@@ -73,7 +70,7 @@ export const pointApi = createApi({
         };
       },
     }),
-    deletePoint: builder.mutation<PointData, string>({
+    deletePoint: build.mutation<PointData, string>({
       query(pointId) {
         return {
           url: `points/${pointId}`,

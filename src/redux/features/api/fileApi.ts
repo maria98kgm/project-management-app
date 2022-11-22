@@ -1,13 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { URL_BASE } from '../../../constants';
 import { FileData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 
-export const fileApi = createApi({
-  reducerPath: 'fileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
-  endpoints: (builder) => ({
-    getFilesByIdsList: builder.mutation<FileData[], string[]>({
+export const fileApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    getFilesByIdsList: build.mutation<FileData[], string[]>({
       query(idsList) {
         return {
           url: `file?ids=${idsList}`,
@@ -17,7 +14,7 @@ export const fileApi = createApi({
         };
       },
     }),
-    getUserFiles: builder.mutation<FileData[], string>({
+    getUserFiles: build.mutation<FileData[], string>({
       query(userId) {
         return {
           url: `file?userId=${userId}`,
@@ -27,7 +24,7 @@ export const fileApi = createApi({
         };
       },
     }),
-    getTaskFiles: builder.mutation<FileData[], string>({
+    getTaskFiles: build.mutation<FileData[], string>({
       query(taskId) {
         return {
           url: `file?taskId=${taskId}`,
@@ -37,7 +34,7 @@ export const fileApi = createApi({
         };
       },
     }),
-    getBoardFiles: builder.mutation<FileData[], string>({
+    getBoardFiles: build.mutation<FileData[], string>({
       query(boardId) {
         return {
           url: `file/${boardId}`,
@@ -47,7 +44,7 @@ export const fileApi = createApi({
         };
       },
     }),
-    deleteFile: builder.mutation<FileData, string>({
+    deleteFile: build.mutation<FileData, string>({
       query(fileId) {
         return {
           url: `file/${fileId}`,
