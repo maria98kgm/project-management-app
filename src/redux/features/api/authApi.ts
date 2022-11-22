@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { URL_BASE } from '../../../constants';
 import { AuthData, UserData } from '../../../models';
 import { decodeToken, setCookieToken } from '../../../share/cookieToken';
+import { apiSlice } from '../apiSlice';
 import { setUser } from '../userSlice';
 
 interface JWTPayload {
@@ -11,26 +10,22 @@ interface JWTPayload {
   exp: number;
 }
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${URL_BASE}/auth/`,
-  }),
-  endpoints: (builder) => ({
-    signUp: builder.mutation<UserData, AuthData>({
+export const authApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    signUp: build.mutation<UserData, AuthData>({
       query(data) {
         return {
-          url: 'signup',
+          url: 'auth/signup',
           method: 'POST',
           body: data,
         };
       },
       transformResponse: (result: { data: UserData }) => result.data,
     }),
-    signIn: builder.mutation<string, AuthData>({
+    signIn: build.mutation<string, AuthData>({
       query(data) {
         return {
-          url: 'signin',
+          url: 'auth/signin',
           method: 'POST',
           body: data,
         };
@@ -52,6 +47,7 @@ export const authApi = createApi({
       },
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useSignUpMutation, useSignInMutation } = authApi;
