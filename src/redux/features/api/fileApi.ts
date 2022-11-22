@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
 import { FileData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
@@ -61,4 +61,10 @@ export const fileApi = createApi({
   }),
 });
 
-export const {} = fileApi;
+export const {
+  useGetFilesByIdsListMutation,
+  useGetUserFilesMutation,
+  useGetTaskFilesMutation,
+  useGetBoardFilesMutation,
+  useDeleteFileMutation,
+} = fileApi;

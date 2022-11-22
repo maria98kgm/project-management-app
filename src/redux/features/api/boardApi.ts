@@ -73,7 +73,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    getAllUserBoards: builder.mutation<BoardData[], string>({
+    getAllUserBoards: builder.mutation<BoardData, string>({
       query(userId) {
         return {
           url: `boardsSet/${userId}`,
@@ -87,4 +87,4 @@ export const boardApi = createApi({
   }),
 });
 
-export const { useCreateBoardMutation, useGetAllUserBoardsMutation } = boardApi;
+export const {} = boardApi;

@@ -15,7 +15,15 @@ export const store = configureStore({
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([authApi.middleware, userApi.middleware, boardApi.middleware]),
+    getDefaultMiddleware({}).concat([
+      authApi.middleware,
+      userApi.middleware,
+      boardApi.middleware,
+      columnApi.middleware,
+      taskApi.middleware,
+      fileApi.middleware,
+      pointApi.middleware,
+    ]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

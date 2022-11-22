@@ -112,4 +112,14 @@ export const columnApi = createApi({
   }),
 });
 
-export const {} = columnApi;
+export const {
+  useGetBoardColumnsMutation,
+  useCreateColumnMutation,
+  useGetColumnMutation,
+  useUpdateColumnMutation,
+  useDeleteColumnMutation,
+  useGetColumnsByIdsListMutation,
+  useGetUserColumnsMutation,
+  useUpdateSetOfColumnsMutation,
+  useCreateSetOfColumnsMutation,
+} = columnApi;

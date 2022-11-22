@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
 import { TaskCreateData, TaskData, TasksSetData, TaskUpdateData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
@@ -10,7 +10,7 @@ export const taskApi = createApi({
     getColumnTasks: builder.mutation<TaskData[], { boardId: string; columnId: string }>({
       query(data) {
         return {
-          url: `/boards${data.boardId}/columns/${data.columnId}/tasks`,
+          url: `/boards/${data.boardId}/columns/${data.columnId}/tasks`,
           headers: {
             Authorization: getCookieToken(),
           },
@@ -23,7 +23,8 @@ export const taskApi = createApi({
     >({
       query(data) {
         return {
-          url: `/boards${data.boardId}/columns/${data.columnId}/tasks`,
+          url: `/boards/${data.boardId}/columns/${data.columnId}/tasks`,
+          method: 'POST',
           headers: {
             Authorization: getCookieToken(),
           },
@@ -122,4 +123,15 @@ export const taskApi = createApi({
   }),
 });
 
-export const {} = taskApi;
+export const {
+  useGetColumnTasksMutation,
+  useCreateTaskMutation,
+  useGetTaskMutation,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+  useGetTasksByIdsListMutation,
+  useGetUserTasksMutation,
+  useGetTasksBySearchMutation,
+  useUpdateTasksSetMutation,
+  useGetBoardTasksMutation,
+} = taskApi;
