@@ -1,5 +1,5 @@
 export interface Board {
-  id?: string;
+  _id?: string;
   title: string;
   owner: string;
   users: string[];
@@ -7,7 +7,7 @@ export interface Board {
 }
 
 export interface Column {
-  id: string;
+  _id?: string;
   boardId: string;
   title: string;
   order: number;
@@ -15,7 +15,7 @@ export interface Column {
 }
 
 export interface Task {
-  id: string;
+  _id?: string;
   title: string;
   order: number;
   description: string;

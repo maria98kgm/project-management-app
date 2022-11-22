@@ -55,7 +55,7 @@ export const BoardColumn: React.FC<{ column: Partial<Column> }> = ({ column }) =
         {column.tasks && column.tasks.length !== 0 ? (
           column.tasks.map((task) => {
             return (
-              <div className="task" key={task.id}>
+              <div className="task" key={task._id}>
                 <div className="task-placeholder"></div>
                 <BoardTask task={task} />
               </div>
