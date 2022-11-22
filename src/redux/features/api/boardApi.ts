@@ -66,7 +66,7 @@ export const boardApi = createApi({
     getBoardsByIdsList: builder.mutation<Board[], string[]>({
       query(idsList) {
         return {
-          url: `boardsSet/${idsList}`,
+          url: `boardsSet?ids=${idsList}`,
           headers: {
             Authorization: getCookieToken(),
           },
