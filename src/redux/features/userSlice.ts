@@ -7,8 +7,10 @@ interface IUserState {
   user: Partial<UserData> | null;
 }
 
+const currentUser: string | null = localStorage.getItem('user');
+
 const initialState: IUserState = {
-  user: null,
+  user: currentUser ? JSON.parse(currentUser) : null,
 };
 
 export const userSlice = createSlice({
