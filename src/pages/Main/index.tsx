@@ -59,11 +59,18 @@ export const Main = () => {
             <CircularProgress />
           </Box>
         ) : boards.length !== 0 && allUsers.length !== 0 ? (
-          boards.map((board) => {
+          boards.map((board, idx) => {
             const foundBoardUsers = allUsers
               .filter((user) => board.users.includes(user._id))
               .map((user) => user.name);
-            return <BoardItem key={board._id} title={board.title} users={foundBoardUsers} />;
+            return (
+              <BoardItem
+                key={`${board.title}-${idx}`}
+                title={board.title}
+                users={foundBoardUsers}
+                boardId={board._id ? board._id : ''}
+              />
+            );
           })
         ) : (
           <p>{t('INFO.NO_BOARDS')}</p>
@@ -71,8 +78,8 @@ export const Main = () => {
       </div>
       <BasicModal isOpen={modalState}>
         <CreateBoardForm
-          onCreateBoard={(newBoard: Board) => {
-            setBoards([...boards, newBoard]);
+          onCreateBoard={() => {
+            fetchBoards();
             setModalState(false);
             setToastState({ isOpen: true, message: t('INFO.APPLIED'), severity: 'success' });
           }}
