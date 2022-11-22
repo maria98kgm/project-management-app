@@ -16,6 +16,7 @@ export const userApi = createApi({
           },
         };
       },
+      transformResponse: (result: UserData[]) => result,
     }),
     getUser: builder.mutation<UserData, string>({
       query(userId) {
@@ -53,4 +54,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetAllUsersMutation, useGetUserMutation } = userApi;
+export const { useGetAllUsersMutation, useGetUserMutation, useDeleteUserMutation } = userApi;
