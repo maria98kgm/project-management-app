@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { URL_BASE } from '../../../constants';
-import { Board } from '../../../models/api/Board.interface';
+import { BoardData } from '../../../models/api/BoardData.interface';
 import { getCookieToken } from '../../../share/cookieToken';
 
 export const boardApi = createApi({
   reducerPath: 'boardApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${URL_BASE}/` }),
   endpoints: (builder) => ({
-    getAllBoards: builder.mutation<Board[], null>({
+    getAllBoards: builder.mutation<BoardData[], null>({
       query() {
         return {
           url: 'boards',
@@ -17,7 +17,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    createBoard: builder.mutation<Board, Board>({
+    createBoard: builder.mutation<BoardData, BoardData>({
       query(data) {
         return {
           url: 'boards',
@@ -28,9 +28,9 @@ export const boardApi = createApi({
           body: data,
         };
       },
-      transformResponse: (response: Board) => response,
+      transformResponse: (response: BoardData) => response,
     }),
-    getBoard: builder.mutation<Board, string>({
+    getBoard: builder.mutation<BoardData, string>({
       query(boardId) {
         return {
           url: `boards/${boardId}`,
@@ -40,7 +40,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    updateBoard: builder.mutation<Board, { boardId: string; boardInfo: Board }>({
+    updateBoard: builder.mutation<BoardData, { boardId: string; boardInfo: BoardData }>({
       query(data) {
         return {
           url: `boards/${data.boardId}`,
@@ -52,7 +52,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    deleteBoard: builder.mutation<Board, string>({
+    deleteBoard: builder.mutation<BoardData, string>({
       query(boardId) {
         return {
           url: `boards/${boardId}`,
@@ -63,7 +63,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    getBoardsByIdsList: builder.mutation<Board[], string[]>({
+    getBoardsByIdsList: builder.mutation<BoardData[], string[]>({
       query(idsList) {
         return {
           url: `boardsSet?ids=${idsList}`,
@@ -73,7 +73,7 @@ export const boardApi = createApi({
         };
       },
     }),
-    getAllUserBoards: builder.mutation<Board[], string>({
+    getAllUserBoards: builder.mutation<BoardData[], string>({
       query(userId) {
         return {
           url: `boardsSet/${userId}`,
@@ -82,7 +82,7 @@ export const boardApi = createApi({
           },
         };
       },
-      transformResponse: (response: Board[]) => response,
+      transformResponse: (response: BoardData[]) => response,
     }),
   }),
 });

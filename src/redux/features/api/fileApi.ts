@@ -1,14 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import { URL_BASE } from '../../../constants';
+import { FileData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
-
-interface FileData {
-  _id?: string;
-  name: string;
-  taskId: string;
-  boardId: string;
-  path: string;
-}
 
 export const fileApi = createApi({
   reducerPath: 'fileApi',
