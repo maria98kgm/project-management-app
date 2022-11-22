@@ -20,7 +20,7 @@ export const Main = () => {
   const [getUsers] = useGetAllUsersMutation();
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
   const user = useAppSelector((state: RootState) => state.user);
-  const [bords, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState<Board[]>([]);
   const [modalState, setModalState] = useState(false);
   const [toastState, setToastState] = useState({
     isOpen: false,
@@ -58,8 +58,8 @@ export const Main = () => {
           <Box>
             <CircularProgress />
           </Box>
-        ) : bords.length !== 0 && allUsers.length !== 0 ? (
-          bords.map((board) => {
+        ) : boards.length !== 0 && allUsers.length !== 0 ? (
+          boards.map((board) => {
             const foundBoardUsers = allUsers
               .filter((user) => board.users.includes(user._id))
               .map((user) => user.name);
@@ -71,7 +71,8 @@ export const Main = () => {
       </div>
       <BasicModal isOpen={modalState}>
         <CreateBoardForm
-          onCreateBoard={() => {
+          onCreateBoard={(newBoard: Board) => {
+            setBoards([...boards, newBoard]);
             setModalState(false);
             setToastState({ isOpen: true, message: t('INFO.APPLIED'), severity: 'success' });
           }}

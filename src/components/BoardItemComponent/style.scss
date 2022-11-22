@@ -6,6 +6,12 @@
   width: 308px;
   background-color: $board-background-color;
   border: solid $board-primary-color;
+  transition-duration: .3s;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 
   .boardItem-loupe {
     position: absolute;
