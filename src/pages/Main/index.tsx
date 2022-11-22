@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
+import { Button, CircularProgress, Box } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardItem } from '../../components/BoardItemComponent';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
@@ -42,8 +42,7 @@ export const Main = () => {
 
   useEffect(() => {
     if (!mount) {
-      setMount(true);
-      fetchBoards();
+      fetchBoards().then(() => setMount(true));
       fetchUsers();
     }
   }, [fetchBoards, fetchUsers, mount]);
@@ -55,7 +54,11 @@ export const Main = () => {
         {t('BUTTONS.ADD_BOARD')}
       </Button>
       <div className="allBoards">
-        {bords.length !== 0 && allUsers.length !== 0 ? (
+        {!mount ? (
+          <Box>
+            <CircularProgress />
+          </Box>
+        ) : bords.length !== 0 && allUsers.length !== 0 ? (
           bords.map((board) => {
             const foundBoardUsers = allUsers
               .filter((user) => board.users.includes(user._id))
@@ -63,7 +66,7 @@ export const Main = () => {
             return <BoardItem key={board._id} title={board.title} users={foundBoardUsers} />;
           })
         ) : (
-          <p className="no-boards">{t('INFO.NO_BOARDS')}</p>
+          <p>{t('INFO.NO_BOARDS')}</p>
         )}
       </div>
       <BasicModal isOpen={modalState}>
