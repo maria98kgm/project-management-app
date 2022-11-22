@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '@mui/material';
@@ -28,6 +28,7 @@ type UserName = {
 
 export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard, handleClose }) => {
   const [names, setNames] = useState<UserName[]>([]);
+  const [mount, setMount] = useState(false);
   const { t } = useTranslation();
   const [getUsers] = useGetAllUsersMutation();
   const [createBoard] = useCreateBoardMutation();
@@ -40,23 +41,26 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
     getFieldState,
   } = useForm<Partial<Board>>({ mode: 'onChange' });
 
-  useEffect(() => {
-    async function fetchUsers() {
-      const users = await getUsers(null).unwrap();
+  const fetchUsers = useCallback(async () => {
+    const users = await getUsers(null).unwrap();
 
-      const nextNames: UserName[] = [];
-      users.forEach((user) => {
-        nextNames.push({
-          id: user._id,
-          name: user.name,
-        });
+    const nextNames: UserName[] = [];
+    users.forEach((user) => {
+      nextNames.push({
+        id: user._id,
+        name: user.name,
       });
+    });
 
-      setNames(nextNames);
+    setNames(nextNames);
+  }, [getUsers]);
+
+  useEffect(() => {
+    if (!mount) {
+      setMount(true);
+      fetchUsers();
     }
-
-    fetchUsers();
-  }, [getUsers, names]);
+  }, [fetchUsers, mount]);
 
   const onSubmit = async (data: Partial<Board>): Promise<void> => {
     const userIds: string[] = names
