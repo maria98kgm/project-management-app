@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { Paths } from '../../models';
-import { setCookieToken } from '../../share/cookieToken';
 import { useSignInMutation } from '../../redux/features/api/authApi';
 
 interface FormInputs {
@@ -28,9 +27,8 @@ export const SignIn = () => {
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
-    const token = await loginUser({ login: data.login, password: data.password }).unwrap();
+    await loginUser({ login: data.login, password: data.password });
 
-    setCookieToken(token);
     navigate(Paths.MAIN);
   };
 

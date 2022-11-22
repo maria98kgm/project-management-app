@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { AuthData, Paths } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
-import { setCookieToken } from '../../share/cookieToken';
 
 interface FormInputs {
   userName: string;
@@ -50,10 +49,8 @@ export const SignUp = () => {
     };
 
     await registerUser(postData);
+    await loginUser({ login: postData.login, password: postData.password });
 
-    const token = await loginUser({ login: data.login, password: data.password }).unwrap();
-
-    setCookieToken(token);
     navigate(Paths.MAIN);
   };
 
