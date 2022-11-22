@@ -13,8 +13,6 @@
     right: 10px;
     bottom: 10px;
     cursor: pointer;
-    background-color: white;
-    border-radius: 10px;
     padding: 0.2rem;
   }
 }
@@ -31,13 +29,16 @@
     color: white;
     margin: 0;
     letter-spacing: 1px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .boardItem-tools {
     display: flex;
     column-gap: 1rem;
 
-    .boardItem-icon {
+    svg:hover {
       cursor: pointer;
     }
   }
