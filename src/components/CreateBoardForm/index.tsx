@@ -9,18 +9,30 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useAppSelector } from '../../redux/hooks';
+import { RootState } from '../../redux/store';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
+import { useCreateBoardMutation } from '../../redux/features/api/boardApi';
 import { Board } from '../../models';
 import './style.scss';
 
 type CreateBoardFormProps = {
+  onCreateBoard: () => void;
   handleClose: () => void;
 };
 
-export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose }) => {
-  const [names, setNames] = useState<string[]>([]);
+type UserName = {
+  id: string;
+  name: string;
+};
+
+export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard, handleClose }) => {
+  const [names, setNames] = useState<UserName[]>([]);
   const { t } = useTranslation();
   const [getUsers] = useGetAllUsersMutation();
+  const [createBoard] = useCreateBoardMutation();
+  const user = useAppSelector((state: RootState) => state.user);
+
   const {
     register,
     formState: { errors },
@@ -32,9 +44,12 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose })
     async function fetchUsers() {
       const users = await getUsers(null).unwrap();
 
-      const nextNames: string[] = [];
+      const nextNames: UserName[] = [];
       users.forEach((user) => {
-        nextNames.push(user.name);
+        nextNames.push({
+          id: user._id,
+          name: user.name,
+        });
       });
 
       setNames(nextNames);
@@ -44,7 +59,18 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose })
   }, [getUsers, names]);
 
   const onSubmit = async (data: Partial<Board>): Promise<void> => {
-    console.log(data);
+    const userIds: string[] = names
+      .filter((user) => data.users!.includes(user.name))
+      .map((user) => user.id);
+
+    const newBoard: Board = {
+      title: data.title ? data.title : '',
+      users: userIds ? userIds : [],
+      owner: user.user && user.user._id ? user.user._id : '',
+    };
+
+    await createBoard(newBoard);
+    onCreateBoard();
   };
 
   const [personName, setPersonName] = useState<string[]>([]);
@@ -86,10 +112,10 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ handleClose })
           input={<OutlinedInput label={t('HEADERS.USERS')} />}
           renderValue={(selected: string[]) => selected.join(', ')}
         >
-          {names.map((name, idx) => (
-            <MenuItem key={`${name}-${idx}`} value={name}>
-              <Checkbox checked={personName.indexOf(name) > -1} />
-              <ListItemText primary={name} />
+          {names.map((user, idx) => (
+            <MenuItem key={`${user.name}-${idx}`} value={user.name}>
+              <Checkbox checked={personName.indexOf(user.name) > -1} />
+              <ListItemText primary={user.name} />
             </MenuItem>
           ))}
         </Select>

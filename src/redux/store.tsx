@@ -3,6 +3,7 @@ import { authApi } from './features/api/authApi';
 import { userApi } from './features/api/userApi';
 import { boardApi } from './features/api/boardApi';
 import userReducer from './features/userSlice';
+import boardReducer from './features/boardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [boardApi.reducerPath]: boardApi.reducer,
     user: userReducer,
+    boards: boardReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>

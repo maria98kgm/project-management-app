@@ -1,5 +1,5 @@
 export interface Board {
-  id: string;
+  id?: string;
   title: string;
   owner: string;
   users: string[];

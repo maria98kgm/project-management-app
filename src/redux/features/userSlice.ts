@@ -1,8 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { UserData } from '../../models';
+import { parseJwt } from '../../share/utils';
+import { authApi } from './api/authApi';
 
 interface IUserState {
-  user: UserData | null;
+  user: Partial<UserData> | null;
 }
 
 const initialState: IUserState = {
@@ -12,13 +14,18 @@ const initialState: IUserState = {
 export const userSlice = createSlice({
   initialState,
   name: 'userSlice',
-  reducers: {
-    setUser: (state, action: PayloadAction<UserData>) => {
-      state.user = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
+      const data = parseJwt(action.payload);
+      state.user = {
+        _id: data.id,
+        login: data.login,
+      };
+    });
   },
 });
 
 export default userSlice.reducer;
 
-export const { setUser } = userSlice.actions;
+// export const { setUser } = userSlice.actions;
