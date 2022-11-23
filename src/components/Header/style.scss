@@ -7,6 +7,17 @@
   width: 100%;
   z-index: 9;
   transition: padding 0.6s;
+
+  &.sticky {
+    padding: 14px 112px;
+  }
+
+  img {
+    width: 150px;
+    height: 30px;
+  }
+
+  @include flex-between;
   padding: 20px 112px;
   background: linear-gradient(
     140.77deg,
