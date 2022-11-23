@@ -49,13 +49,15 @@ export const Main = () => {
 
   return (
     <section className="main">
-      <h1>{t('HEADERS.BOARDS')}</h1>
-      <Button variant="outlined" startIcon={'+'} onClick={() => setModalState(true)}>
-        {t('BUTTONS.ADD_BOARD')}
-      </Button>
+      <div className="main-header">
+        <h1>{t('HEADERS.BOARDS')}</h1>
+        <Button variant="outlined" startIcon={'+'} onClick={() => setModalState(true)}>
+          {t('BUTTONS.ADD_BOARD')}
+        </Button>
+      </div>
       <div className="allBoards">
         {!mount ? (
-          <Box>
+          <Box className="loader">
             <CircularProgress />
           </Box>
         ) : boards.length !== 0 && allUsers.length !== 0 ? (

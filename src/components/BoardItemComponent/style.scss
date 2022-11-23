@@ -51,11 +51,11 @@
 }
 
 .boardItem-bottom {
-  padding: 1rem 0.4rem;
+  padding: 0 0.4rem 1rem;
 
   .boardItem-description {
     margin: 0;
-    height: 68px;
+    height: 55px;
     font-size: 14px;
     color: $primary-text-color;
   }
