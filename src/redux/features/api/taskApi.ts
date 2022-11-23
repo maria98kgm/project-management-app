@@ -1,10 +1,18 @@
-import { TaskCreateData, TaskData, TasksSetData, TaskUpdateData } from '../../../models';
+import {
+  TaskData,
+  GetColumnTasks,
+  CreateTask,
+  GetTask,
+  UpdateTask,
+  DeleteTask,
+  UpdateTasksSet,
+} from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 
 export const taskApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    getColumnTasks: build.mutation<TaskData[], { boardId: string; columnId: string }>({
+    getColumnTasks: build.mutation<TaskData[], GetColumnTasks>({
       query(data) {
         return {
           url: `/boards/${data.boardId}/columns/${data.columnId}/tasks`,
@@ -14,10 +22,7 @@ export const taskApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    createTask: build.mutation<
-      TaskData,
-      { boardId: string; columnId: string; taskInfo: TaskCreateData }
-    >({
+    createTask: build.mutation<TaskData, CreateTask>({
       query(data) {
         return {
           url: `/boards/${data.boardId}/columns/${data.columnId}/tasks`,
@@ -29,7 +34,7 @@ export const taskApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    getTask: build.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
+    getTask: build.mutation<TaskData, GetTask>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}/tasks/${data.taskId}`,
@@ -39,10 +44,7 @@ export const taskApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateTask: build.mutation<
-      TaskData,
-      { boardId: string; columnId: string; taskId: string; taskInfo: TaskUpdateData }
-    >({
+    updateTask: build.mutation<TaskData, UpdateTask>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}/tasks/${data.taskId}`,
@@ -54,7 +56,7 @@ export const taskApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    deleteTask: build.mutation<TaskData, { boardId: string; columnId: string; taskId: string }>({
+    deleteTask: build.mutation<TaskData, DeleteTask>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}/tasks/${data.taskId}`,
@@ -95,7 +97,7 @@ export const taskApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateTasksSet: build.mutation<TaskData[], TasksSetData[]>({
+    updateTasksSet: build.mutation<TaskData[], UpdateTasksSet[]>({
       query(tasks) {
         return {
           url: `tasksSet`,

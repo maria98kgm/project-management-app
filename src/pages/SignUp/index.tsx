@@ -2,7 +2,7 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { AuthData, Paths } from '../../models';
+import { Paths, SignInData, SignUpData } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
 
 interface FormInputs {
@@ -42,14 +42,18 @@ export const SignUp = () => {
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
-    const postData: AuthData = {
+    const regData: SignUpData = {
       name: data.userName,
       login: data.login,
       password: data.password,
     };
+    const loginData: SignInData = {
+      login: data.login,
+      password: data.password,
+    };
 
-    await registerUser(postData);
-    await loginUser({ login: postData.login, password: postData.password });
+    await registerUser(regData);
+    await loginUser(loginData);
 
     navigate(Paths.MAIN);
   };

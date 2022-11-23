@@ -1,15 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { UserData } from '../../models';
-import { parseJwt } from '../../share/utils';
-import { authApi } from './api/authApi';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { StateUserInfo } from '../../models';
+import { RootState } from '../store';
 
-interface IUserState {
-  userInfo: UserData | null;
+interface UserState {
+  userInfo: StateUserInfo | null;
 }
 
 const currentUser: string | null = localStorage.getItem('user');
 
-const initialState: IUserState = {
+const initialState: UserState = {
   userInfo: currentUser ? JSON.parse(currentUser) : null,
 };
 
@@ -17,7 +16,7 @@ export const userSlice = createSlice({
   initialState,
   name: 'userSlice',
   reducers: {
-    setUser: (state, action: PayloadAction<UserData>) => {
+    setUser: (state, action: PayloadAction<StateUserInfo>) => {
       state.userInfo = action.payload;
     },
   },
@@ -25,4 +24,6 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-// export const { setUser } = userSlice.actions;
+export const selectUserInfo = (store: RootState) => store.user.userInfo;
+
+export const { setUser } = userSlice.actions;

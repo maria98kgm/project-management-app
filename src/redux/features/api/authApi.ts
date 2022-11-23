@@ -1,4 +1,4 @@
-import { AuthData, UserData } from '../../../models';
+import { SignInData, SignUpData, StateUserInfo, UserData } from '../../../models';
 import { decodeToken, setCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 import { setUser } from '../userSlice';
@@ -12,7 +12,7 @@ interface JWTPayload {
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    signUp: build.mutation<UserData, AuthData>({
+    signUp: build.mutation<UserData, SignUpData>({
       query(data) {
         return {
           url: 'auth/signup',
@@ -22,7 +22,7 @@ export const authApi = apiSlice.injectEndpoints({
       },
       transformResponse: (result: { data: UserData }) => result.data,
     }),
-    signIn: build.mutation<string, AuthData>({
+    signIn: build.mutation<string, SignInData>({
       query(data) {
         return {
           url: 'auth/signin',
@@ -35,7 +35,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           const decodedToken: JWTPayload = decodeToken(data);
-          const userData: UserData = { login: decodedToken.login, _id: decodedToken.id };
+          const userData: StateUserInfo = { login: decodedToken.login, _id: decodedToken.id };
           const tokenExpDate = new Date(decodedToken.exp * 1000);
 
           dispatch(setUser(userData));
