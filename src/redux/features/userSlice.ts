@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserData } from '../../models';
+import { RootState } from '../store';
 
 interface IUserState {
   userInfo: UserData | null;
@@ -22,5 +23,7 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const selectUserInfo = (store: RootState) => store.user.userInfo;
 
 export const { setUser } = userSlice.actions;
