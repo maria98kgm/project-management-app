@@ -59,7 +59,11 @@
     "SIGNUP": "Sign up",
     "ADD_BOARD": "Add board",
     "ADD_COLUMN": "Add column",
-    "ADD_TASK": "Add task"
+    "ADD_TASK": "Add task",
+    "MAIN": "Go to main page",
+    "NEWBOARD": "Create new board",
+    "EDITPROFILE": "Edit profile",
+    "SIGNOUT": "Sign out"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
