@@ -1,4 +1,12 @@
-import { ColumnData, ColumnsSetData, ColumnUpCrData } from '../../../models';
+import {
+  ColumnData,
+  CreateColumn,
+  CreateColumnsSet,
+  DeleteColumn,
+  GetColumn,
+  UpdateColumn,
+  UpdateColumnsSet,
+} from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 
@@ -14,7 +22,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    createColumn: build.mutation<ColumnData, { boardId: string; columnInfo: ColumnUpCrData }>({
+    createColumn: build.mutation<ColumnData, CreateColumn>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns`,
@@ -26,7 +34,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    getColumn: build.mutation<ColumnData, { boardId: string; columnId: string }>({
+    getColumn: build.mutation<ColumnData, GetColumn>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}`,
@@ -36,10 +44,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateColumn: build.mutation<
-      ColumnData,
-      { boardId: string; columnId: string; columnInfo: ColumnUpCrData }
-    >({
+    updateColumn: build.mutation<ColumnData, UpdateColumn>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}`,
@@ -51,7 +56,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    deleteColumn: build.mutation<ColumnData, { boardId: string; columnId: string }>({
+    deleteColumn: build.mutation<ColumnData, DeleteColumn>({
       query(data) {
         return {
           url: `boards/${data.boardId}/columns/${data.columnId}`,
@@ -82,7 +87,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateSetOfColumns: build.mutation<ColumnData[], ColumnsSetData[]>({
+    updateSetOfColumns: build.mutation<ColumnData[], UpdateColumnsSet[]>({
       query(columns) {
         return {
           url: `columnsSet`,
@@ -94,7 +99,7 @@ export const columnApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    createSetOfColumns: build.mutation<ColumnData[], ColumnData[]>({
+    createSetOfColumns: build.mutation<ColumnData[], CreateColumnsSet[]>({
       query(columns) {
         return {
           url: `columnsSet`,

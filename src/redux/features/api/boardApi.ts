@@ -1,4 +1,4 @@
-import { BoardData } from '../../../models';
+import { BoardData, NewBoardData, UpdateBoard } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 
@@ -14,7 +14,7 @@ export const boardApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    createBoard: build.mutation<BoardData, BoardData>({
+    createBoard: build.mutation<BoardData, NewBoardData>({
       query(data) {
         return {
           url: 'boards',
@@ -36,7 +36,7 @@ export const boardApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateBoard: build.mutation<BoardData, { boardId: string; boardInfo: BoardData }>({
+    updateBoard: build.mutation<BoardData, UpdateBoard>({
       query(data) {
         return {
           url: `boards/${data.boardId}`,
