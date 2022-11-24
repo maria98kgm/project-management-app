@@ -1,7 +1,7 @@
 import { BoardData, NewBoardData, UpdateBoard } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
-import { setBoards } from '../boardSlice';
+import { setBoards, addBoard, deleteBoard } from '../boardSlice';
 
 export const boardApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -27,6 +27,14 @@ export const boardApi = apiSlice.injectEndpoints({
         };
       },
       transformResponse: (response: BoardData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(addBoard(data));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     getBoard: build.mutation<BoardData, string>({
       query(boardId) {
@@ -59,6 +67,14 @@ export const boardApi = apiSlice.injectEndpoints({
             Authorization: getCookieToken(),
           },
         };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(deleteBoard(data._id));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getBoardsByIdsList: build.mutation<BoardData[], string[]>({
@@ -93,4 +109,12 @@ export const boardApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {} = boardApi;
+export const {
+  useGetAllBoardsMutation,
+  useCreateBoardMutation,
+  useGetBoardMutation,
+  useUpdateBoardMutation,
+  useDeleteBoardMutation,
+  useGetBoardsByIdsListMutation,
+  useGetUserBoardsMutation,
+} = boardApi;

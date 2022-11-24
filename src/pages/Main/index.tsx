@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, CircularProgress, Box } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardItem } from '../../components/BoardItemComponent';
-import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
+import { selectBoards } from '../../redux/features/boardSlice';
 import { RootState } from '../../redux/store';
-import { BasicModal } from '../../components/Modal/Modal';
 import { Toast } from '../../components/Toast';
-import { BoardData, UserData } from '../../models';
+import { UserData } from '../../models';
 import './style.scss';
 
 export const Main = () => {
@@ -20,8 +19,7 @@ export const Main = () => {
   const [getUsers] = useGetAllUsersMutation();
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
   const user = useAppSelector((state: RootState) => state.user);
-  const [boards, setBoards] = useState<BoardData[]>([]);
-  const [modalState, setModalState] = useState(false);
+  const boards = useAppSelector(selectBoards);
   const [toastState, setToastState] = useState({
     isOpen: false,
     severity: 'info' as AlertColor,
@@ -30,8 +28,7 @@ export const Main = () => {
 
   const fetchBoards = useCallback(async () => {
     if (user.userInfo && user.userInfo._id) {
-      const userBords = await getBoards(user.userInfo._id).unwrap();
-      setBoards(userBords);
+      await getBoards(user.userInfo._id).unwrap();
     }
   }, [getBoards, user]);
 
@@ -55,9 +52,6 @@ export const Main = () => {
     <section className="main">
       <div className="main-header">
         <h1>{t('HEADERS.BOARDS')}</h1>
-        <Button variant="outlined" startIcon={'+'} onClick={() => setModalState(true)}>
-          {t('BUTTONS.ADD_BOARD')}
-        </Button>
       </div>
       <div className="allBoards">
         {!mount ? (
@@ -77,9 +71,6 @@ export const Main = () => {
                 boardId={board._id ? board._id : ''}
                 onDelete={async () => {
                   showToast(t('INFO.APPLIED'), 'success');
-                  setMount(true);
-                  await fetchBoards();
-                  setMount(false);
                 }}
                 onCancel={() => showToast(t('INFO.CANCELLED'), 'warning')}
               />
@@ -89,21 +80,6 @@ export const Main = () => {
           <p>{t('INFO.NO_BOARDS')}</p>
         )}
       </div>
-      <BasicModal isOpen={modalState}>
-        <CreateBoardForm
-          onCreateBoard={async () => {
-            setMount(false);
-            setModalState(false);
-            showToast(t('INFO.APPLIED'), 'success');
-            await fetchBoards();
-            setMount(true);
-          }}
-          handleClose={() => {
-            setModalState(false);
-            showToast(t('INFO.CANCELLED'), 'warning');
-          }}
-        />
-      </BasicModal>
       <Toast
         isOpen={toastState.isOpen}
         severity={toastState.severity}
