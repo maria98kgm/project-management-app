@@ -39,7 +39,7 @@ export const Header = () => {
                     {t('BUTTONS.SIGNUP')}
                   </Button>
                 </div>
-              ) : isToken && location.pathname === '/' ? (
+              ) : isToken && location.pathname === '/welcome' ? (
                 <React.Fragment>
                   <Button
                     className="main-btn"
