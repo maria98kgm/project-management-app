@@ -13,7 +13,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useCreateBoardMutation } from '../../redux/features/api/boardApi';
-import { Board } from '../../models';
+import { BoardData, NewBoardData } from '../../models';
 import './style.scss';
 
 type CreateBoardFormProps = {
@@ -39,7 +39,7 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
     formState: { errors },
     handleSubmit,
     getFieldState,
-  } = useForm<Partial<Board>>({ mode: 'onChange' });
+  } = useForm<Partial<BoardData>>({ mode: 'onChange' });
 
   const fetchUsers = useCallback(async () => {
     const users = await getUsers(null).unwrap();
@@ -62,15 +62,15 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
     }
   }, [fetchUsers, mount]);
 
-  const onSubmit = async (data: Partial<Board>): Promise<void> => {
+  const onSubmit = async (data: Partial<BoardData>): Promise<void> => {
     const userIds: string[] = names
       .filter((user) => data.users!.includes(user.name))
       .map((user) => user.id);
 
-    const newBoard: Board = {
+    const newBoard: NewBoardData = {
       title: data.title ? data.title : '',
       users: userIds ? userIds : [],
-      owner: user.user && user.user._id ? user.user._id : '',
+      owner: user.userInfo && user.userInfo._id ? user.userInfo._id : '',
     };
 
     await createBoard(newBoard);

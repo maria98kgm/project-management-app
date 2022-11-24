@@ -4,6 +4,7 @@ import { userApi } from './features/api/userApi';
 import { boardApi } from './features/api/boardApi';
 import userReducer from './features/userSlice';
 import boardReducer from './features/boardSlice';
+import { apiSlice } from './features/apiSlice';
 
 export const store = configureStore({
   reducer: {

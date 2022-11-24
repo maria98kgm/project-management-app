@@ -1,3 +1,5 @@
+import { TaskData } from './Task.interface';
+
 export interface NewColumnData {
   title: string;
   order: number;
@@ -6,6 +8,7 @@ export interface NewColumnData {
 export interface ColumnData extends NewColumnData {
   _id: string;
   boardId: string;
+  tasks?: Partial<TaskData>[];
 }
 
 export interface GetColumn {

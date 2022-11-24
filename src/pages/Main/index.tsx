@@ -4,23 +4,23 @@ import { Button, CircularProgress, Box } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardItem } from '../../components/BoardItemComponent';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
-import { useGetAllUserBoardsMutation } from '../../redux/features/api/boardApi';
+import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { BasicModal } from '../../components/Modal/Modal';
 import { Toast } from '../../components/Toast';
-import { Board, UserData } from '../../models';
+import { BoardData, UserData } from '../../models';
 import './style.scss';
 
 export const Main = () => {
   const { t } = useTranslation();
   const [mount, setMount] = useState(false);
-  const [getBoards] = useGetAllUserBoardsMutation();
+  const [getBoards] = useGetUserBoardsMutation();
   const [getUsers] = useGetAllUsersMutation();
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
   const user = useAppSelector((state: RootState) => state.user);
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState<BoardData[]>([]);
   const [modalState, setModalState] = useState(false);
   const [toastState, setToastState] = useState({
     isOpen: false,
@@ -29,8 +29,8 @@ export const Main = () => {
   });
 
   const fetchBoards = useCallback(async () => {
-    if (user.user && user.user._id) {
-      const userBords = await getBoards(user.user._id).unwrap();
+    if (user.userInfo && user.userInfo._id) {
+      const userBords = await getBoards(user.userInfo._id).unwrap();
       setBoards(userBords);
     }
   }, [getBoards, user]);
