@@ -47,6 +47,10 @@ export const Main = () => {
     }
   }, [fetchBoards, fetchUsers, mount]);
 
+  const showToast = (message: string, severity: AlertColor) => {
+    setToastState({ isOpen: true, message, severity });
+  };
+
   return (
     <section className="main">
       <div className="main-header">
@@ -71,6 +75,13 @@ export const Main = () => {
                 title={board.title}
                 users={foundBoardUsers}
                 boardId={board._id ? board._id : ''}
+                onDelete={async () => {
+                  showToast(t('INFO.APPLIED'), 'success');
+                  setMount(true);
+                  await fetchBoards();
+                  setMount(false);
+                }}
+                onCancel={() => showToast(t('INFO.CANCELLED'), 'warning')}
               />
             );
           })
@@ -80,14 +91,16 @@ export const Main = () => {
       </div>
       <BasicModal isOpen={modalState}>
         <CreateBoardForm
-          onCreateBoard={() => {
-            fetchBoards();
+          onCreateBoard={async () => {
+            setMount(false);
             setModalState(false);
-            setToastState({ isOpen: true, message: t('INFO.APPLIED'), severity: 'success' });
+            showToast(t('INFO.APPLIED'), 'success');
+            await fetchBoards();
+            setMount(true);
           }}
           handleClose={() => {
             setModalState(false);
-            setToastState({ isOpen: true, message: t('INFO.CANCELLED'), severity: 'warning' });
+            showToast(t('INFO.CANCELLED'), 'warning');
           }}
         />
       </BasicModal>
