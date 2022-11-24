@@ -13,6 +13,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useCreateBoardMutation } from '../../redux/features/api/boardApi';
+import { showToast } from '../../redux/features/toastSlice';
+import { useTypedDispatch } from '../../redux/store';
 import { BoardData, NewBoardData } from '../../models';
 import './style.scss';
 
@@ -30,6 +32,7 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
   const [names, setNames] = useState<UserName[]>([]);
   const [mount, setMount] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useTypedDispatch();
   const [getUsers] = useGetAllUsersMutation();
   const [createBoard] = useCreateBoardMutation();
   const user = useAppSelector((state: RootState) => state.user);
@@ -128,7 +131,15 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
         <Button variant="contained" type="submit">
           {t('BUTTONS.CREATE')}
         </Button>
-        <Button variant="contained" onClick={() => handleClose()}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            dispatch(
+              showToast({ isOpen: true, severity: 'warning', message: `${t('INFO.CANCELLED')}` })
+            );
+            handleClose();
+          }}
+        >
           {t('BUTTONS.CANCEL')}
         </Button>
       </div>

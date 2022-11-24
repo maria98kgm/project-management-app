@@ -5,3 +5,4 @@ export * from './api/User.interface';
 export * from './api/Board.interface';
 export * from './api/Column.interface';
 export * from './api/Task.interface';
+export * from './api/Toast.interface';

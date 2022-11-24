@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, Box } from '@mui/material';
-import { AlertColor } from '@mui/material/Alert';
 import { BoardItem } from '../../components/BoardItemComponent';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
 import { selectBoards } from '../../redux/features/boardSlice';
-import { RootState } from '../../redux/store';
-import { Toast } from '../../components/Toast';
+import { selectUserInfo } from '../../redux/features/userSlice';
+
 import { UserData } from '../../models';
 import './style.scss';
 
@@ -18,19 +17,14 @@ export const Main = () => {
   const [getBoards] = useGetUserBoardsMutation();
   const [getUsers] = useGetAllUsersMutation();
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
-  const user = useAppSelector((state: RootState) => state.user);
+  const userInfo = useAppSelector(selectUserInfo);
   const boards = useAppSelector(selectBoards);
-  const [toastState, setToastState] = useState({
-    isOpen: false,
-    severity: 'info' as AlertColor,
-    message: '',
-  });
 
   const fetchBoards = useCallback(async () => {
-    if (user.userInfo && user.userInfo._id) {
-      await getBoards(user.userInfo._id).unwrap();
+    if (userInfo && userInfo._id) {
+      await getBoards(userInfo._id).unwrap();
     }
-  }, [getBoards, user]);
+  }, [getBoards, userInfo]);
 
   const fetchUsers = useCallback(async () => {
     const usersResp: UserData[] = await getUsers(null).unwrap();
@@ -43,10 +37,6 @@ export const Main = () => {
       fetchUsers();
     }
   }, [fetchBoards, fetchUsers, mount]);
-
-  const showToast = (message: string, severity: AlertColor) => {
-    setToastState({ isOpen: true, message, severity });
-  };
 
   return (
     <section className="main">
@@ -69,10 +59,6 @@ export const Main = () => {
                 title={board.title}
                 users={foundBoardUsers}
                 boardId={board._id ? board._id : ''}
-                onDelete={async () => {
-                  showToast(t('INFO.APPLIED'), 'success');
-                }}
-                onCancel={() => showToast(t('INFO.CANCELLED'), 'warning')}
               />
             );
           })
@@ -80,12 +66,6 @@ export const Main = () => {
           <p>{t('INFO.NO_BOARDS')}</p>
         )}
       </div>
-      <Toast
-        isOpen={toastState.isOpen}
-        severity={toastState.severity}
-        message={toastState.message}
-        handleClose={() => setToastState({ ...toastState, isOpen: false })}
-      />
     </section>
   );
 };

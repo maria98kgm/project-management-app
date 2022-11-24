@@ -1,6 +1,8 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
+import { showToast } from '../../redux/features/toastSlice';
+import { useTypedDispatch } from '../../redux/store';
 
 const HIDE_DURATION = 4000;
 const BOTTOM = 'bottom';
@@ -14,10 +16,15 @@ type ToastProps = {
   isOpen: boolean;
   severity: AlertColor;
   message: string;
-  handleClose: () => void;
 };
 
-export const Toast: React.FC<ToastProps> = ({ isOpen, severity, message, handleClose }) => {
+export const Toast: React.FC<ToastProps> = ({ isOpen, severity, message }) => {
+  const dispatch = useTypedDispatch();
+
+  const handleClose = () => {
+    dispatch(showToast({ isOpen: false, severity, message }));
+  };
+
   return (
     <React.Fragment>
       <Snackbar

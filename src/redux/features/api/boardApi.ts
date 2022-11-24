@@ -2,6 +2,7 @@ import { BoardData, NewBoardData, UpdateBoard } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 import { setBoards, addBoard, deleteBoard } from '../boardSlice';
+import { showToast } from '../toastSlice';
 
 export const boardApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -31,6 +32,13 @@ export const boardApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(addBoard(data));
+          dispatch(
+            showToast({
+              isOpen: true,
+              severity: 'success',
+              message: 'Changes applied',
+            })
+          );
         } catch (err) {
           console.error(err);
         }
@@ -72,6 +80,13 @@ export const boardApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(deleteBoard(data._id));
+          dispatch(
+            showToast({
+              isOpen: true,
+              severity: 'success',
+              message: 'Changes applied',
+            })
+          );
         } catch (err) {
           console.error(err);
         }

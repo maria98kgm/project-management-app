@@ -1,26 +1,18 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteBoardMutation } from '../../redux/features/api/boardApi';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './style.scss';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
+import { useDeleteBoardMutation } from '../../redux/features/api/boardApi';
+import './style.scss';
 
 type BoardItemProp = {
   boardId: string;
   title: string;
   users: string[];
-  onDelete: () => void;
-  onCancel: () => void;
 };
 
-export const BoardItem: React.FC<BoardItemProp> = ({
-  boardId,
-  title,
-  users,
-  onDelete,
-  onCancel,
-}) => {
+export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [deleteBoardById] = useDeleteBoardMutation();
@@ -34,7 +26,6 @@ export const BoardItem: React.FC<BoardItemProp> = ({
   const deleteBoard = async (id: string) => {
     setModalState(false);
     await deleteBoardById(id);
-    onDelete();
   };
 
   return (
@@ -55,10 +46,7 @@ export const BoardItem: React.FC<BoardItemProp> = ({
       <ConfirmationModal
         modalState={modalState}
         applyYes={() => deleteBoard(boardId)}
-        applyNo={() => {
-          setModalState(false);
-          onCancel();
-        }}
+        applyNo={() => setModalState(false)}
       />
     </div>
   );
