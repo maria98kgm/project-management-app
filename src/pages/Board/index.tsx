@@ -43,7 +43,7 @@ export const Board = () => {
       <div className="boards-header">
         <ArrowBackIosIcon color="primary" onClick={() => navigate(-1)} />
         <h1>Board</h1>
-        <Button variant="contained" color="primary" startIcon={'+'}>
+        <Button variant="outlined" color="primary" startIcon={'+'}>
           {t('BUTTONS.ADD_COLUMN')}
         </Button>
       </div>
