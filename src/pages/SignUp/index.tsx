@@ -2,9 +2,8 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { AuthData, Paths } from '../../models';
-import { setCookie } from '../../share/setCookie';
-import { URL_BASE } from '../../constants';
+import { Paths, SignInData, SignUpData } from '../../models';
+import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
 
 interface FormInputs {
   userName: string;
@@ -23,6 +22,9 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
+  const [registerUser] = useSignUpMutation();
+  const [loginUser] = useSignInMutation();
+
   const navigate = useNavigate();
 
   const validatePassword = (password: string): string | boolean => {
@@ -39,47 +41,21 @@ export const SignUp = () => {
     return password === getValues('password') || 'Password is not the same!';
   };
 
-  const onSubmit = (data: FormInputs): void => {
-    signUp(data)
-      .then((res: { login: string }) => logIn(res.login, data.password))
-      .then((res: { token: string }) => {
-        setCookie(res.token);
-        navigate(Paths.MAIN);
-      })
-      .catch((err: Error) => console.error(err.message || err));
-  };
-
-  const signUp = async (data: FormInputs): Promise<{ login: string }> => {
-    const postData: AuthData = {
+  const onSubmit = async (data: FormInputs): Promise<void> => {
+    const regData: SignUpData = {
       name: data.userName,
       login: data.login,
       password: data.password,
     };
-    const res = await fetch(`${URL_BASE}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
-
-    return res.json();
-  };
-
-  const logIn = async (login: string, password: string): Promise<{ token: string }> => {
-    const postData: AuthData = {
-      login: login,
-      password: password,
+    const loginData: SignInData = {
+      login: data.login,
+      password: data.password,
     };
-    const res = await fetch(`${URL_BASE}/auth/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
 
-    return res.json();
+    await registerUser(regData);
+    await loginUser(loginData);
+
+    navigate(Paths.MAIN);
   };
 
   return (
