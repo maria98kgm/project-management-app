@@ -1,4 +1,4 @@
-import { AuthData, UserData } from '../../../models';
+import { UpdateUser, UserData } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 
@@ -25,7 +25,7 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    updateUser: build.mutation<UserData, { userId: string; userInfo: AuthData }>({
+    updateUser: build.mutation<UserData, UpdateUser>({
       query(data) {
         return {
           url: `users/${data.userId}`,

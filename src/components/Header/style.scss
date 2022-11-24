@@ -1,6 +1,7 @@
 @import 'src/styles/style-import';
 
 .header {
+  @include flex-center-between;
   position: fixed;
   top: 0;
   width: 100%;
@@ -11,6 +12,11 @@
     padding: 14px 112px;
   }
 
+  img {
+    width: 150px;
+    height: 30px;
+  }
+
   @include flex-between;
   padding: 20px 112px;
   background: linear-gradient(
@@ -19,6 +25,18 @@
     $primary-color 46.22%,
     $purple-color-footer 100.74%
   );
+
+  &.sticky {
+    padding: 14px 112px;
+  }
+
+  img {
+    height: fit-content;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   @media (max-width: $breakpoint735) {
     flex-direction: column;
@@ -58,5 +76,9 @@
         }
       }
     }
+  }
+
+  button {
+    margin-right: 10px;
   }
 }

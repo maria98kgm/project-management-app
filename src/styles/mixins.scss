@@ -18,6 +18,11 @@
   @include flex;
   align-items: center;
 }
+@mixin flex-start-center {
+  @include flex;
+  justify-content: flex-start;
+  align-items: center;
+}
 
 @mixin flex-center-center {
   @include flex;
@@ -30,6 +35,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+@mixin flex-column-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 @mixin feature-card {
