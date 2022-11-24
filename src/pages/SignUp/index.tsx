@@ -2,9 +2,8 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { AuthData, Paths } from '../../models';
+import { Paths, SignInData, SignUpData } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
-import { setCookieToken } from '../../share/cookieToken';
 
 interface FormInputs {
   userName: string;
@@ -43,17 +42,19 @@ export const SignUp = () => {
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
-    const postData: AuthData = {
+    const regData: SignUpData = {
       name: data.userName,
       login: data.login,
       password: data.password,
     };
+    const loginData: SignInData = {
+      login: data.login,
+      password: data.password,
+    };
 
-    await registerUser(postData);
+    await registerUser(regData);
+    await loginUser(loginData);
 
-    const token = await loginUser({ login: data.login, password: data.password }).unwrap();
-
-    setCookieToken(token);
     navigate(Paths.MAIN);
   };
 
