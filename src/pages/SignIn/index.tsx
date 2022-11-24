@@ -2,8 +2,9 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { Paths } from '../../models';
-import { useSignInMutation } from '../../redux/features/api/authApi';
+import { AuthData, Paths } from '../../models';
+import { setCookie } from '../../share/setCookie';
+import { URL_BASE } from '../../constants';
 
 interface FormInputs {
   login: string;
@@ -20,16 +21,33 @@ export const SignIn = () => {
 
   const navigate = useNavigate();
 
-  const [loginUser] = useSignInMutation();
-
   const validatePassword = (password: string): string | boolean => {
     return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
   };
 
-  const onSubmit = async (data: FormInputs): Promise<void> => {
-    await loginUser({ login: data.login, password: data.password });
+  const onSubmit = (data: FormInputs): void => {
+    logIn(data.login, data.password)
+      .then((res: { token: string }) => {
+        setCookie(res.token);
+        navigate(Paths.MAIN);
+      })
+      .catch((err: Error) => console.error(err.message || err));
+  };
 
-    navigate(Paths.MAIN);
+  const logIn = async (login: string, password: string): Promise<{ token: string }> => {
+    const postData: AuthData = {
+      login: login,
+      password: password,
+    };
+    const res = await fetch(`${URL_BASE}/auth/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    });
+
+    return res.json();
   };
 
   return (
