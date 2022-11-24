@@ -1,6 +1,7 @@
 import { BoardData, NewBoardData, UpdateBoard } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
+import { setBoards } from '../boardSlice';
 
 export const boardApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -25,7 +26,7 @@ export const boardApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response: Board) => response,
+      transformResponse: (response: BoardData) => response,
     }),
     getBoard: build.mutation<BoardData, string>({
       query(boardId) {
@@ -70,7 +71,7 @@ export const boardApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    getUserBoards: build.mutation<BoardData, string>({
+    getUserBoards: build.mutation<BoardData[], string>({
       query(userId) {
         return {
           url: `boardsSet/${userId}`,
@@ -79,7 +80,15 @@ export const boardApi = apiSlice.injectEndpoints({
           },
         };
       },
-      transformResponse: (response: Board[]) => response,
+      transformResponse: (response: BoardData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setBoards(data));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
   }),
 });

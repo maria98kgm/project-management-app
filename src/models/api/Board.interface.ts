@@ -1,3 +1,5 @@
+import { ColumnData } from './Column.interface';
+
 export interface NewBoardData {
   title: string;
   owner: string;
@@ -6,6 +8,7 @@ export interface NewBoardData {
 
 export interface BoardData extends NewBoardData {
   _id: string;
+  columns?: ColumnData[];
 }
 
 export interface UpdateBoard {

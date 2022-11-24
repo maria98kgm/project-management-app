@@ -6,11 +6,11 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { AlertColor } from '@mui/material/Alert';
 import { BoardTask } from '../BoardTask';
-import { Column } from '../../models/api/Board.interface';
+import { ColumnData } from '../../models';
 import { Toast } from '../Toast';
 import './style.scss';
 
-export const BoardColumn: React.FC<{ column: Partial<Column> }> = ({ column }) => {
+export const BoardColumn: React.FC<{ column: Partial<ColumnData> }> = ({ column }) => {
   const { t } = useTranslation();
   const [isEdit, setIsEdit] = useState(false);
   const [toastState, setToastState] = useState({
