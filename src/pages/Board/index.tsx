@@ -13,8 +13,9 @@ import {
   useGetBoardColumnsMutation,
   useDeleteColumnMutation,
   useUpdateSetOfColumnsMutation,
+  useUpdateColumnMutation,
 } from '../../redux/features/api/columnApi';
-import { ColumnData, UpdateColumnsSet } from '../../models';
+import { ColumnData, UpdateColumnsSet, NewColumnData } from '../../models';
 import './style.scss';
 
 export const Board = () => {
@@ -26,6 +27,7 @@ export const Board = () => {
   const [getColumns] = useGetBoardColumnsMutation();
   const [deleteColumnById] = useDeleteColumnMutation();
   const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
+  const [updateColumn] = useUpdateColumnMutation();
   const [mount, setMount] = useState(false);
   const [modalState, setModalState] = useState(false);
 
@@ -59,6 +61,16 @@ export const Board = () => {
     }
   };
 
+  const updateColumnTitle = async (columnId: string, columnInfo: NewColumnData) => {
+    if (id) {
+      await updateColumn({
+        boardId: id,
+        columnId,
+        columnInfo,
+      });
+    }
+  };
+
   return (
     <div className="board-columns container">
       <div className="boards-header">
@@ -82,7 +94,11 @@ export const Board = () => {
           boards[currentBoard].columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>
-                <BoardColumn column={column} onDelete={(columnId) => deleteColumn(columnId)} />
+                <BoardColumn
+                  column={column}
+                  onDelete={(columnId) => deleteColumn(columnId)}
+                  onUpdateTitle={(columnId, columnInfo) => updateColumnTitle(columnId, columnInfo)}
+                />
               </div>
             );
           })

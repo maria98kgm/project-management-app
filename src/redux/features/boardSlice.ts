@@ -42,7 +42,18 @@ export const boardSlice = createSlice({
       const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
       if (state.boards[currentBoard].columns) {
         state.boards[currentBoard].columns = state.boards[currentBoard].columns!.filter(
-          (column) => column._id !== action.payload.columnId
+          (column: ColumnData) => column._id !== action.payload.columnId
+        );
+      }
+    },
+    updateColumnInfo: (state, action: PayloadAction<ColumnData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.map(
+          (column: ColumnData) => {
+            if (column._id === action.payload._id) column.title = action.payload.title;
+            return column;
+          }
         );
       }
     },
@@ -53,5 +64,12 @@ export default boardSlice.reducer;
 
 export const selectBoards = (store: RootState) => store.boards.boards;
 
-export const { setBoards, addBoard, deleteBoard, setColumns, addColumn, deleteColumn } =
-  boardSlice.actions;
+export const {
+  setBoards,
+  addBoard,
+  deleteBoard,
+  setColumns,
+  addColumn,
+  deleteColumn,
+  updateColumnInfo,
+} = boardSlice.actions;
