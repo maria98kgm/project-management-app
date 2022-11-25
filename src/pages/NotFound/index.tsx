@@ -1,4 +1,6 @@
 import React from 'react';
+import { Paths } from '../../models';
+import { Button } from '@mui/material';
 import './style.scss';
 
 export const NotFound = () => {
@@ -26,9 +28,11 @@ export const NotFound = () => {
           <div className="number">4</div>
         </div>
         <div className="text">Oops. The page you`re looking for doesn`t exist.</div>
-        <a className="button" href="#">
-          Back Home
-        </a>
+        <div className="button">
+          <Button className="button-home" variant="contained" href={Paths.WELCOME}>
+            Back Home
+          </Button>
+        </div>
       </div>
     </React.Fragment>
   );
