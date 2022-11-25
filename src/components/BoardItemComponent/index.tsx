@@ -1,26 +1,53 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
+import { useDeleteBoardMutation } from '../../redux/features/api/boardApi';
 import './style.scss';
-import { ReactComponent as EditPencil } from '../../assets/main/editPencil.svg';
-import { ReactComponent as TrashCan } from '../../assets/main/trashCan.svg';
-import { ReactComponent as Loupe } from '../../assets/main/loupe.svg';
 
-export const BoardItem = () => {
+type BoardItemProp = {
+  boardId: string;
+  title: string;
+  users: string[];
+};
+
+export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [deleteBoardById] = useDeleteBoardMutation();
+  const [modalState, setModalState] = useState(false);
+
+  const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    event.stopPropagation();
+    setModalState(true);
+  };
+
+  const deleteBoard = async (id: string) => {
+    setModalState(false);
+    await deleteBoardById(id);
+  };
+
   return (
-    <div className="boardItem">
+    <div className="boardItem" onClick={() => navigate(`/board/${boardId}`)}>
       <div className="boardItem-top">
-        <h2 className="boardItem-title">Title</h2>
+        <h2 className="boardItem-title">{title}</h2>
         <div className="boardItem-tools">
-          <EditPencil className="boardItem-icon" />
-          <TrashCan className="boardItem-icon" />
+          <DeleteIcon color="info" onClick={(event) => showDeleteModal(event)} />
         </div>
       </div>
       <div className="boardItem-bottom">
-        <p className="boardItem-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        </p>
+        <div className="boardItem-description">
+          <h3>{t('HEADERS.USERS')}:</h3>
+          <p>{users.join(', ')}</p>
+        </div>
         <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
       </div>
-      <Loupe className="boardItem-loupe" />
+      <ConfirmationModal
+        modalState={modalState}
+        applyYes={() => deleteBoard(boardId)}
+        applyNo={() => setModalState(false)}
+      />
     </div>
   );
 };

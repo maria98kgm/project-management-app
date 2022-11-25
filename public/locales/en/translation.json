@@ -63,12 +63,23 @@
     "MAIN": "Main page",
     "NEWBOARD": "New board",
     "EDITPROFILE": "Edit profile",
-    "SIGNOUT": "Sign out"
+    "SIGNOUT": "Sign out",
+    "CREATE": "Create",
+    "CANCEL": "Cancel",
+    "YES": "Yes",
+    "NO": "No"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
     "NO_TASKS": "There are no tasks in the column",
+    "NO_BOARDS": "Create your first board",
     "CANCELLED": "Changes canceled",
-    "APPLIED": "Changes applied"
+    "APPLIED": "Changes applied",
+    "CONFIRMATION": "Are you sure you want to do this?"
+  },
+  "HEADERS": {
+    "BOARDS": "Boards",
+    "TITLE": "Title",
+    "USERS": "Users"
   }
 }
