@@ -9,8 +9,12 @@ import { BasicModal } from '../../components/Modal/Modal';
 import { CreateColumnForm } from '../../components/CreateColumnForm';
 import { useAppSelector } from '../../redux/hooks';
 import { selectBoards } from '../../redux/features/boardSlice';
-import { useGetBoardColumnsMutation } from '../../redux/features/api/columnApi';
-import { ColumnData } from '../../models';
+import {
+  useGetBoardColumnsMutation,
+  useDeleteColumnMutation,
+  useUpdateSetOfColumnsMutation,
+} from '../../redux/features/api/columnApi';
+import { ColumnData, UpdateColumnsSet } from '../../models';
 import './style.scss';
 
 export const Board = () => {
@@ -20,6 +24,8 @@ export const Board = () => {
   const boards = useAppSelector(selectBoards);
   const currentBoard = boards.findIndex((board) => board._id === id);
   const [getColumns] = useGetBoardColumnsMutation();
+  const [deleteColumnById] = useDeleteColumnMutation();
+  const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
   const [mount, setMount] = useState(false);
   const [modalState, setModalState] = useState(false);
 
@@ -34,6 +40,24 @@ export const Board = () => {
       fetchColumns().then(() => setMount(true));
     }
   }, [fetchColumns, mount]);
+
+  const deleteColumn = async (columnId: string) => {
+    if (id) {
+      await deleteColumnById({ boardId: id, columnId });
+
+      const newColumns = boards[currentBoard].columns!.filter(
+        (column: ColumnData) => column._id !== columnId
+      );
+      const updatedColumns = newColumns.map(
+        (column: ColumnData, idx: number): UpdateColumnsSet => ({
+          _id: column._id,
+          order: idx,
+        })
+      );
+
+      await updateColumnsOrder(updatedColumns);
+    }
+  };
 
   return (
     <div className="board-columns container">
@@ -58,7 +82,7 @@ export const Board = () => {
           boards[currentBoard].columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>
-                <BoardColumn column={column} boardId={id!} />
+                <BoardColumn column={column} onDelete={(columnId) => deleteColumn(columnId)} />
               </div>
             );
           })

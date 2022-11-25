@@ -6,27 +6,27 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { BoardTask } from '../BoardTask';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
-import { useDeleteColumnMutation } from '../../redux/features/api/columnApi';
 import { ColumnData } from '../../models';
 import './style.scss';
 
-export const BoardColumn: React.FC<{ column: Partial<ColumnData>; boardId: string }> = ({
-  boardId,
-  column,
-}) => {
+type BoardColumnProps = {
+  column: Partial<ColumnData>;
+  onDelete: (columnId: string) => void;
+};
+
+export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete }) => {
   const { t } = useTranslation();
   const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
-  const [deleteColumnById] = useDeleteColumnMutation();
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.stopPropagation();
     setModalState(true);
   };
 
-  const deleteColumn = async () => {
+  const deleteColumn = () => {
     setModalState(false);
-    await deleteColumnById({ boardId, columnId: column._id! });
+    if (column._id) onDelete(column._id);
   };
 
   return (

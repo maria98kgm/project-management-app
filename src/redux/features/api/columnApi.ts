@@ -88,7 +88,6 @@ export const columnApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('data', data);
           dispatch(deleteColumn({ boardId: data.boardId, columnId: data._id }));
         } catch (err) {
           console.error(err);
@@ -125,6 +124,15 @@ export const columnApi = apiSlice.injectEndpoints({
           },
           body: columns,
         };
+      },
+      transformResponse: (response: ColumnData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     createSetOfColumns: build.mutation<ColumnData[], CreateColumnsSet[]>({
