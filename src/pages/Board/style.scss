@@ -10,6 +10,11 @@
   .boards-header {
     @include flex-start-center;
 
+    h1 {
+      font-weight: 600;
+      color: $primary-text-color;
+    }
+
     svg:hover {
       cursor: pointer;
     }

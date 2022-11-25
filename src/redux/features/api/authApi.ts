@@ -20,6 +20,7 @@ export const authApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
+      transformResponse: (result: { data: UserData }) => result.data,
     }),
     signIn: build.mutation<string, SignInData>({
       query(data) {

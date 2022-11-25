@@ -1,6 +1,8 @@
 import { BoardData, NewBoardData, UpdateBoard } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
+import { setBoards, addBoard, deleteBoard } from '../boardSlice';
+import { showToast } from '../toastSlice';
 
 export const boardApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -24,6 +26,22 @@ export const boardApi = apiSlice.injectEndpoints({
           },
           body: data,
         };
+      },
+      transformResponse: (response: BoardData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(addBoard(data));
+          dispatch(
+            showToast({
+              isOpen: true,
+              severity: 'success',
+              message: 'Changes applied',
+            })
+          );
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getBoard: build.mutation<BoardData, string>({
@@ -58,6 +76,21 @@ export const boardApi = apiSlice.injectEndpoints({
           },
         };
       },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(deleteBoard(data._id));
+          dispatch(
+            showToast({
+              isOpen: true,
+              severity: 'success',
+              message: 'Changes applied',
+            })
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     getBoardsByIdsList: build.mutation<BoardData[], string[]>({
       query(idsList) {
@@ -69,7 +102,7 @@ export const boardApi = apiSlice.injectEndpoints({
         };
       },
     }),
-    getUserBoards: build.mutation<BoardData, string>({
+    getUserBoards: build.mutation<BoardData[], string>({
       query(userId) {
         return {
           url: `boardsSet/${userId}`,
@@ -77,6 +110,15 @@ export const boardApi = apiSlice.injectEndpoints({
             Authorization: getCookieToken(),
           },
         };
+      },
+      transformResponse: (response: BoardData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setBoards(data));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
   }),

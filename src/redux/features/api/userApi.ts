@@ -13,7 +13,7 @@ export const userApi = apiSlice.injectEndpoints({
           },
         };
       },
-      transformResponse: (result: UserData[]) => result,
+      transformResponse: (response: UserData[]) => response,
     }),
     getUser: build.mutation<UserData, string>({
       query(userId) {
