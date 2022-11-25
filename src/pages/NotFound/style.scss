@@ -1,9 +1,5 @@
 @import 'src/styles/style-import';
 
-a {
-  text-decoration: none;
-}
-
 .center {
   height: 100%;
   display: flex;
@@ -174,13 +170,6 @@ a {
 
 .button {
   margin-top: 4rem;
-  padding: 1.2rem 3rem;
-  color: $white-color;
-  background-color: $primary-color;
-  
-  &:hover {
-    background-color: $primary-text-color;
-  }
 }
 
 .by {
