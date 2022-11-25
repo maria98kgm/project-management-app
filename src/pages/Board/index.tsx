@@ -58,7 +58,7 @@ export const Board = () => {
           boards[currentBoard].columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>
-                <BoardColumn column={column} />
+                <BoardColumn column={column} boardId={id!} />
               </div>
             );
           })
@@ -73,7 +73,7 @@ export const Board = () => {
               ? boards[currentBoard].columns!.length
               : 0
           }
-          boardId={id ? id : ''}
+          boardId={id!}
           onCreateColumn={async () => {
             setModalState(false);
           }}

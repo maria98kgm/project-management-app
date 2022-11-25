@@ -9,7 +9,7 @@ import {
 } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
-import { setColumns, addColumn } from '../boardSlice';
+import { setColumns, addColumn, deleteColumn } from '../boardSlice';
 
 export const columnApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -84,6 +84,15 @@ export const columnApi = apiSlice.injectEndpoints({
             Authorization: getCookieToken(),
           },
         };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('data', data);
+          dispatch(deleteColumn({ boardId: data.boardId, columnId: data._id }));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getColumnsByIdsList: build.mutation<ColumnData[], string[]>({

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BoardData, ColumnData } from '../../models';
+import { BoardData, ColumnData, DeleteColumn } from '../../models';
 import { RootState } from '../store';
 
 interface IBoardState {
@@ -38,6 +38,14 @@ export const boardSlice = createSlice({
         ];
       }
     },
+    deleteColumn: (state, action: PayloadAction<DeleteColumn>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.filter(
+          (column) => column._id !== action.payload.columnId
+        );
+      }
+    },
   },
 });
 
@@ -45,4 +53,5 @@ export default boardSlice.reducer;
 
 export const selectBoards = (store: RootState) => store.boards.boards;
 
-export const { setBoards, addBoard, deleteBoard, setColumns, addColumn } = boardSlice.actions;
+export const { setBoards, addBoard, deleteBoard, setColumns, addColumn, deleteColumn } =
+  boardSlice.actions;
