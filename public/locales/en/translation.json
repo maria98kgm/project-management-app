@@ -33,7 +33,7 @@
     "TEAMS": {
       "TITLE": "Our perspective team",
       "DESCRIPTION": "A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox",
-      "BUTTON":"Contact us",
+      "BUTTON": "Contact us",
       "TEAMMATE": [
         {
           "NAME": "Tanya",
@@ -60,8 +60,8 @@
     "ADD_BOARD": "Add board",
     "ADD_COLUMN": "Add column",
     "ADD_TASK": "Add task",
-    "MAIN": "Go to main page",
-    "NEWBOARD": "Create new board",
+    "MAIN": "Main page",
+    "NEWBOARD": "New board",
     "EDITPROFILE": "Edit profile",
     "SIGNOUT": "Sign out"
   },

@@ -1,31 +1,38 @@
 @import 'src/styles/style-import';
 
 .footer {
-  @include flex-row-center-around;
+  @include flex-center-between;
   background-color: $purple-color-footer;
   color: $white-color;
-  height: $footer-height;
+  min-height: $footer-height;
+  gap: 2rem;
+  padding: 0.8rem 4rem;
 
-  @media (max-width: $breakpoint550) {
+  @media (max-width: $breakpoint735) {
     flex-direction: column;
+    align-items: flex-start;
+    padding: 0.8rem 2rem;
+  }
+
+  .year {
+    margin: 0;
   }
 
   .git_links {
-    width: 24rem;
-    @include flex-between;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 
-    @media (max-width: $breakpoint550) {
+    @media (max-width: $breakpoint735) {
       flex-direction: column;
     }
 
     .git_link {
       @include flex;
+
       img {
-        padding: 0 5px;
-      }
-      @media (max-width: $breakpoint550) {
-        padding: 10px 0;
-        justify-content: center;
+        padding-right: 8px;
       }
 
       text-decoration: none;
