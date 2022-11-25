@@ -1,55 +1,53 @@
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { CircularProgress, Box } from '@mui/material';
 import { BoardColumn } from '../../components/BoardColumn';
+import { useAppSelector } from '../../redux/hooks';
+import { selectBoards } from '../../redux/features/boardSlice';
+import { useGetBoardColumnsMutation } from '../../redux/features/api/columnApi';
 import { ColumnData } from '../../models';
 import './style.scss';
 
-const columns: ColumnData[] = [
-  {
-    _id: '1',
-    boardId: '1',
-    title: 'Title 1',
-    order: 1,
-    tasks: [],
-  },
-  {
-    _id: '2',
-    boardId: '1',
-    title: 'Title 2',
-    order: 2,
-    tasks: [
-      {
-        _id: '1',
-        title: 'Task 1',
-        description: 'Description 1',
-      },
-      {
-        _id: '2',
-        title: 'Task 2',
-        description: 'Description 2',
-      },
-    ],
-  },
-];
-
 export const Board = () => {
+  const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const boards = useAppSelector(selectBoards);
+  const currentBoard = boards.findIndex((board) => board._id === id);
+  const [getColumns] = useGetBoardColumnsMutation();
+  const [mount, setMount] = useState(false);
+
+  const fetchColumns = useCallback(async () => {
+    if (id) {
+      await getColumns(id).unwrap();
+    }
+  }, [getColumns, id]);
+
+  useEffect(() => {
+    if (!mount) {
+      fetchColumns().then(() => setMount(true));
+    }
+  }, [fetchColumns, mount]);
 
   return (
     <div className="board-columns container">
       <div className="boards-header">
         <ArrowBackIosIcon color="primary" onClick={() => navigate(-1)} />
-        <h1>Board</h1>
+        <h1>{boards[currentBoard].title}</h1>
         <Button variant="outlined" color="primary" startIcon={'+'}>
           {t('BUTTONS.ADD_COLUMN')}
         </Button>
       </div>
       <div className="columns">
-        {columns ? (
-          columns.map((column) => {
+        {!mount ? (
+          <Box className="loader">
+            <CircularProgress />
+          </Box>
+        ) : boards[currentBoard]?.columns && boards[currentBoard].columns?.length !== 0 ? (
+          boards[currentBoard].columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>
                 <BoardColumn column={column} />
