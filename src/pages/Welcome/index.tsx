@@ -24,7 +24,7 @@ export const Welcome = () => {
   useEffect(() => {
     let observer: IntersectionObserver | undefined = undefined;
 
-    const addAnimation = () => {
+    const addAnimation = (): void => {
       const options = { threshold: [0.5] };
       observer = new IntersectionObserver(onEntry, options);
 
@@ -34,7 +34,7 @@ export const Welcome = () => {
       });
     };
 
-    const onEntry = (entry: IntersectionObserverEntry[]) => {
+    const onEntry = (entry: IntersectionObserverEntry[]): void => {
       entry.forEach((change) => {
         if (change.isIntersecting) {
           change.target.classList.add(ANIMATION_SHOW_CLASS);

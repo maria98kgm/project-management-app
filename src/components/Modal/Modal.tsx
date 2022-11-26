@@ -22,7 +22,7 @@ type ModalProps = {
 export const BasicModal: React.FC<ModalProps> = ({ isOpen, children }) => {
   const [modalStyle, setModalStyle] = useState(style);
 
-  const handleResize = () => {
+  const handleResize = (): void => {
     if (window.innerWidth < 420) setModalStyle({ ...modalStyle, width: 300 });
     else setModalStyle({ ...modalStyle, width: 400 });
   };

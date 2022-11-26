@@ -29,24 +29,26 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
 
   const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent): void => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
 
-    setOpenBurgerMenu(open);
-  };
+      setOpenBurgerMenu(open);
+    };
 
-  const handleMenuButton = (path: Paths) => {
+  const handleMenuButton = (path: Paths): void => {
     setOpenBurgerMenu(false);
     navigate(path);
   };
 
-  const signOut = () => {
+  const signOut = (): void => {
     dispatch(setUser(null));
     localStorage.removeItem('user');
     navigate(Paths.WELCOME);

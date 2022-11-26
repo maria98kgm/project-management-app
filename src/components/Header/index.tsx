@@ -19,7 +19,7 @@ export const Header = () => {
 
   const isToken = !!userInfo;
 
-  const changeHeader = () => {
+  const changeHeader = (): void => {
     if (window.scrollY >= 80) {
       setHeader(true);
     } else {
@@ -27,12 +27,12 @@ export const Header = () => {
     }
   };
 
-  const handleResize = () => {
+  const handleResize = (): void => {
     if (window.innerWidth <= 1190) setShowBurger(true);
     else setShowBurger(false);
   };
 
-  const createNewBoard = () => {
+  const createNewBoard = (): void => {
     setModalState(true);
   };
 
