@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { IconButton, Drawer, Box, Divider, ListItemButton, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -6,15 +6,28 @@ import { useNavigate } from 'react-router-dom';
 import { LanguageSwitch } from '../LanguageSwitch/LanguageSwitch';
 import { ReactComponent as MenuIcon } from '../../assets/menuIcon.svg';
 import { ReactComponent as CloseIcon } from '../../assets/closeIcon.svg';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUser } from '../../redux/features/userSlice';
+import { Paths } from '../../models';
 
-export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
-  isToken,
-  showBurger,
-}) => {
+interface NavBarProps {
+  isToken: boolean;
+  showBurger: boolean;
+  createNewBoard: () => void;
+}
+
+const menuButtonStyle = {
+  p: 0,
+  justifyContent: 'center',
+  mb: '20px',
+};
+
+export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBoard }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
-  const [openBurgerMenu, setOpenBurgerMenu] = React.useState(false);
+  const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -26,6 +39,17 @@ export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
     }
 
     setOpenBurgerMenu(open);
+  };
+
+  const handleMenuButton = (path: Paths) => {
+    setOpenBurgerMenu(false);
+    navigate(path);
+  };
+
+  const signOut = () => {
+    dispatch(setUser(null));
+    localStorage.removeItem('user');
+    navigate(Paths.WELCOME);
   };
 
   if (!isToken) {
@@ -60,17 +84,17 @@ export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
                 </IconButton>
                 <Divider sx={{ m: 2 }} />
                 <Box>
-                  <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                    <Button sx={{ color: 'white' }} onClick={() => navigate('/signup')}>
+                  <ListItemButton sx={menuButtonStyle}>
+                    <Button sx={{ color: 'white' }} onClick={() => handleMenuButton(Paths.SIGNUP)}>
                       {t('BUTTONS.SIGNUP')}
                     </Button>
                   </ListItemButton>
-                  <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                    <Button sx={{ color: 'white' }} onClick={() => navigate('/signin')}>
+                  <ListItemButton sx={menuButtonStyle}>
+                    <Button sx={{ color: 'white' }} onClick={() => handleMenuButton(Paths.SIGNIN)}>
                       {t('BUTTONS.SIGNIN')}
                     </Button>
                   </ListItemButton>
-                  <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
+                  <ListItemButton sx={menuButtonStyle}>
                     <LanguageSwitch />
                   </ListItemButton>
                 </Box>
@@ -79,10 +103,10 @@ export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Button variant="outlined" color="secondary" onClick={() => navigate('/signin')}>
+            <Button variant="outlined" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
               {t('BUTTONS.SIGNIN')}
             </Button>
-            <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
+            <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNUP)}>
               {t('BUTTONS.SIGNUP')}
             </Button>
             <LanguageSwitch />
@@ -123,43 +147,27 @@ export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
               </IconButton>
               <Divider sx={{ m: 2 }} />
               <Box>
-                <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                  <Button
-                    className="main-btn"
-                    sx={{ color: 'white' }}
-                    onClick={() => navigate('/main')}
-                  >
+                <ListItemButton sx={menuButtonStyle}>
+                  <Button sx={{ color: 'white' }} onClick={() => handleMenuButton(Paths.MAIN)}>
                     {t('BUTTONS.MAIN')}
                   </Button>
                 </ListItemButton>
-                <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                  <Button
-                    className="new-board-btn"
-                    sx={{ color: 'white' }}
-                    onClick={() => navigate('/modalka open')}
-                  >
+                <ListItemButton sx={menuButtonStyle}>
+                  <Button sx={{ color: 'white' }} onClick={createNewBoard}>
                     {t('BUTTONS.NEWBOARD')}
                   </Button>
                 </ListItemButton>
-                <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                  <Button
-                    className="edit-profile-btn"
-                    sx={{ color: 'white' }}
-                    onClick={() => navigate('/editprofile')}
-                  >
+                <ListItemButton sx={menuButtonStyle}>
+                  <Button sx={{ color: 'white' }} onClick={() => handleMenuButton(Paths.BOARD)}>
                     {t('BUTTONS.EDITPROFILE')}
                   </Button>
                 </ListItemButton>
-                <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
-                  <Button
-                    className="sign-out-btn"
-                    sx={{ color: 'white' }}
-                    onClick={() => navigate('/')}
-                  >
+                <ListItemButton sx={menuButtonStyle}>
+                  <Button sx={{ color: 'white' }} onClick={signOut}>
                     {t('BUTTONS.SIGNOUT')}
                   </Button>
                 </ListItemButton>
-                <ListItemButton sx={{ p: 0, justifyContent: 'center', mb: '20px' }}>
+                <ListItemButton sx={menuButtonStyle}>
                   <LanguageSwitch />
                 </ListItemButton>
               </Box>
@@ -168,24 +176,16 @@ export const NavBar: React.FC<{ isToken: boolean; showBurger: boolean }> = ({
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Button
-            className="new-board-btn"
-            variant="contained"
-            onClick={() => navigate('/modalka open')}
-          >
+          <Button variant="contained" onClick={createNewBoard}>
             {t('BUTTONS.NEWBOARD')}
           </Button>
-          <Button
-            className="edit-profile-btn"
-            variant="contained"
-            onClick={() => navigate('/editprofile')}
-          >
+          <Button variant="contained" onClick={() => navigate(Paths.BOARD)}>
             {t('BUTTONS.EDITPROFILE')}
           </Button>
-          <Button className="sign-out-btn" variant="contained" onClick={() => navigate('/')}>
+          <Button variant="contained" onClick={signOut}>
             {t('BUTTONS.SIGNOUT')}
           </Button>
-          <Button className="main-btn" variant="contained" onClick={() => navigate('/main')}>
+          <Button variant="contained" onClick={() => navigate(Paths.MAIN)}>
             {t('BUTTONS.MAIN')}
           </Button>
           <LanguageSwitch />
