@@ -35,9 +35,6 @@ export const SignIn = () => {
       .then(() => navigate(Paths.MAIN))
       .catch((error) => {
         dispatch(showToast({ isOpen: true, severity: 'error', message: error.data.message }));
-        setTimeout(() => {
-          showToast({ isOpen: false, severity: 'info', message: '' });
-        }, 4000);
       });
   };
 

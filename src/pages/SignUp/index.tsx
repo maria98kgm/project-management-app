@@ -62,9 +62,6 @@ export const SignUp = () => {
       })
       .catch((error) => {
         dispatch(showToast({ isOpen: true, severity: 'error', message: error.data.message }));
-        setTimeout(() => {
-          showToast({ isOpen: false, severity: 'info', message: '' });
-        }, 4000);
       });
   };
 

@@ -9,6 +9,7 @@ import { ReactComponent as CloseIcon } from '../../assets/closeIcon.svg';
 import { useAppDispatch } from '../../redux/hooks';
 import { setUser } from '../../redux/features/userSlice';
 import { Paths } from '../../models';
+import { showToast } from '../../redux/features/toastSlice';
 
 interface NavBarProps {
   isToken: boolean;
@@ -52,6 +53,9 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
     dispatch(setUser(null));
     localStorage.removeItem('user');
     navigate(Paths.WELCOME);
+    dispatch(
+      showToast({ isOpen: true, severity: 'success', message: 'You have successfully logged out!' })
+    );
   };
 
   if (!isToken) {
