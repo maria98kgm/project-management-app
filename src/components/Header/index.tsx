@@ -76,7 +76,7 @@ export const Header = () => {
                   <Button
                     className="edit-profile-btn"
                     variant="contained"
-                    onClick={() => navigate('/editprofile')}
+                    onClick={() => navigate(Paths.EDITPROFILE)}
                   >
                     {t('BUTTONS.EDITPROFILE')}
                   </Button>
