@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, Box } from '@mui/material';
-import { BoardItem } from '../../components/BoardItemComponent';
+import { BoardItem } from '../../components/BoardItem';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
