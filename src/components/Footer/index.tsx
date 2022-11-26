@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer>
       <div className="footer">
-        <p>© 2022</p>
+        <p className="year">© 2022</p>
         <div className="git_links">
           <a
             className="git_link"

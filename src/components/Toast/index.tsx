@@ -21,7 +21,7 @@ type ToastProps = {
 export const Toast: React.FC<ToastProps> = ({ isOpen, severity, message }) => {
   const dispatch = useTypedDispatch();
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     dispatch(showToast({ isOpen: false, severity, message }));
   };
 

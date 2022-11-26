@@ -82,7 +82,7 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
 
   const [personName, setPersonName] = useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: SelectChangeEvent<typeof personName>): void => {
     const {
       target: { value },
     } = event;
