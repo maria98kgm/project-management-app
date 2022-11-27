@@ -1,0 +1,16 @@
+@import 'src/styles/style-import';
+
+.create-column {
+  h2 {
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0.6rem;
+  }
+
+  .buttons {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}

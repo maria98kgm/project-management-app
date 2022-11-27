@@ -24,6 +24,13 @@ export const ConfirmationModal: React.FC<ModalProps> = ({ modalState, applyYes, 
           onClick={(event) => {
             event.stopPropagation();
             applyYes();
+            dispatch(
+              showToast({
+                isOpen: true,
+                severity: 'success',
+                message: `${t('INFO.APPLIED')}`,
+              })
+            );
           }}
         >
           {t('BUTTONS.YES')}
@@ -34,7 +41,11 @@ export const ConfirmationModal: React.FC<ModalProps> = ({ modalState, applyYes, 
             event.stopPropagation();
             applyNo();
             dispatch(
-              showToast({ isOpen: true, severity: 'warning', message: `${t('INFO.CANCELLED')}` })
+              showToast({
+                isOpen: true,
+                severity: 'warning',
+                message: `${t('INFO.CANCELLED')}`,
+              })
             );
           }}
         >
