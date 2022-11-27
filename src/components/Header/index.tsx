@@ -40,21 +40,18 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (checkTokenExp()) {
-        dispatch(setUser(null));
-        localStorage.removeItem('user');
-        navigate(Paths.WELCOME);
-        dispatch(
-          showToast({
-            isOpen: true,
-            severity: 'warning',
-            message: 'Your token has expired! Sign in again!',
-          })
-        );
-      }
-    }, 10000);
-    return () => clearInterval(intervalId);
+    if (checkTokenExp()) {
+      dispatch(setUser(null));
+      localStorage.removeItem('user');
+      navigate(Paths.WELCOME);
+      dispatch(
+        showToast({
+          isOpen: true,
+          severity: 'warning',
+          message: 'Your token has expired! Sign in again!',
+        })
+      );
+    }
   });
 
   window.addEventListener('scroll', changeHeader);

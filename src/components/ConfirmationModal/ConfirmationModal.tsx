@@ -24,6 +24,13 @@ export const ConfirmationModal: React.FC<ModalProps> = ({ modalState, applyYes, 
           onClick={(event) => {
             event.stopPropagation();
             applyYes();
+            dispatch(
+              showToast({
+                isOpen: true,
+                severity: 'success',
+                message: `${t('INFO.APPLIED')}`,
+              })
+            );
           }}
         >
           {t('BUTTONS.YES')}
