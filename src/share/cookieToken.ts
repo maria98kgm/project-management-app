@@ -14,3 +14,7 @@ export const decodeToken = (token: string) => {
 
   return JSON.parse(payloadBuffer.toString());
 };
+
+export const checkTokenExp = () => {
+  return !document.cookie && localStorage.getItem('user');
+};
