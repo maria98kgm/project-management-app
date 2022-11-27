@@ -18,12 +18,12 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) =>
   const [deleteBoardById] = useDeleteBoardMutation();
   const [modalState, setModalState] = useState(false);
 
-  const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+  const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
     event.stopPropagation();
     setModalState(true);
   };
 
-  const deleteBoard = async (id: string) => {
+  const deleteBoard = async (id: string): Promise<void> => {
     setModalState(false);
     await deleteBoardById(id);
   };

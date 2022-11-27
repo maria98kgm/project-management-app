@@ -1,9 +1,11 @@
 import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
 import { Paths, SignInData, SignUpData } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
+import { showToast } from '../../redux/features/toastSlice';
+import { useAppDispatch } from '../../redux/hooks';
 
 interface FormInputs {
   userName: string;
@@ -22,10 +24,11 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
-  const [registerUser] = useSignUpMutation();
-  const [loginUser] = useSignInMutation();
+  const [registerUser, { isLoading }] = useSignUpMutation();
+  const [loginUser, { isLoading: loginIsLoading }] = useSignInMutation();
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const validatePassword = (password: string): string | boolean => {
     const repeatPasswordState = getFieldState('repeatPassword');
@@ -52,10 +55,14 @@ export const SignUp = () => {
       password: data.password,
     };
 
-    await registerUser(regData);
-    await loginUser(loginData);
-
-    navigate(Paths.MAIN);
+    await registerUser(regData)
+      .unwrap()
+      .then(() => {
+        loginUser(loginData).then(() => navigate(Paths.MAIN));
+      })
+      .catch((error) => {
+        dispatch(showToast({ isOpen: true, severity: 'error', message: error.data.message }));
+      });
   };
 
   return (
@@ -124,6 +131,9 @@ export const SignUp = () => {
           Sign Up
         </Button>
       </form>
+      <Backdrop sx={{ color: '#fff' }} open={isLoading || loginIsLoading}>
+        <CircularProgress color="inherit" size={60} />
+      </Backdrop>
     </section>
   );
 };

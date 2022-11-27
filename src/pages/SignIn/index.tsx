@@ -1,9 +1,11 @@
 import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
 import { Paths } from '../../models';
 import { useSignInMutation } from '../../redux/features/api/authApi';
+import { showToast } from '../../redux/features/toastSlice';
+import { useAppDispatch } from '../../redux/hooks';
 
 interface FormInputs {
   login: string;
@@ -19,17 +21,21 @@ export const SignIn = () => {
   } = useForm<FormInputs>({ mode: 'onChange' });
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const [loginUser] = useSignInMutation();
+  const [loginUser, { isLoading }] = useSignInMutation();
 
   const validatePassword = (password: string): string | boolean => {
     return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
-    await loginUser({ login: data.login, password: data.password });
-
-    navigate(Paths.MAIN);
+    await loginUser({ login: data.login, password: data.password })
+      .unwrap()
+      .then(() => navigate(Paths.MAIN))
+      .catch((error) => {
+        dispatch(showToast({ isOpen: true, severity: 'error', message: error.data.message }));
+      });
   };
 
   return (
@@ -70,6 +76,9 @@ export const SignIn = () => {
           Sign In
         </Button>
       </form>
+      <Backdrop sx={{ color: '#fff' }} open={isLoading}>
+        <CircularProgress color="inherit" size={60} />
+      </Backdrop>
     </section>
   );
 };

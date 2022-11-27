@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
-import { LanguageSwitch } from '../LanguageSwitch/LanguageSwitch';
+import './style.scss';
+import appLogo from '../../assets/img/app_logo.png';
+import { NavBar } from '../NavBar';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { BasicModal } from '../../components/Modal/Modal';
-import { Paths } from '../../models/PathsEnum';
 import { useAppSelector } from '../../redux/hooks';
 import { selectUserInfo } from '../../redux/features/userSlice';
-import appLogo from '../../assets/img/logo.png';
-import './style.scss';
+import { Paths } from '../../models';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const userInfo = useAppSelector(selectUserInfo);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
+  const [showBurger, setShowBurger] = useState(window.innerWidth <= 1190);
   const [header, setHeader] = useState(false);
   const [modalState, setModalState] = useState(false);
+
   const isToken = !!userInfo;
 
-  const changeHeader = () => {
+  const changeHeader = (): void => {
     if (window.scrollY >= 80) {
       setHeader(true);
     } else {
@@ -27,82 +27,36 @@ export const Header = () => {
     }
   };
 
+  const handleResize = (): void => {
+    if (window.innerWidth <= 1190) setShowBurger(true);
+    else setShowBurger(false);
+  };
+
+  const createNewBoard = (): void => {
+    setModalState(true);
+  };
+
   window.addEventListener('scroll', changeHeader);
+  window.addEventListener('resize', handleResize);
 
   return (
     <React.Fragment>
       <header>
         <div className={header ? 'header sticky' : 'header'}>
           <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
-          <div className="control">
-            <LanguageSwitch />
-            <div className="control-button">
-              {!isToken ? (
-                <div className="authorization">
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => navigate(Paths.SIGNIN)}
-                  >
-                    {t('BUTTONS.SIGNIN')}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => navigate(Paths.SIGNUP)}
-                  >
-                    {t('BUTTONS.SIGNUP')}
-                  </Button>
-                </div>
-              ) : location.hash === `#${Paths.WELCOME}` ? (
-                <React.Fragment>
-                  <Button
-                    className="main-btn"
-                    variant="contained"
-                    onClick={() => navigate('/main')}
-                  >
-                    {t('BUTTONS.MAIN')}
-                  </Button>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Button
-                    className="new-board-btn"
-                    variant="contained"
-                    onClick={() => setModalState(true)}
-                  >
-                    {t('BUTTONS.NEWBOARD')}
-                  </Button>
-                  <Button
-                    className="edit-profile-btn"
-                    variant="contained"
-                    onClick={() => navigate('/editprofile')}
-                  >
-                    {t('BUTTONS.EDITPROFILE')}
-                  </Button>
-                  <Button
-                    className="sign-out-btn"
-                    variant="contained"
-                    onClick={() => navigate('/')}
-                  >
-                    {t('BUTTONS.SIGNOUT')}
-                  </Button>
-                </React.Fragment>
-              )}
-            </div>
-          </div>
+          <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
         </div>
-        <BasicModal isOpen={modalState}>
-          <CreateBoardForm
-            onCreateBoard={async () => {
-              setModalState(false);
-            }}
-            handleClose={() => {
-              setModalState(false);
-            }}
-          />
-        </BasicModal>
       </header>
+      <BasicModal isOpen={modalState}>
+        <CreateBoardForm
+          onCreateBoard={async () => {
+            setModalState(false);
+          }}
+          handleClose={() => {
+            setModalState(false);
+          }}
+        />
+      </BasicModal>
     </React.Fragment>
   );
 };

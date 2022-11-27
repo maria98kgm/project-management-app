@@ -6,12 +6,15 @@
   width: 308px;
   background-color: $board-background-color;
   border: solid $board-primary-color;
-  border-radius: 3px;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   &:hover {
     cursor: pointer;
     transform: scale(1.05);
+  }
+
+  @media (max-width: $breakpoint370) {
+    width: 260px;
   }
 }
 

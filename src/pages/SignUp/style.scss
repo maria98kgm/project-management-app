@@ -1,15 +1,14 @@
 @import 'src/styles/style-import';
 
 .signUp-content {
-  display: flex;
-  justify-content: center;
+  @include flex-center-center;
+  margin: 4rem 0;
 }
 
 .signUp-form {
+  @include flex-center-center;
   min-width: 460px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   row-gap: 1.4rem;
   background-color: white;
   padding: 32px 52px;
@@ -20,10 +19,8 @@
     font-size: 22px;
     margin: 0.6rem;
   }
-}
 
-@media (max-width: 480px) {
-  .signUp-form {
-    min-width: auto;
+  @media (max-width: $breakpoint480) {
+    min-width: 90%;
   }
 }
