@@ -57,6 +57,16 @@ export const boardSlice = createSlice({
         );
       }
     },
+    setTasks: (
+      state,
+      action: PayloadAction<{ tasks: TaskData[]; boardId: string; columnId: string }>
+    ) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      const currentColumn = state.boards[currentBoard].columns!.findIndex(
+        (column) => column._id === action.payload.columnId
+      );
+      state.boards[currentBoard].columns![currentColumn].tasks = [...action.payload.tasks];
+    },
     addTask: (state, action: PayloadAction<TaskData>) => {
       const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
       const currentColumn = state.boards[currentBoard].columns!.findIndex(
@@ -88,5 +98,6 @@ export const {
   addColumn,
   deleteColumn,
   updateColumnInfo,
+  setTasks,
   addTask,
 } = boardSlice.actions;

@@ -15,6 +15,7 @@ import {
   useUpdateSetOfColumnsMutation,
   useUpdateColumnMutation,
 } from '../../redux/features/api/columnApi';
+import { useGetColumnTasksMutation } from '../../redux/features/api/taskApi';
 import { ColumnData, UpdateColumnsSet, NewColumnData } from '../../models';
 import './style.scss';
 
@@ -25,6 +26,7 @@ export const Board = () => {
   const boards = useAppSelector(selectBoards);
   const currentBoard = boards.findIndex((board) => board._id === id);
   const [getColumns] = useGetBoardColumnsMutation();
+  const [getTasks] = useGetColumnTasksMutation();
   const [deleteColumnById] = useDeleteColumnMutation();
   const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
   const [updateColumn] = useUpdateColumnMutation();
@@ -37,11 +39,22 @@ export const Board = () => {
     }
   }, [getColumns, id]);
 
+  const fetchTasks = useCallback(() => {
+    if (boards[currentBoard].columns && boards[currentBoard].columns?.length !== 0) {
+      const promises = boards[currentBoard].columns!.map(
+        async (column) => await getTasks({ boardId: id || '', columnId: column._id }).unwrap()
+      );
+      return Promise.allSettled(promises);
+    }
+  }, [getTasks, boards, currentBoard, id]);
+
   useEffect(() => {
     if (!mount) {
-      fetchColumns().then(() => setMount(true));
+      fetchColumns()
+        .then(() => fetchTasks())
+        .then(() => setMount(true));
     }
-  }, [fetchColumns, mount]);
+  }, [fetchColumns, fetchTasks, mount]);
 
   const deleteColumn = async (columnId: string) => {
     if (id) {
