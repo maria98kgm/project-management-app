@@ -10,7 +10,7 @@ export interface TaskUpdateData extends TaskCreateData {
   columnId: string;
 }
 
-export interface TaskData extends TaskCreateData {
+export interface TaskData extends TaskUpdateData {
   _id: string;
   boardId: string;
 }

@@ -80,6 +80,7 @@
   "HEADERS": {
     "BOARDS": "Boards",
     "TITLE": "Title",
+    "DESCRIPTION": "Description",
     "USERS": "Users"
   }
 }

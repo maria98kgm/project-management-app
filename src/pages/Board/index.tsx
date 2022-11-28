@@ -114,9 +114,6 @@ export const Board = () => {
               : 0
           }
           boardId={id!}
-          onCreateColumn={async () => {
-            setModalState(false);
-          }}
           handleClose={() => {
             setModalState(false);
           }}

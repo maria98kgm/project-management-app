@@ -13,3 +13,8 @@ export interface UpdateUser {
   userId: string;
   userInfo: SignInData;
 }
+
+export interface UserName {
+  id: string;
+  name: string;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -10,6 +11,8 @@ import { showToast } from '../../redux/features/toastSlice';
 import { useTypedDispatch } from '../../redux/store';
 import { ColumnData, NewColumnData } from '../../models';
 import './style.scss';
+import { CreateTaskForm } from '../CreateTaskForm';
+import { BasicModal } from '../Modal/Modal';
 
 type BoardColumnProps = {
   column: Partial<ColumnData>;
@@ -19,9 +22,11 @@ type BoardColumnProps = {
 
 export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUpdateTitle }) => {
   const { t } = useTranslation();
+  const { id } = useParams();
   const dispatch = useTypedDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
+  const [modalTaskState, setModalTaskState] = useState(false);
   const [title, setTitle] = useState(column.title);
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -101,7 +106,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
           <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
         )}
       </div>
-      <Button color="primary" startIcon={'+'}>
+      <Button color="primary" startIcon={'+'} onClick={() => setModalTaskState(true)}>
         {t('BUTTONS.ADD_TASK')}
       </Button>
       <ConfirmationModal
@@ -109,6 +114,14 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
         applyYes={() => deleteColumn()}
         applyNo={() => setModalState(false)}
       />
+      <BasicModal isOpen={modalTaskState}>
+        <CreateTaskForm
+          handleClose={() => setModalTaskState(false)}
+          columnId={column._id || ''}
+          taskOrder={column.tasks && column.tasks?.length !== 0 ? column.tasks!.length : 0}
+          boardId={id || ''}
+        />
+      </BasicModal>
     </div>
   );
 };
