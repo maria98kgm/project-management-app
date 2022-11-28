@@ -41,7 +41,6 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) =>
           <h3>{t('HEADERS.USERS')}:</h3>
           <p>{users.join(', ')}</p>
         </div>
-        <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
       </div>
       <ConfirmationModal
         modalState={modalState}

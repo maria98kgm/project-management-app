@@ -9,7 +9,7 @@ import {
 } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
-import { addTask, setTasks } from '../boardSlice';
+import { addTask, setTasks, deleteTask } from '../boardSlice';
 
 export const taskApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -26,7 +26,11 @@ export const taskApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setTasks({ tasks: data, boardId: data[0].boardId, columnId: data[0].columnId }));
+          if (data[0]?.boardId && data[0].columnId) {
+            dispatch(
+              setTasks({ tasks: data, boardId: data[0].boardId, columnId: data[0].columnId })
+            );
+          }
         } catch (err) {
           console.error(err);
         }
@@ -85,6 +89,17 @@ export const taskApi = apiSlice.injectEndpoints({
           },
         };
       },
+      transformResponse: (response: TaskData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const {
+            data: { boardId, columnId, _id: taskId },
+          } = await queryFulfilled;
+          dispatch(deleteTask({ boardId, columnId, taskId }));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     getTasksByIdsList: build.mutation<TaskData[], string[]>({
       query(idsList) {
@@ -126,6 +141,15 @@ export const taskApi = apiSlice.injectEndpoints({
           },
           body: tasks,
         };
+      },
+      transformResponse: (response: TaskData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setTasks({ tasks: data, boardId: data[0].boardId, columnId: data[0].columnId }));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getBoardTasks: build.mutation<TaskData[], string>({

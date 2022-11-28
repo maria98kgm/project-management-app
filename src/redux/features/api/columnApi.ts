@@ -26,7 +26,9 @@ export const columnApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
+          if (data[0]?.boardId) {
+            dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
+          }
         } catch (err) {
           console.error(err);
         }

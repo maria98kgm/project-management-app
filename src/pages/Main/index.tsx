@@ -3,32 +3,39 @@ import { useTranslation } from 'react-i18next';
 import { CircularProgress, Box } from '@mui/material';
 import { BoardItem } from '../../components/BoardItem';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
+import { useGetBoardColumnsMutation } from '../../redux/features/api/columnApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
 import { selectBoards } from '../../redux/features/boardSlice';
-import { selectUserInfo } from '../../redux/features/userSlice';
-
-import { UserData } from '../../models';
+import { selectUserInfo, selectUses } from '../../redux/features/userSlice';
 import './style.scss';
 
 export const Main = () => {
   const { t } = useTranslation();
   const [mount, setMount] = useState(false);
   const [getBoards] = useGetUserBoardsMutation();
+  const [getColumns] = useGetBoardColumnsMutation();
   const [getUsers] = useGetAllUsersMutation();
-  const [allUsers, setAllUsers] = useState<UserData[]>([]);
   const userInfo = useAppSelector(selectUserInfo);
+  const allUsers = useAppSelector(selectUses);
   const boards = useAppSelector(selectBoards);
 
   const fetchBoards = useCallback(async () => {
     if (userInfo && userInfo._id) {
       await getBoards(userInfo._id).unwrap();
+      if (boards.length !== 0) {
+        const promises = boards!.map(async (board) => {
+          if (!board.columns || board.columns?.length === 0) {
+            await getColumns(board._id).unwrap();
+          }
+        });
+        return Promise.allSettled(promises);
+      }
     }
-  }, [getBoards, userInfo]);
+  }, [getBoards, getColumns, boards, userInfo]);
 
   const fetchUsers = useCallback(async () => {
-    const usersResp: UserData[] = await getUsers(null).unwrap();
-    setAllUsers(usersResp);
+    await getUsers(null).unwrap();
   }, [getUsers]);
 
   useEffect(() => {
@@ -51,7 +58,7 @@ export const Main = () => {
         ) : boards.length !== 0 && allUsers.length !== 0 ? (
           boards.map((board, idx) => {
             const foundBoardUsers = allUsers
-              .filter((user) => board.users.includes(user._id))
+              .filter((user) => board.users.includes(user.id))
               .map((user) => user.name);
             return (
               <BoardItem

@@ -10,7 +10,6 @@ import { CreateColumnForm } from '../../components/CreateColumnForm';
 import { useAppSelector } from '../../redux/hooks';
 import { selectBoards } from '../../redux/features/boardSlice';
 import {
-  useGetBoardColumnsMutation,
   useDeleteColumnMutation,
   useUpdateSetOfColumnsMutation,
   useUpdateColumnMutation,
@@ -25,7 +24,7 @@ export const Board = () => {
   const navigate = useNavigate();
   const boards = useAppSelector(selectBoards);
   const currentBoard = boards.findIndex((board) => board._id === id);
-  const [getColumns] = useGetBoardColumnsMutation();
+  const columns = boards[currentBoard].columns;
   const [getTasks] = useGetColumnTasksMutation();
   const [deleteColumnById] = useDeleteColumnMutation();
   const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
@@ -33,28 +32,21 @@ export const Board = () => {
   const [mount, setMount] = useState(false);
   const [modalState, setModalState] = useState(false);
 
-  const fetchColumns = useCallback(async () => {
-    if (id) {
-      await getColumns(id).unwrap();
-    }
-  }, [getColumns, id]);
-
   const fetchTasks = useCallback(() => {
-    if (boards[currentBoard].columns && boards[currentBoard].columns?.length !== 0) {
-      const promises = boards[currentBoard].columns!.map(
+    if (columns && columns?.length !== 0) {
+      const promises = columns!.map(
         async (column) => await getTasks({ boardId: id || '', columnId: column._id }).unwrap()
       );
       return Promise.allSettled(promises);
     }
-  }, [getTasks, boards, currentBoard, id]);
+    return Promise.resolve();
+  }, [getTasks, columns, id]);
 
   useEffect(() => {
     if (!mount) {
-      fetchColumns()
-        .then(() => fetchTasks())
-        .then(() => setMount(true));
+      fetchTasks().then(() => setMount(true));
     }
-  }, [fetchColumns, fetchTasks, mount]);
+  }, [fetchTasks, mount]);
 
   const deleteColumn = async (columnId: string) => {
     if (id) {
@@ -103,13 +95,13 @@ export const Board = () => {
           <Box className="loader">
             <CircularProgress />
           </Box>
-        ) : boards[currentBoard]?.columns && boards[currentBoard].columns?.length !== 0 ? (
-          boards[currentBoard].columns!.map((column: ColumnData) => {
+        ) : columns && columns?.length !== 0 ? (
+          columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>
                 <BoardColumn
                   column={column}
-                  onDelete={(columnId) => deleteColumn(columnId)}
+                  onDeleteColumn={(columnId) => deleteColumn(columnId)}
                   onUpdateTitle={(columnId, columnInfo) => updateColumnTitle(columnId, columnInfo)}
                 />
               </div>
@@ -121,11 +113,7 @@ export const Board = () => {
       </div>
       <BasicModal isOpen={modalState}>
         <CreateColumnForm
-          columnOrder={
-            boards[currentBoard]?.columns && boards[currentBoard].columns?.length !== 0
-              ? boards[currentBoard].columns!.length
-              : 0
-          }
+          columnOrder={columns && columns?.length !== 0 ? columns!.length : 0}
           boardId={id!}
           handleClose={() => {
             setModalState(false);

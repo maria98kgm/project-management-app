@@ -8,35 +8,60 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { BoardTask } from '../BoardTask';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
 import { showToast } from '../../redux/features/toastSlice';
+import { useDeleteTaskMutation, useUpdateTasksSetMutation } from '../../redux/features/api/taskApi';
 import { useTypedDispatch } from '../../redux/store';
-import { ColumnData, NewColumnData } from '../../models';
+import { ColumnData, NewColumnData, TaskData, UpdateTasksSet } from '../../models';
 import './style.scss';
 import { CreateTaskForm } from '../CreateTaskForm';
 import { BasicModal } from '../Modal/Modal';
 
 type BoardColumnProps = {
   column: Partial<ColumnData>;
-  onDelete: (columnId: string) => void;
+  onDeleteColumn: (columnId: string) => void;
   onUpdateTitle: (columnId: string, columnInfo: NewColumnData) => void;
 };
 
-export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUpdateTitle }) => {
+export const BoardColumn: React.FC<BoardColumnProps> = ({
+  column,
+  onDeleteColumn,
+  onUpdateTitle,
+}) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useTypedDispatch();
+  const [daleteTaskById] = useDeleteTaskMutation();
+  const [updateTasksOrder] = useUpdateTasksSetMutation();
   const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalTaskState, setModalTaskState] = useState(false);
   const [title, setTitle] = useState(column.title);
+  const [deletedItem, setDeletedItem] = useState('');
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.stopPropagation();
     setModalState(true);
+    setDeletedItem('column');
   };
 
-  const deleteColumn = () => {
+  const deleteItem = async () => {
+    if (column._id && deletedItem === 'column') onDeleteColumn(column._id);
+
+    if (column._id && id && deletedItem !== 'column') {
+      await daleteTaskById({ boardId: id, columnId: column._id, taskId: deletedItem });
+
+      const newTasks = column.tasks!.filter((task: Partial<TaskData>) => task._id !== deletedItem);
+      const updatedTasks = newTasks.map(
+        (task: Partial<TaskData>, idx: number): UpdateTasksSet => ({
+          _id: task._id || '',
+          order: idx,
+          columnId: column._id || '',
+        })
+      );
+
+      await updateTasksOrder(updatedTasks);
+    }
+
     setModalState(false);
-    if (column._id) onDelete(column._id);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +82,11 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
         message: `${t('INFO.APPLIED')}`,
       })
     );
+  };
+
+  const deleteTask = (taskId: string) => {
+    setModalState(true);
+    setDeletedItem(taskId);
   };
 
   return (
@@ -98,7 +128,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
             return (
               <div className="task" key={task._id}>
                 <div className="task-placeholder"></div>
-                <BoardTask task={task} />
+                <BoardTask task={task} onDelete={(taskId) => deleteTask(taskId)} />
               </div>
             );
           })
@@ -111,7 +141,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
       </Button>
       <ConfirmationModal
         modalState={modalState}
-        applyYes={() => deleteColumn()}
+        applyYes={() => deleteItem()}
         applyNo={() => setModalState(false)}
       />
       <BasicModal isOpen={modalTaskState}>
