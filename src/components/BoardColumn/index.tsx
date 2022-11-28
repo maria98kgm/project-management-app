@@ -44,7 +44,15 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   };
 
   const deleteItem = async () => {
-    if (column._id && deletedItem === 'column') onDeleteColumn(column._id);
+    if (column._id && deletedItem === 'column') {
+      if (column.tasks?.length !== 0) {
+        column.tasks!.forEach(async (task: Partial<TaskData>) => {
+          if (column._id && id && task._id)
+            await daleteTaskById({ boardId: id, columnId: column._id, taskId: task._id });
+        });
+      }
+      onDeleteColumn(column._id);
+    }
 
     if (column._id && id && deletedItem !== 'column') {
       await daleteTaskById({ boardId: id, columnId: column._id, taskId: deletedItem });

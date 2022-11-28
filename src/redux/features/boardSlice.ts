@@ -57,6 +57,22 @@ export const boardSlice = createSlice({
         );
       }
     },
+    updateColumnsOrder: (
+      state,
+      action: PayloadAction<{ columns: ColumnData[]; boardId: string }>
+    ) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.map(
+          (column: ColumnData) => {
+            action.payload.columns.forEach((col) => {
+              if (column._id === col._id) column.order = col.order;
+            });
+            return column;
+          }
+        );
+      }
+    },
     setTasks: (
       state,
       action: PayloadAction<{ tasks: TaskData[]; boardId: string; columnId: string }>
@@ -111,6 +127,7 @@ export const {
   addColumn,
   deleteColumn,
   updateColumnInfo,
+  updateColumnsOrder,
   setTasks,
   addTask,
   deleteTask,
