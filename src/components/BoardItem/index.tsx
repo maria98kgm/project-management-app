@@ -9,10 +9,19 @@ type BoardItemProp = {
   boardId: string;
   title: string;
   users: string[];
+  colCount: number;
+  taskCount: number;
   onDelete: (boardId: string) => void;
 };
 
-export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users, onDelete }) => {
+export const BoardItem: React.FC<BoardItemProp> = ({
+  boardId,
+  title,
+  users,
+  colCount,
+  taskCount,
+  onDelete,
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [modalState, setModalState] = useState(false);
@@ -40,6 +49,9 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users, onDe
           <h3>{t('HEADERS.USERS')}:</h3>
           <p>{users.join(', ')}</p>
         </div>
+        <p className="boardItem-columns-tasks">
+          Columns: {colCount}, Tasks: {taskCount}
+        </p>
       </div>
       <ConfirmationModal
         modalState={modalState}

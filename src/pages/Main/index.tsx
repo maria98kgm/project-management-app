@@ -101,7 +101,16 @@ export const Main = () => {
                 key={`${board.title}-${idx}`}
                 title={board.title}
                 users={foundBoardUsers}
-                boardId={board._id ? board._id : ''}
+                boardId={board._id || ''}
+                colCount={(board.columns && board.columns.length) || 0}
+                taskCount={
+                  board.columns
+                    ? board.columns.reduce(
+                        (acc, col) => (col.tasks ? acc + col.tasks.length : 0),
+                        0
+                      )
+                    : 0
+                }
                 onDelete={(boardId) => deleteAllBoardInfo(boardId)}
               />
             );
