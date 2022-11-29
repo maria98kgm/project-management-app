@@ -1,4 +1,4 @@
-import { SignInData } from './Auth.interface';
+import { SignUpData } from './Auth.interface';
 
 export interface StateUserInfo {
   _id: string;
@@ -11,5 +11,5 @@ export interface UserData extends StateUserInfo {
 
 export interface UpdateUser {
   userId: string;
-  userInfo: SignInData;
+  userInfo: SignUpData;
 }
