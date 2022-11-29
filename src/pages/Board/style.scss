@@ -7,6 +7,14 @@
   overflow-x: auto;
   overflow-y: hidden;
 
+  @media (max-width: $breakpoint899) {
+    padding-top: 2rem;
+  }
+
+  @media (max-width: $breakpoint735) {
+    padding-top: 3rem;
+  }
+
   .boards-header {
     @include flex-start-center;
 

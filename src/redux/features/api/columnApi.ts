@@ -9,6 +9,7 @@ import {
 } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
+import { setColumns, addColumn, deleteColumn, updateColumnInfo } from '../boardSlice';
 
 export const columnApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -21,6 +22,15 @@ export const columnApi = apiSlice.injectEndpoints({
           },
         };
       },
+      transformResponse: (response: ColumnData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     createColumn: build.mutation<ColumnData, CreateColumn>({
       query(data) {
@@ -32,6 +42,15 @@ export const columnApi = apiSlice.injectEndpoints({
           },
           body: data.columnInfo,
         };
+      },
+      transformResponse: (response: ColumnData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(addColumn(data));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getColumn: build.mutation<ColumnData, GetColumn>({
@@ -55,6 +74,15 @@ export const columnApi = apiSlice.injectEndpoints({
           body: data.columnInfo,
         };
       },
+      transformResponse: (response: ColumnData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(updateColumnInfo(data));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     deleteColumn: build.mutation<ColumnData, DeleteColumn>({
       query(data) {
@@ -65,6 +93,14 @@ export const columnApi = apiSlice.injectEndpoints({
             Authorization: getCookieToken(),
           },
         };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(deleteColumn({ boardId: data.boardId, columnId: data._id }));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     getColumnsByIdsList: build.mutation<ColumnData[], string[]>({
@@ -97,6 +133,15 @@ export const columnApi = apiSlice.injectEndpoints({
           },
           body: columns,
         };
+      },
+      transformResponse: (response: ColumnData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     createSetOfColumns: build.mutation<ColumnData[], CreateColumnsSet[]>({

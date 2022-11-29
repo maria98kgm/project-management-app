@@ -82,6 +82,13 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
     };
 
     await createBoard(newBoard);
+    dispatch(
+      showToast({
+        isOpen: true,
+        severity: 'success',
+        message: `${t('INFO.APPLIED')}`,
+      })
+    );
     onCreateBoard();
   };
 
