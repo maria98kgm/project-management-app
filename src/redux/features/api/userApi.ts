@@ -51,4 +51,9 @@ export const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllUsersMutation, useGetUserMutation, useDeleteUserMutation } = userApi;
+export const {
+  useGetAllUsersMutation,
+  useUpdateUserMutation,
+  useGetUserMutation,
+  useDeleteUserMutation,
+} = userApi;
