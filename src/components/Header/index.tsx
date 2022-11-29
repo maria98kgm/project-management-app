@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.scss';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import appLogo from '../../assets/img/app_logo.png';
 import { NavBar } from '../NavBar';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { BasicModal } from '../../components/Modal/Modal';
-import { useAppSelector } from '../../redux/hooks';
-import { selectUserInfo } from '../../redux/features/userSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectUserInfo, setUser } from '../../redux/features/userSlice';
 import { Paths } from '../../models';
-import { useNavigate } from 'react-router-dom';
+import { checkTokenExp } from '../../share/cookieToken';
+import { showToast } from '../../redux/features/toastSlice';
 
 export const Header = () => {
   const userInfo = useAppSelector(selectUserInfo);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [showBurger, setShowBurger] = useState(window.innerWidth <= 1190);
   const [header, setHeader] = useState(false);
@@ -35,6 +40,21 @@ export const Header = () => {
   const createNewBoard = (): void => {
     setModalState(true);
   };
+
+  useEffect(() => {
+    if (checkTokenExp()) {
+      dispatch(setUser(null));
+      localStorage.removeItem('user');
+      navigate(Paths.WELCOME);
+      dispatch(
+        showToast({
+          isOpen: true,
+          severity: 'warning',
+          message: t('INFO.TOKEN_EXPIRED'),
+        })
+      );
+    }
+  });
 
   window.addEventListener('scroll', changeHeader);
   window.addEventListener('resize', handleResize);

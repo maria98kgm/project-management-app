@@ -2,6 +2,7 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Paths, SignInData, SignUpData } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
 import { showToast } from '../../redux/features/toastSlice';
@@ -29,6 +30,7 @@ export const SignUp = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const validatePassword = (password: string): string | boolean => {
     const repeatPasswordState = getFieldState('repeatPassword');
@@ -68,14 +70,14 @@ export const SignUp = () => {
   return (
     <section className="signUp-content">
       <form onSubmit={handleSubmit(onSubmit)} className="signUp-form">
-        <h2>Create an account</h2>
+        <h2>{t('HEADERS.REGISTER')}</h2>
         <TextField
           {...register('userName', {
             required: 'This field is required!',
             minLength: { value: 2, message: 'Min length is 2!' },
             maxLength: { value: 20, message: 'Max length is 20!' },
           })}
-          label="Name"
+          label={t('FIELDS.NAME')}
           variant="standard"
           error={!!getFieldState('userName').error}
           helperText={errors['userName']?.message}
@@ -89,7 +91,7 @@ export const SignUp = () => {
             minLength: { value: 2, message: 'Min length is 2!' },
             maxLength: { value: 20, message: 'Max length is 20!' },
           })}
-          label="Login"
+          label={t('FIELDS.LOGIN')}
           variant="standard"
           error={!!getFieldState('login').error}
           helperText={errors['login']?.message}
@@ -104,7 +106,7 @@ export const SignUp = () => {
             maxLength: { value: 20, message: 'Max length is 20!' },
             validate: validatePassword,
           })}
-          label="Password"
+          label={t('FIELDS.PASSWORD')}
           variant="standard"
           error={!!getFieldState('password').error}
           helperText={errors['password']?.message}
@@ -118,7 +120,7 @@ export const SignUp = () => {
             required: 'This field is required!',
             validate: validateRepeatPassword,
           })}
-          label="Repeat Password"
+          label={t('FIELDS.REPEAT_PASSWORD')}
           variant="standard"
           error={!!getFieldState('repeatPassword').error}
           helperText={errors['repeatPassword']?.message}
@@ -128,7 +130,7 @@ export const SignUp = () => {
           fullWidth
         />
         <Button variant="contained" type="submit">
-          Sign Up
+          {t('BUTTONS.SIGNUP')}
         </Button>
       </form>
       <Backdrop sx={{ color: '#fff' }} open={isLoading || loginIsLoading}>

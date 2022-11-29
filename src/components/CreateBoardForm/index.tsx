@@ -45,18 +45,23 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
   } = useForm<Partial<BoardData>>({ mode: 'onChange' });
 
   const fetchUsers = useCallback(async () => {
-    const users = await getUsers(null).unwrap();
+    await getUsers(null)
+      .unwrap()
+      .then((users) => {
+        const nextNames: UserName[] = [];
+        users.forEach((user) => {
+          nextNames.push({
+            id: user._id,
+            name: user.name,
+          });
+        });
 
-    const nextNames: UserName[] = [];
-    users.forEach((user) => {
-      nextNames.push({
-        id: user._id,
-        name: user.name,
+        setNames(nextNames);
+      })
+      .catch((err) => {
+        if (err.status === 403) handleClose();
       });
-    });
-
-    setNames(nextNames);
-  }, [getUsers]);
+  }, [getUsers, handleClose]);
 
   useEffect(() => {
     if (!mount) {
