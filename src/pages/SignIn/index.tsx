@@ -2,6 +2,7 @@ import './style.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Paths } from '../../models';
 import { useSignInMutation } from '../../redux/features/api/authApi';
 import { showToast } from '../../redux/features/toastSlice';
@@ -22,6 +23,7 @@ export const SignIn = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [loginUser, { isLoading }] = useSignInMutation();
 
@@ -41,14 +43,14 @@ export const SignIn = () => {
   return (
     <section className="signIn-content">
       <form onSubmit={handleSubmit(onSubmit)} className="signIn-form">
-        <h2>Sign in</h2>
+        <h2>{t('HEADERS.LOG_IN')}</h2>
         <TextField
           {...register('login', {
             required: 'This field is required!',
             minLength: { value: 2, message: 'Min length is 2!' },
             maxLength: { value: 20, message: 'Max length is 20!' },
           })}
-          label="Login"
+          label={t('FIELDS.LOGIN')}
           variant="standard"
           error={!!getFieldState('login').error}
           helperText={errors['login']?.message}
@@ -63,7 +65,7 @@ export const SignIn = () => {
             maxLength: { value: 20, message: 'Max length is 20!' },
             validate: validatePassword,
           })}
-          label="Password"
+          label={t('FIELDS.PASSWORD')}
           variant="standard"
           error={!!getFieldState('password').error}
           helperText={errors['password']?.message}
@@ -73,7 +75,7 @@ export const SignIn = () => {
           fullWidth
         />
         <Button variant="contained" type="submit">
-          Sign In
+          {t('BUTTONS.SIGNIN')}
         </Button>
       </form>
       <Backdrop sx={{ color: '#fff' }} open={isLoading}>
