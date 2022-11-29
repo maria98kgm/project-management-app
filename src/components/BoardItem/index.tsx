@@ -3,19 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
-import { useDeleteBoardMutation } from '../../redux/features/api/boardApi';
 import './style.scss';
 
 type BoardItemProp = {
   boardId: string;
   title: string;
   users: string[];
+  onDelete: (boardId: string) => void;
 };
 
-export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) => {
+export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users, onDelete }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [deleteBoardById] = useDeleteBoardMutation();
   const [modalState, setModalState] = useState(false);
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
@@ -23,9 +22,9 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) =>
     setModalState(true);
   };
 
-  const deleteBoard = async (id: string): Promise<void> => {
+  const deleteBoard = (id: string): void => {
     setModalState(false);
-    await deleteBoardById(id);
+    onDelete(id);
   };
 
   return (

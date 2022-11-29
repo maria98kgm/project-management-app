@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { CircularProgress, Box } from '@mui/material';
 import { BoardColumn } from '../../components/BoardColumn';
 import { BasicModal } from '../../components/Modal/Modal';
 import { CreateColumnForm } from '../../components/CreateColumnForm';
@@ -14,7 +13,6 @@ import {
   useUpdateSetOfColumnsMutation,
   useUpdateColumnMutation,
 } from '../../redux/features/api/columnApi';
-import { useGetColumnTasksMutation } from '../../redux/features/api/taskApi';
 import { ColumnData, UpdateColumnsSet, NewColumnData } from '../../models';
 import './style.scss';
 
@@ -25,28 +23,10 @@ export const Board = () => {
   const boards = useAppSelector(selectBoards);
   const currentBoard = boards.findIndex((board) => board._id === id);
   const columns = boards[currentBoard].columns;
-  const [getTasks] = useGetColumnTasksMutation();
   const [deleteColumnById] = useDeleteColumnMutation();
   const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
   const [updateColumn] = useUpdateColumnMutation();
-  const [mount, setMount] = useState(false);
   const [modalState, setModalState] = useState(false);
-
-  const fetchTasks = useCallback(() => {
-    if (columns && columns?.length !== 0) {
-      const promises = columns!.map(
-        async (column) => await getTasks({ boardId: id || '', columnId: column._id }).unwrap()
-      );
-      return Promise.allSettled(promises);
-    }
-    return Promise.resolve();
-  }, [getTasks, columns, id]);
-
-  useEffect(() => {
-    if (!mount) {
-      fetchTasks().then(() => setMount(true));
-    }
-  }, [fetchTasks, mount]);
 
   const deleteColumn = async (columnId: string) => {
     if (id) {
@@ -91,11 +71,7 @@ export const Board = () => {
         </Button>
       </div>
       <div className="columns">
-        {!mount ? (
-          <Box className="loader">
-            <CircularProgress />
-          </Box>
-        ) : columns && columns?.length !== 0 ? (
+        {columns && columns?.length !== 0 ? (
           columns!.map((column: ColumnData) => {
             return (
               <div className="column" key={column._id}>

@@ -2,12 +2,20 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, Box } from '@mui/material';
 import { BoardItem } from '../../components/BoardItem';
-import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
-import { useGetBoardColumnsMutation } from '../../redux/features/api/columnApi';
+import {
+  useGetUserBoardsMutation,
+  useDeleteBoardMutation,
+} from '../../redux/features/api/boardApi';
+import {
+  useGetBoardColumnsMutation,
+  useDeleteColumnMutation,
+} from '../../redux/features/api/columnApi';
+import { useDeleteTaskMutation, useGetColumnTasksMutation } from '../../redux/features/api/taskApi';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { useAppSelector } from '../../redux/hooks';
 import { selectBoards } from '../../redux/features/boardSlice';
 import { selectUserInfo, selectUses } from '../../redux/features/userSlice';
+import { ColumnData, TaskData } from '../../models';
 import './style.scss';
 
 export const Main = () => {
@@ -15,7 +23,11 @@ export const Main = () => {
   const [mount, setMount] = useState(false);
   const [getBoards] = useGetUserBoardsMutation();
   const [getColumns] = useGetBoardColumnsMutation();
+  const [getTasks] = useGetColumnTasksMutation();
   const [getUsers] = useGetAllUsersMutation();
+  const [deleteBoardById] = useDeleteBoardMutation();
+  const [deleteColumnById] = useDeleteColumnMutation();
+  const [deleteTaskById] = useDeleteTaskMutation();
   const userInfo = useAppSelector(selectUserInfo);
   const allUsers = useAppSelector(selectUses);
   const boards = useAppSelector(selectBoards);
@@ -24,15 +36,22 @@ export const Main = () => {
     if (userInfo && userInfo._id) {
       await getBoards(userInfo._id).unwrap();
       if (boards.length !== 0) {
-        const promises = boards!.map(async (board) => {
+        const columnPromises = boards!.map(async (board) => {
           if (!board.columns || board.columns?.length === 0) {
-            await getColumns(board._id).unwrap();
+            const columns = await getColumns(board._id).unwrap();
+            if (columns && columns?.length !== 0) {
+              const taskPromises = columns!.map(
+                async (column) =>
+                  await getTasks({ boardId: board._id || '', columnId: column._id }).unwrap()
+              );
+              await Promise.allSettled(taskPromises);
+            }
           }
         });
-        return Promise.allSettled(promises);
+        return Promise.allSettled(columnPromises);
       }
     }
-  }, [getBoards, getColumns, boards, userInfo]);
+  }, [userInfo, getBoards, boards, getColumns, getTasks]);
 
   const fetchUsers = useCallback(async () => {
     await getUsers(null).unwrap();
@@ -44,6 +63,23 @@ export const Main = () => {
       fetchUsers();
     }
   }, [fetchBoards, fetchUsers, mount]);
+
+  const deleteAllBoardInfo = async (boardId: string) => {
+    boards.forEach((board) => {
+      if (board._id === boardId && board.columns && board.columns.length !== 0) {
+        board.columns.forEach(async (column: ColumnData) => {
+          if (column.tasks && column.tasks.length !== 0) {
+            column.tasks.forEach(
+              async (task: TaskData) =>
+                await deleteTaskById({ boardId, columnId: column._id, taskId: task._id })
+            );
+          }
+          await deleteColumnById({ boardId, columnId: column._id });
+        });
+      }
+    });
+    await deleteBoardById(boardId);
+  };
 
   return (
     <section className="main">
@@ -66,6 +102,7 @@ export const Main = () => {
                 title={board.title}
                 users={foundBoardUsers}
                 boardId={board._id ? board._id : ''}
+                onDelete={(boardId) => deleteAllBoardInfo(boardId)}
               />
             );
           })

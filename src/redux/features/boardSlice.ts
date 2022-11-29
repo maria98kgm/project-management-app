@@ -40,7 +40,7 @@ export const boardSlice = createSlice({
     },
     deleteColumn: (state, action: PayloadAction<DeleteColumn>) => {
       const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
-      if (state.boards[currentBoard].columns) {
+      if (currentBoard !== -1 && state.boards[currentBoard].columns) {
         state.boards[currentBoard].columns = state.boards[currentBoard].columns!.filter(
           (column: ColumnData) => column._id !== action.payload.columnId
         );
