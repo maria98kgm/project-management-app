@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StateUserInfo } from '../../models';
+import { JWTPayload, StateUserInfo } from '../../models';
+import { decodeToken } from '../../share/cookieToken';
 import { RootState } from '../store';
 
 interface UserState {
   userInfo: StateUserInfo | null;
 }
 
-const currentUser: string | null = localStorage.getItem('user');
+let currentUser: StateUserInfo | null = null;
+
+const token: '' | RegExpMatchArray | null =
+  document.cookie && document.cookie.match(/^Bearer=([^;]+)/);
+
+if (token) {
+  const jwtPayload: JWTPayload = decodeToken(token[1]);
+  currentUser = { login: jwtPayload.login, _id: jwtPayload.id };
+}
 
 const initialState: UserState = {
-  userInfo: currentUser ? JSON.parse(currentUser) : null,
+  userInfo: currentUser,
 };
 
 export const userSlice = createSlice({

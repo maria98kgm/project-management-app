@@ -15,6 +15,10 @@ export const decodeToken = (token: string) => {
   return JSON.parse(payloadBuffer.toString());
 };
 
-export const checkTokenExp = () => {
-  return !document.cookie && localStorage.getItem('user');
+export const deleteCookieToken = () => {
+  const token: '' | RegExpMatchArray | null =
+    document.cookie && document.cookie.match(/^Bearer=([^;]+)/);
+  if (token) {
+    document.cookie = `${token[0]}; expires=Sun, 20 Aug 2000 12:00:00 UTC`;
+  }
 };
