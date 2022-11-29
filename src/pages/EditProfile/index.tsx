@@ -15,7 +15,6 @@ import { ConfirmationModal } from '../../components/ConfirmationModal/Confirmati
 import { Paths, UserData } from '../../models';
 
 import './style.scss';
-import { setCookieToken } from '../../share/cookieToken';
 
 interface FormInputs {
   userName: string;
@@ -64,11 +63,11 @@ export const EditProfile = () => {
       trigger('repeatPassword');
     }
 
-    return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
+    return /^[a-z0-9]*$/i.test(password) || `${t('INFO.PASSWORD_VALID')}`;
   };
 
   const validateRepeatPassword = (password: string): string | boolean => {
-    return password === getValues('password') || 'Password is not the same!';
+    return password === getValues('password') || `${t('INFO.PASSWORD_MATCH')}`;
   };
 
   const showDeleteModal = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -80,13 +79,12 @@ export const EditProfile = () => {
     await deleteUserID(_id);
     dispatch(setUser(null));
     localStorage.removeItem('user');
-    setCookieToken('token', '-1');
     navigate(Paths.WELCOME);
     dispatch(
       showToast({
         isOpen: true,
         severity: 'success',
-        message: 'You have successfully delete user!',
+        message: `${t('INFO.MESSAGE_DELETE')}`,
       })
     );
   };
@@ -119,14 +117,14 @@ export const EditProfile = () => {
       ) : (
         <div className="editProfile">
           <form className="editProfile-form" onSubmit={handleSubmit(onEditUserSubmit)}>
-            <h2>User profile</h2>
+            <h2>{t('HEADERS.USER_PROFILE')}</h2>
             <TextField
               {...register('userName', {
-                required: 'This field is required!',
-                minLength: { value: 2, message: 'Min length is 2!' },
-                maxLength: { value: 20, message: 'Max length is 20!' },
+                required: `${t('INFO.REQUIRED_TEXT')}`,
+                minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
               })}
-              label="Change your name"
+              label={t('FIELDS.CHANGE_NAME')}
               defaultValue={userData.name}
               variant="standard"
               error={!!getFieldState('userName').error}
@@ -137,11 +135,11 @@ export const EditProfile = () => {
             />
             <TextField
               {...register('login', {
-                required: 'This field is required!',
-                minLength: { value: 2, message: 'Min length is 2!' },
-                maxLength: { value: 20, message: 'Max length is 20!' },
+                required: `${t('INFO.REQUIRED_TEXT')}`,
+                minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
               })}
-              label="Change your login:"
+              label={t('FIELDS.CHANGE_LOGIN')}
               defaultValue={userData.login}
               variant="standard"
               error={!!getFieldState('login').error}
@@ -152,12 +150,12 @@ export const EditProfile = () => {
             />
             <TextField
               {...register('password', {
-                required: 'This field is required!',
-                minLength: { value: 6, message: 'Min length is 6!' },
-                maxLength: { value: 20, message: 'Max length is 20!' },
+                required: `${t('INFO.REQUIRED_TEXT')}`,
+                minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
+                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
                 validate: validatePassword,
               })}
-              label="Change your password:"
+              label={t('FIELDS.CHANGE_PASSWORD')}
               variant="standard"
               error={!!getFieldState('password').error}
               helperText={errors['password']?.message}
@@ -168,10 +166,10 @@ export const EditProfile = () => {
             />
             <TextField
               {...register('repeatPassword', {
-                required: 'This field is required!',
+                required: `${t('INFO.REQUIRED_TEXT')}`,
                 validate: validateRepeatPassword,
               })}
-              label="Repeat Password"
+              label={t('FIELDS.REPEAT_PASSWORD')}
               variant="standard"
               error={!!getFieldState('repeatPassword').error}
               helperText={errors['repeatPassword']?.message}
@@ -181,7 +179,7 @@ export const EditProfile = () => {
               fullWidth
             />
             <Button variant="contained" type="submit">
-              Save changes
+              {t('BUTTONS.SAVE_CHANGES')}
             </Button>
           </form>
           <Button
@@ -190,7 +188,7 @@ export const EditProfile = () => {
             className="delete-user"
             onClick={(event) => showDeleteModal(event)}
           >
-            Delete account
+            {t('BUTTONS.DELETE')}
           </Button>
           <ConfirmationModal
             modalState={modalState}
