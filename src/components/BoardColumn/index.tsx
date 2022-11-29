@@ -12,7 +12,7 @@ import { ColumnData, NewColumnData } from '../../models';
 import './style.scss';
 
 type BoardColumnProps = {
-  column: Partial<ColumnData>;
+  column: ColumnData;
   onDelete: (columnId: string) => void;
   onUpdateTitle: (columnId: string, columnInfo: NewColumnData) => void;
 };
@@ -20,6 +20,7 @@ type BoardColumnProps = {
 export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUpdateTitle }) => {
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
+
   const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [title, setTitle] = useState(column.title);
@@ -31,7 +32,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
 
   const deleteColumn = () => {
     setModalState(false);
-    if (column._id) onDelete(column._id);
+    onDelete(column._id);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,10 +41,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({ column, onDelete, onUp
 
   const changeTitle = () => {
     setIsEdit(false);
-
-    if (column._id && title && column.order) {
-      onUpdateTitle(column._id, { title, order: column.order });
-    }
+    onUpdateTitle(column._id, { title, order: column.order });
 
     dispatch(
       showToast({

@@ -48,7 +48,7 @@ export const Main = () => {
           <Box className="loader">
             <CircularProgress />
           </Box>
-        ) : boards.length !== 0 && allUsers.length !== 0 ? (
+        ) : boards.length && allUsers.length ? (
           boards.map((board, idx) => {
             const foundBoardUsers = allUsers
               .filter((user) => board.users.includes(user._id))
