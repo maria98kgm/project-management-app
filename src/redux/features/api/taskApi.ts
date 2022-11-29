@@ -9,7 +9,7 @@ import {
 } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
-import { addTask, setTasks, deleteTask } from '../boardSlice';
+import { addTask, setTasks, deleteTask, updateTaskInfo } from '../boardSlice';
 
 export const taskApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -77,6 +77,15 @@ export const taskApi = apiSlice.injectEndpoints({
           },
           body: data.taskInfo,
         };
+      },
+      transformResponse: (response: TaskData) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(updateTaskInfo(data));
+        } catch (err) {
+          console.error(err);
+        }
       },
     }),
     deleteTask: build.mutation<TaskData, DeleteTask>({

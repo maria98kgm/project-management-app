@@ -112,6 +112,24 @@ export const boardSlice = createSlice({
         );
       }
     },
+    updateTaskInfo: (state, action: PayloadAction<TaskData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      const currentColumn = state.boards[currentBoard].columns!.findIndex(
+        (column) => column._id === action.payload.columnId
+      );
+      if (state.boards[currentBoard].columns![currentColumn].tasks) {
+        state.boards[currentBoard].columns![currentColumn].tasks = state.boards[
+          currentBoard
+        ].columns![currentColumn].tasks!.map((task: TaskData) => {
+          if (task._id === action.payload._id) {
+            task.title = action.payload.title;
+            task.description = action.payload.description;
+            task.users = [...action.payload.users];
+          }
+          return task;
+        });
+      }
+    },
   },
 });
 
@@ -131,4 +149,5 @@ export const {
   setTasks,
   addTask,
   deleteTask,
+  updateTaskInfo,
 } = boardSlice.actions;

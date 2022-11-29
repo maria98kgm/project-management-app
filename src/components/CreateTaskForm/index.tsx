@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,7 +14,7 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
-import { useCreateTaskMutation } from '../../redux/features/api/taskApi';
+import { useCreateTaskMutation, useUpdateTaskMutation } from '../../redux/features/api/taskApi';
 import { showToast } from '../../redux/features/toastSlice';
 import { useTypedDispatch } from '../../redux/store';
 import { TaskData, TaskCreateData } from '../../models';
@@ -24,6 +24,7 @@ type CreateTaskFormProps = {
   taskOrder: number;
   boardId: string;
   columnId: string;
+  task: TaskData | null;
   handleClose: () => void;
 };
 
@@ -32,6 +33,7 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   taskOrder,
   boardId,
   columnId,
+  task,
 }) => {
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
@@ -39,13 +41,29 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   const names = useAppSelector((state: RootState) => state.user.allUsers);
   const [personName, setPersonName] = useState<string[]>([]);
   const [createTask] = useCreateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     getFieldState,
+    setValue,
+    setFocus,
   } = useForm<Partial<TaskData>>({ mode: 'onChange' });
+
+  useEffect(() => {
+    if (task) {
+      setValue('title', task.title);
+      setValue('description', task.description);
+      setFocus('title');
+      const taskNames = names
+        .filter((name) => task.users.includes(name.id))
+        .map((name) => name.name);
+      setPersonName(taskNames);
+      setValue('users', taskNames);
+    }
+  }, [task, setValue, setFocus, names]);
 
   const onSubmit = async (data: Partial<TaskData>): Promise<void> => {
     const userIds: string[] = names
@@ -60,7 +78,16 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       users: userIds,
     };
 
-    await createTask({ boardId, columnId, taskInfo });
+    if (task) {
+      await updateTask({
+        boardId,
+        columnId,
+        taskId: task._id,
+        taskInfo: { ...taskInfo, columnId },
+      });
+    } else {
+      await createTask({ boardId, columnId, taskInfo });
+    }
 
     dispatch(
       showToast({
@@ -82,7 +109,7 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="create-task">
-      <h2>{t('BUTTONS.ADD_TASK')}</h2>
+      <h2>{task ? t('BUTTONS.EDIT_TASK') : t('BUTTONS.ADD_TASK')}</h2>
       <TextField
         {...register('title', {
           required: 'This field is required!',
@@ -134,7 +161,7 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       </FormControl>
       <div className="buttons">
         <Button variant="contained" type="submit">
-          {t('BUTTONS.CREATE')}
+          {task ? t('BUTTONS.EDIT') : t('BUTTONS.CREATE')}
         </Button>
         <Button
           variant="contained"

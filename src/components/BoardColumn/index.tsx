@@ -36,6 +36,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   const [modalTaskState, setModalTaskState] = useState(false);
   const [title, setTitle] = useState(column.title);
   const [deletedItem, setDeletedItem] = useState('');
+  const [editedItem, setEditedItem] = useState<TaskData | null>(null);
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.stopPropagation();
@@ -97,6 +98,12 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
     setDeletedItem(taskId);
   };
 
+  const editTask = (taskId: string) => {
+    setModalTaskState(true);
+    const taskData = column.tasks!.find((task) => task._id === taskId);
+    setEditedItem(taskData || null);
+  };
+
   return (
     <div className="boardColumn">
       <div className="column-title">
@@ -136,7 +143,11 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
             return (
               <div className="task" key={task._id}>
                 <div className="task-placeholder"></div>
-                <BoardTask task={task} onDelete={(taskId) => deleteTask(taskId)} />
+                <BoardTask
+                  task={task}
+                  onDelete={(taskId) => deleteTask(taskId)}
+                  onEdit={(taskId) => editTask(taskId)}
+                />
               </div>
             );
           })
@@ -144,7 +155,14 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
           <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
         )}
       </div>
-      <Button color="primary" startIcon={'+'} onClick={() => setModalTaskState(true)}>
+      <Button
+        color="primary"
+        startIcon={'+'}
+        onClick={() => {
+          setModalTaskState(true);
+          setEditedItem(null);
+        }}
+      >
         {t('BUTTONS.ADD_TASK')}
       </Button>
       <ConfirmationModal
@@ -158,6 +176,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
           columnId={column._id || ''}
           taskOrder={column.tasks && column.tasks?.length !== 0 ? column.tasks!.length : 0}
           boardId={id || ''}
+          task={editedItem}
         />
       </BasicModal>
     </div>

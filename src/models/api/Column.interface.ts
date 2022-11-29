@@ -8,7 +8,7 @@ export interface NewColumnData {
 export interface ColumnData extends NewColumnData {
   _id: string;
   boardId: string;
-  tasks?: Partial<TaskData>[];
+  tasks?: TaskData[];
 }
 
 export interface GetColumn {
