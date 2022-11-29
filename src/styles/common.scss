@@ -25,3 +25,9 @@
 .content {
   min-height: calc(100vh - $footer-height);
 }
+
+.loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

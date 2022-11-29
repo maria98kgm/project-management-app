@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BoardData } from '../../models';
+import { BoardData, ColumnData, DeleteColumn } from '../../models';
 import { RootState } from '../store';
 
 interface IBoardState {
@@ -23,6 +23,40 @@ export const boardSlice = createSlice({
     deleteBoard: (state, action: PayloadAction<string>) => {
       state.boards = state.boards.filter((board) => board._id !== action.payload);
     },
+    setColumns: (state, action: PayloadAction<{ columns: ColumnData[]; boardId: string }>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      state.boards[currentBoard].columns = [...action.payload.columns];
+    },
+    addColumn: (state, action: PayloadAction<ColumnData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (!state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = [action.payload];
+      } else {
+        state.boards[currentBoard].columns = [
+          ...(state.boards[currentBoard].columns as ColumnData[]),
+          action.payload,
+        ];
+      }
+    },
+    deleteColumn: (state, action: PayloadAction<DeleteColumn>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.filter(
+          (column: ColumnData) => column._id !== action.payload.columnId
+        );
+      }
+    },
+    updateColumnInfo: (state, action: PayloadAction<ColumnData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.map(
+          (column: ColumnData) => {
+            if (column._id === action.payload._id) column.title = action.payload.title;
+            return column;
+          }
+        );
+      }
+    },
   },
 });
 
@@ -30,4 +64,12 @@ export default boardSlice.reducer;
 
 export const selectBoards = (store: RootState) => store.boards.boards;
 
-export const { setBoards, addBoard, deleteBoard } = boardSlice.actions;
+export const {
+  setBoards,
+  addBoard,
+  deleteBoard,
+  setColumns,
+  addColumn,
+  deleteColumn,
+  updateColumnInfo,
+} = boardSlice.actions;
