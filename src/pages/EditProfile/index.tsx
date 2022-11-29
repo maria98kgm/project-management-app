@@ -1,21 +1,22 @@
-import { Box, TextField, Button, CircularProgress } from '@mui/material';
-import React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import {
+  useDeleteUserMutation,
+  useGetUserMutation,
+  useUpdateUserMutation,
+} from '../../redux/features/api/userApi';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectUserInfo, setUser } from '../../redux/features/userSlice';
+import { showToast } from '../../redux/features/toastSlice';
+import { Box, TextField, Button, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { ConfirmationModal } from '../../components/ConfirmationModal/ConfirmationModal';
 import { Paths, UserData } from '../../models';
-import { useDeleteUserMutation, useGetUserMutation } from '../../redux/features/api/userApi';
-import { selectUserInfo, setUser } from '../../redux/features/userSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import './style.scss';
+import { setCookieToken } from '../../share/cookieToken';
 
-type EditProfileProps = {
-  onUpdateUserInfo: () => void;
-  onDelete: (userId: string) => void;
-};
 interface FormInputs {
   userName: string;
   login: string;
@@ -26,7 +27,6 @@ interface FormInputs {
 export const EditProfile = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
   const {
     register,
@@ -36,11 +36,10 @@ export const EditProfile = () => {
     getFieldState,
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
-  // const [getUsers, { isLoading, isError, error }] = useGetAllUsersMutation();
-  // const data = await getAllUsers(args).unwrap();
 
   const [userData, setUserData] = useState<UserData>({ _id: '', name: '', login: '' });
   const [getUser] = useGetUserMutation();
+  const [updateUserData] = useUpdateUserMutation();
   const [deleteUserID] = useDeleteUserMutation();
   const userInfo = useAppSelector(selectUserInfo);
   const [mount, setMount] = useState(false);
@@ -80,7 +79,35 @@ export const EditProfile = () => {
   const deleteUser = async (_id: string): Promise<void> => {
     await deleteUserID(_id);
     dispatch(setUser(null));
+    localStorage.removeItem('user');
+    setCookieToken('token', '-1');
     navigate(Paths.WELCOME);
+    dispatch(
+      showToast({
+        isOpen: true,
+        severity: 'success',
+        message: 'You have successfully delete user!',
+      })
+    );
+  };
+
+  const onEditUserSubmit = async (data: FormInputs): Promise<void> => {
+    const editData = {
+      userId: userInfo!._id,
+      userInfo: {
+        name: data.userName,
+        login: data.login,
+        password: data.password,
+      },
+    };
+    await updateUserData(editData);
+    dispatch(
+      showToast({
+        isOpen: true,
+        severity: 'success',
+        message: `${t('INFO.APPLIED')}`,
+      })
+    );
   };
 
   return (
@@ -90,8 +117,8 @@ export const EditProfile = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <div className="editProfile-form">
-          <form>
+        <div className="editProfile">
+          <form className="editProfile-form" onSubmit={handleSubmit(onEditUserSubmit)}>
             <h2>User profile</h2>
             <TextField
               {...register('userName', {
