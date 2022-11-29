@@ -14,6 +14,6 @@ describe('Sign Up', () => {
       </Router>
     );
 
-    expect(screen.getByText(/HEADERS.REGISTER/i)).toBeInTheDocument();
+    expect(screen.getByText(/BUTTONS.SIGNUP/i)).toBeInTheDocument();
   });
 });

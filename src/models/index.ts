@@ -1,5 +1,6 @@
 export * from './PathsEnum';
 export * from './api/Response.interface';
+export * from './api/JWTPayload.interface';
 export * from './api/Auth.interface';
 export * from './api/User.interface';
 export * from './api/Board.interface';

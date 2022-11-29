@@ -9,7 +9,6 @@ import { BasicModal } from '../../components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
 import { Paths } from '../../models';
-import { checkTokenExp } from '../../share/cookieToken';
 import { showToast } from '../../redux/features/toastSlice';
 
 export const Header = () => {
@@ -42,9 +41,8 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    if (checkTokenExp()) {
+    if (!document.cookie && userInfo) {
       dispatch(setUser(null));
-      localStorage.removeItem('user');
       navigate(Paths.WELCOME);
       dispatch(
         showToast({
