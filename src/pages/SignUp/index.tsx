@@ -39,11 +39,11 @@ export const SignUp = () => {
       trigger('repeatPassword');
     }
 
-    return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
+    return /^[a-z0-9]*$/i.test(password) || `${t('INFO.PASSWORD_VALID')}`;
   };
 
   const validateRepeatPassword = (password: string): string | boolean => {
-    return password === getValues('password') || 'Password is not the same!';
+    return password === getValues('password') || `${t('INFO.PASSWORD_MATCH')}`;
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
@@ -73,9 +73,9 @@ export const SignUp = () => {
         <h2>{t('HEADERS.REGISTER')}</h2>
         <TextField
           {...register('userName', {
-            required: 'This field is required!',
-            minLength: { value: 2, message: 'Min length is 2!' },
-            maxLength: { value: 20, message: 'Max length is 20!' },
+            required: `${t('INFO.REQUIRED_TEXT')}`,
+            minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+            maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
           })}
           label={t('FIELDS.NAME')}
           variant="standard"
@@ -87,9 +87,9 @@ export const SignUp = () => {
         />
         <TextField
           {...register('login', {
-            required: 'This field is required!',
-            minLength: { value: 2, message: 'Min length is 2!' },
-            maxLength: { value: 20, message: 'Max length is 20!' },
+            required: `${t('INFO.REQUIRED_TEXT')}`,
+            minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+            maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
           })}
           label={t('FIELDS.LOGIN')}
           variant="standard"
@@ -101,9 +101,9 @@ export const SignUp = () => {
         />
         <TextField
           {...register('password', {
-            required: 'This field is required!',
-            minLength: { value: 6, message: 'Min length is 6!' },
-            maxLength: { value: 20, message: 'Max length is 20!' },
+            required: `${t('INFO.REQUIRED_TEXT')}`,
+            minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
+            maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
             validate: validatePassword,
           })}
           label={t('FIELDS.PASSWORD')}
@@ -117,7 +117,7 @@ export const SignUp = () => {
         />
         <TextField
           {...register('repeatPassword', {
-            required: 'This field is required!',
+            required: `${t('INFO.REQUIRED_TEXT')}`,
             validate: validateRepeatPassword,
           })}
           label={t('FIELDS.REPEAT_PASSWORD')}
