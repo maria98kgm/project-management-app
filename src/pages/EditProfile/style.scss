@@ -9,7 +9,7 @@
   margin: 4rem 0;
 }
 
-.editProfile-form {
+.editProfile {
   @include flex-center-center;
   min-width: 460px;
   flex-direction: column;
@@ -24,7 +24,18 @@
     margin: 0.6rem;
   }
 
-  @media (max-width: $breakpoint480) {
+  @media (max-width: 580px) {
     min-width: 90%;
+  }
+
+  .editProfile-form {
+    @include flex-center-center;
+    min-width: 460px;
+    flex-direction: column;
+    row-gap: 1.4rem;
+  
+    @media (max-width: 580px) {
+      min-width: 90%;
+    }
   }
 }
