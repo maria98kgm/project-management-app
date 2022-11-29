@@ -53,9 +53,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
     dispatch(setUser(null));
     localStorage.removeItem('user');
     navigate(Paths.WELCOME);
-    dispatch(
-      showToast({ isOpen: true, severity: 'success', message: 'You have successfully logged out!' })
-    );
+    dispatch(showToast({ isOpen: true, severity: 'success', message: t('INFO.LOG_OUT') }));
   };
 
   if (!isToken) {

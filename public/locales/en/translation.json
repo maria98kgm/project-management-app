@@ -75,11 +75,21 @@
     "NO_BOARDS": "Create your first board",
     "CANCELLED": "Changes canceled",
     "APPLIED": "Changes applied",
-    "CONFIRMATION": "Are you sure you want to do this?"
+    "CONFIRMATION": "Are you sure you want to do this?",
+    "TOKEN_EXPIRED": "Your token has expired! Sign in again!",
+    "LOG_OUT": "You have successfully logged out!"
   },
   "HEADERS": {
     "BOARDS": "Boards",
     "TITLE": "Title",
-    "USERS": "Users"
+    "USERS": "Users",
+    "REGISTER": "Register",
+    "LOG_IN": "Log in"
+  },
+  "FIELDS": {
+    "NAME": "Name",
+    "LOGIN": "Login",
+    "PASSWORD": "Password",
+    "REPEAT_PASSWORD": "Repeat Password"
   }
 }
