@@ -15,6 +15,7 @@ import { ConfirmationModal } from '../../components/ConfirmationModal/Confirmati
 import { Paths, UserData } from '../../models';
 
 import './style.scss';
+import { deleteCookieToken } from '../../share/cookieToken';
 
 interface FormInputs {
   userName: string;
@@ -78,7 +79,7 @@ export const EditProfile = () => {
   const deleteUser = async (_id: string): Promise<void> => {
     await deleteUserID(_id);
     dispatch(setUser(null));
-    localStorage.removeItem('user');
+    deleteCookieToken();
     navigate(Paths.WELCOME);
     dispatch(
       showToast({
