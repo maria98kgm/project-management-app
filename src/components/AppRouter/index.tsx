@@ -9,6 +9,7 @@ import { Main } from '../../pages/Main';
 import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
 import { Welcome } from '../../pages/Welcome';
+import { Search } from '../../pages/Search';
 import { NotFound } from '../../pages/NotFound';
 
 export const AppRouter = () => {
@@ -26,6 +27,7 @@ export const AppRouter = () => {
         <Route element={<ProtectedRoute isAllowed={!!userInfo} redirectPath={Paths.WELCOME} />}>
           <Route path={Paths.MAIN} element={<Main />} />
           <Route path={Paths.BOARD} element={<Board />} />
+          <Route path={Paths.SEARCH} element={<Search />} />
         </Route>
         <Route path={Paths.NOT_FOUND} element={<NotFound />} />
       </Route>

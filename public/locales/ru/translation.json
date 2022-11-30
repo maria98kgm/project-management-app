@@ -88,6 +88,9 @@
   "HEADERS": {
     "BOARDS": "Доски",
     "TITLE": "Заголовок",
+    "DESCRIPTION": "Описание",
+    "OWNER": "Владелец",
+    "RESPONSIBLE": "Ответственные",
     "USERS": "Пользователи",
     "REGISTER": "Регистрация",
     "LOG_IN": "Вход",
