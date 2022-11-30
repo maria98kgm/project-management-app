@@ -3,10 +3,7 @@
 .board-columns {
   @include flex-column-start;
   width: 100%;
-  min-height: calc(100vh - $footer-height - $header-height);
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-top: 3rem;
+  min-height: calc(100vh - $footer-height - $header-height - 60px);
 
   .boards-header {
     @include flex-start-center;
@@ -33,5 +30,9 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
   }
 }
