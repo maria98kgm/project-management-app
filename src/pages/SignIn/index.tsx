@@ -28,7 +28,7 @@ export const SignIn = () => {
   const [loginUser, { isLoading }] = useSignInMutation();
 
   const validatePassword = (password: string): string | boolean => {
-    return /^[a-z0-9]*$/i.test(password) || 'The password should contain only numbers and letters!';
+    return /^[a-z0-9]*$/i.test(password) || `${t('INFO.PASSWORD_VALID')}`;
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
@@ -46,9 +46,9 @@ export const SignIn = () => {
         <h2>{t('HEADERS.LOG_IN')}</h2>
         <TextField
           {...register('login', {
-            required: 'This field is required!',
-            minLength: { value: 2, message: 'Min length is 2!' },
-            maxLength: { value: 20, message: 'Max length is 20!' },
+            required: `${t('INFO.REQUIRED_TEXT')}`,
+            minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+            maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
           })}
           label={t('FIELDS.LOGIN')}
           variant="standard"
@@ -60,9 +60,9 @@ export const SignIn = () => {
         />
         <TextField
           {...register('password', {
-            required: 'This field is required!',
-            minLength: { value: 6, message: 'Min length is 6!' },
-            maxLength: { value: 20, message: 'Max length is 20!' },
+            required: `${t('INFO.REQUIRED_TEXT')}`,
+            minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
+            maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
             validate: validatePassword,
           })}
           label={t('FIELDS.PASSWORD')}

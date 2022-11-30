@@ -33,14 +33,4 @@
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(308px, 1fr));
   width: 100%;
-
-  .loader {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  @media (max-width: $breakpoint899) {
-    justify-items: start;
-  }
 }

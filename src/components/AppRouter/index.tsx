@@ -10,6 +10,7 @@ import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
 import { Welcome } from '../../pages/Welcome';
 import { NotFound } from '../../pages/NotFound';
+import { EditProfile } from '../../pages/EditProfile';
 
 export const AppRouter = () => {
   const userInfo = useAppSelector(selectUserInfo);
@@ -28,6 +29,7 @@ export const AppRouter = () => {
           <Route path={Paths.BOARD} element={<Board />} />
         </Route>
         <Route path={Paths.NOT_FOUND} element={<NotFound />} />
+        <Route path={Paths.EDITPROFILE} element={<EditProfile />} />
       </Route>
     </Routes>
   );
