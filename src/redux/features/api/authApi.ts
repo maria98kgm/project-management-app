@@ -1,14 +1,7 @@
-import { SignInData, SignUpData, StateUserInfo, UserData } from '../../../models';
+import { JWTPayload, SignInData, SignUpData, StateUserInfo, UserData } from '../../../models';
 import { decodeToken, setCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
 import { setUser } from '../userSlice';
-
-interface JWTPayload {
-  id: string;
-  login: string;
-  iat: number;
-  exp: number;
-}
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -39,7 +32,6 @@ export const authApi = apiSlice.injectEndpoints({
           const tokenExpDate = new Date(decodedToken.exp * 1000);
 
           dispatch(setUser(userData));
-          localStorage.setItem('user', JSON.stringify(userData));
           setCookieToken(data, tokenExpDate.toUTCString());
         } catch (err) {
           console.error(err);
@@ -51,3 +43,4 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const { useSignUpMutation, useSignInMutation } = authApi;
+// Bearer=(.*?);

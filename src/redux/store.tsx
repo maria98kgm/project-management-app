@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     user: userReducer,
-    boards: boardReducer,
+    board: boardReducer,
     toast: toastReducer,
   },
   devTools: process.env.NODE_ENV === 'development',

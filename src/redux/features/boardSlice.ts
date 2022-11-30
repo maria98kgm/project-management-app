@@ -135,7 +135,7 @@ export const boardSlice = createSlice({
 
 export default boardSlice.reducer;
 
-export const selectBoards = (store: RootState) => store.boards.boards;
+export const selectBoards = (store: RootState) => store.board.boards;
 
 export const {
   setBoards,

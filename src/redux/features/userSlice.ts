@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StateUserInfo, UserName } from '../../models';
+import { JWTPayload, StateUserInfo, UserName } from '../../models';
+import { decodeToken } from '../../share/cookieToken';
 import { RootState } from '../store';
 
 interface UserState {
@@ -7,10 +8,18 @@ interface UserState {
   allUsers: UserName[];
 }
 
-const currentUser: string | null = localStorage.getItem('user');
+let currentUser: StateUserInfo | null = null;
+
+const token: '' | RegExpMatchArray | null =
+  document.cookie && document.cookie.match(/^Bearer=([^;]+)/);
+
+if (token) {
+  const jwtPayload: JWTPayload = decodeToken(token[1]);
+  currentUser = { login: jwtPayload.login, _id: jwtPayload.id };
+}
 
 const initialState: UserState = {
-  userInfo: currentUser ? JSON.parse(currentUser) : null,
+  userInfo: currentUser,
   allUsers: [],
 };
 

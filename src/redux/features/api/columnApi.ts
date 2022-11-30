@@ -28,13 +28,10 @@ export const columnApi = apiSlice.injectEndpoints({
           },
         };
       },
-      transformResponse: (response: ColumnData[]) => response,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          if (data[0]?.boardId) {
-            dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
-          }
+          if (data.length) dispatch(setColumns({ columns: data, boardId: data[0].boardId }));
         } catch (err) {
           console.error(err);
         }

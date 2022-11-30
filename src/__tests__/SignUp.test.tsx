@@ -14,6 +14,6 @@ describe('Sign Up', () => {
       </Router>
     );
 
-    expect(screen.getByText(/Create an account/i)).toBeInTheDocument();
+    expect(screen.getByText(/BUTTONS.SIGNUP/i)).toBeInTheDocument();
   });
 });

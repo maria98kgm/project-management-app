@@ -6,21 +6,18 @@
   min-height: calc(100vh - $footer-height - $header-height);
   overflow-x: auto;
   overflow-y: hidden;
-
-  @media (max-width: $breakpoint899) {
-    padding-top: 2rem;
-  }
-
-  @media (max-width: $breakpoint735) {
-    padding-top: 3rem;
-  }
+  padding-top: 3rem;
 
   .boards-header {
     @include flex-start-center;
+    height: 100px;
 
     h1 {
       font-weight: 600;
       color: $primary-text-color;
+      letter-spacing: 1px;
+      font-size: 26px;
+      margin: 0;
     }
 
     svg:hover {

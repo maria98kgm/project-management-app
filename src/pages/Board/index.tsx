@@ -42,7 +42,7 @@ export const Board = () => {
         })
       );
 
-      await updateColumnsOrder(updatedColumns);
+      if (updatedColumns.length) await updateColumnsOrder(updatedColumns);
     }
   };
 

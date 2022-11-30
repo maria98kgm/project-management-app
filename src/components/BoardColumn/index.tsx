@@ -79,10 +79,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
 
   const changeTitle = () => {
     setIsEdit(false);
-
-    if (column._id && title && column.order) {
-      onUpdateTitle(column._id, { title, order: column.order });
-    }
+    onUpdateTitle(column!._id, { title, order: column.order });
 
     dispatch(
       showToast({
