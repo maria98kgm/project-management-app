@@ -67,7 +67,9 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
         })
       );
 
-      await updateTasksOrder(updatedTasks);
+      if (updatedTasks.length) {
+        await updateTasksOrder(updatedTasks);
+      }
     }
 
     setModalState(false);
@@ -79,7 +81,10 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
 
   const changeTitle = () => {
     setIsEdit(false);
-    onUpdateTitle(column!._id, { title, order: column.order });
+
+    if (column._id && title && column.order) {
+      onUpdateTitle(column._id, { title, order: column.order });
+    }
 
     dispatch(
       showToast({
