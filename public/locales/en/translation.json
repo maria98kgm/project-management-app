@@ -77,14 +77,18 @@
     "APPLIED": "Changes applied",
     "CONFIRMATION": "Are you sure you want to do this?",
     "TOKEN_EXPIRED": "Your token has expired! Sign in again!",
-    "LOG_OUT": "You have successfully logged out!"
+    "LOG_OUT": "You have successfully logged out!",
+    "TASK_SEARCH": "Task search",
+    "FOUND_TASKS": "The following tasks were found for the query ",
+    "NOTHING_FOUND": "Not a single task was found"
   },
   "HEADERS": {
     "BOARDS": "Boards",
     "TITLE": "Title",
     "USERS": "Users",
     "REGISTER": "Register",
-    "LOG_IN": "Log in"
+    "LOG_IN": "Log in",
+    "SEARCH": "Search"
   },
   "FIELDS": {
     "NAME": "Name",

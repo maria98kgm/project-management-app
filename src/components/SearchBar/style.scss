@@ -1,0 +1,9 @@
+@import 'src/styles/style-import';
+
+fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: $secondary-color;
+}
+
+.MuiInputBase-input {
+  color: $secondary-color;
+}
