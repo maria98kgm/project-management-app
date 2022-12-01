@@ -163,7 +163,10 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
                   </Button>
                 </ListItemButton>
                 <ListItemButton sx={menuButtonStyle}>
-                  <Button sx={{ color: 'white' }} onClick={() => handleMenuButton(Paths.BOARD)}>
+                  <Button
+                    sx={{ color: 'white' }}
+                    onClick={() => handleMenuButton(Paths.EDITPROFILE)}
+                  >
                     {t('BUTTONS.EDITPROFILE')}
                   </Button>
                 </ListItemButton>
@@ -184,7 +187,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
           <Button variant="contained" onClick={createNewBoard}>
             {t('BUTTONS.NEWBOARD')}
           </Button>
-          <Button variant="contained" onClick={() => navigate(Paths.BOARD)}>
+          <Button variant="contained" onClick={() => navigate(Paths.EDITPROFILE)}>
             {t('BUTTONS.EDITPROFILE')}
           </Button>
           <Button variant="contained" onClick={signOut}>

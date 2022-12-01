@@ -6,7 +6,8 @@
   width: 308px;
   background-color: $board-background-color;
   border: solid $board-primary-color;
-  transition-duration: 0.3s;
+  border-radius: 3px;
+  transition-duration: .3s;
 
   &:hover {
     cursor: pointer;

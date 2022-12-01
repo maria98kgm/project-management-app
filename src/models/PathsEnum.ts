@@ -5,4 +5,5 @@ export enum Paths {
   MAIN = '/main',
   BOARD = '/board/:id',
   NOT_FOUND = '*',
+  EDITPROFILE = '/editprofile',
 }

@@ -69,7 +69,9 @@
     "EDIT": "Edit",
     "CANCEL": "Cancel",
     "YES": "Yes",
-    "NO": "No"
+    "NO": "No",
+    "SAVE_CHANGES": "Save changes",
+    "DELETE": "Delete account"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
@@ -79,7 +81,13 @@
     "APPLIED": "Changes applied",
     "CONFIRMATION": "Are you sure you want to do this?",
     "TOKEN_EXPIRED": "Your token has expired! Sign in again!",
-    "LOG_OUT": "You have successfully logged out!"
+    "LOG_OUT": "You have successfully logged out!",
+    "REQUIRED_TEXT": "This field is required!",
+    "MESSAGE_MIN": "Min length is ",
+    "MESSAGE_MAX": "Max length is ",
+    "MESSAGE_DELETE": "You have successfully delete user!",
+    "PASSWORD_MATCH": "Password is not the same!",
+    "PASSWORD_VALID": "The password should contain only numbers and letters!"
   },
   "HEADERS": {
     "BOARDS": "Boards",
@@ -87,12 +95,16 @@
     "DESCRIPTION": "Description",
     "USERS": "Users",
     "REGISTER": "Register",
-    "LOG_IN": "Log in"
+    "LOG_IN": "Log in",
+    "USER_PROFILE": "User profile"
   },
   "FIELDS": {
     "NAME": "Name",
     "LOGIN": "Login",
     "PASSWORD": "Password",
-    "REPEAT_PASSWORD": "Repeat Password"
+    "REPEAT_PASSWORD": "Repeat Password",
+    "CHANGE_NAME": "Change your name",
+    "CHANGE_LOGIN": "Change your login",
+    "CHANGE_PASSWORD": "Change your password"
   }
 }
