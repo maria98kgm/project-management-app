@@ -12,9 +12,9 @@ import { showToast } from '../../redux/features/toastSlice';
 import { useDeleteTaskMutation, useUpdateTasksSetMutation } from '../../redux/features/api/taskApi';
 import { useTypedDispatch } from '../../redux/store';
 import { ColumnData, NewColumnData, TaskData, UpdateTasksSet } from '../../models';
-import './style.scss';
 import { CreateTaskForm } from '../CreateTaskForm';
 import { BasicModal } from '../Modal/Modal';
+import './style.scss';
 
 type BoardColumnProps = {
   column: Partial<ColumnData>;
@@ -50,7 +50,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
 
   const deleteItem = async () => {
     if (column._id && deletedItem === 'column') {
-      if (column.tasks?.length !== 0) {
+      if (column.tasks && column.tasks?.length !== 0) {
         column.tasks!.forEach(async (task: Partial<TaskData>) => {
           if (column._id && id && task._id)
             await daleteTaskById({ boardId: id, columnId: column._id, taskId: task._id });
@@ -111,7 +111,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   };
 
   return (
-    <Draggable draggableId={column._id} index={index}>
+    <Draggable draggableId={column._id!} index={index}>
       {(provided) => (
         <div
           className="boardColumn"

@@ -106,7 +106,7 @@ export const Main = () => {
                 taskCount={
                   board.columns
                     ? board.columns.reduce(
-                        (acc, col) => (col.tasks ? acc + col.tasks.length : 0),
+                        (acc, col) => (col.tasks ? acc + col.tasks.length : acc),
                         0
                       )
                     : 0

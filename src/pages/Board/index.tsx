@@ -28,8 +28,8 @@ export const Board = () => {
   const currentBoard = boards.findIndex((board) => board._id === id);
   const columns = boards[currentBoard].columns;
 
-  const [deleteColumnById] = useDeleteColumnMutation();
-  const [updateColumnsOrder, { isLoading }] = useUpdateSetOfColumnsMutation();
+  const [deleteColumnById, { isLoading: deleating }] = useDeleteColumnMutation();
+  const [updateColumnsOrder, { isLoading: updating }] = useUpdateSetOfColumnsMutation();
   const [updateColumn] = useUpdateColumnMutation();
   const [modalState, setModalState] = useState(false);
 
@@ -138,15 +138,12 @@ export const Board = () => {
         <CreateColumnForm
           columnOrder={columns && columns?.length !== 0 ? columns!.length : 0}
           boardId={id!}
-          onCreateColumn={async () => {
-            setModalState(false);
-          }}
           handleClose={() => {
             setModalState(false);
           }}
         />
       </BasicModal>
-      <Backdrop sx={{ color: '#fff' }} open={isLoading}>
+      <Backdrop sx={{ color: '#fff' }} open={deleating || updating}>
         <CircularProgress color="inherit" size={60} />
       </Backdrop>
     </div>
