@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { Draggable } from '@hello-pangea/dnd';
 import { BoardTask } from '../BoardTask';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
 import { showToast } from '../../redux/features/toastSlice';
@@ -19,16 +20,19 @@ type BoardColumnProps = {
   column: Partial<ColumnData>;
   onDeleteColumn: (columnId: string) => void;
   onUpdateTitle: (columnId: string, columnInfo: NewColumnData) => void;
+  index: number;
 };
 
 export const BoardColumn: React.FC<BoardColumnProps> = ({
   column,
   onDeleteColumn,
   onUpdateTitle,
+  index,
 }) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useTypedDispatch();
+
   const [daleteTaskById] = useDeleteTaskMutation();
   const [updateTasksOrder] = useUpdateTasksSetMutation();
   const [isEdit, setIsEdit] = useState(false);
@@ -107,80 +111,89 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   };
 
   return (
-    <div className="boardColumn">
-      <div className="column-title">
-        {isEdit ? (
-          <React.Fragment>
-            <input value={title} onChange={(event) => handleChange(event)} />
-            <CheckCircleOutlineIcon color="info" onClick={() => changeTitle()} />
-            <HighlightOffIcon
-              color="info"
-              onClick={() => {
-                setIsEdit(false);
-                setTitle(column.title);
-                dispatch(
-                  showToast({
-                    isOpen: true,
-                    severity: 'warning',
-                    message: `${t('INFO.CANCELLED')}`,
-                  })
-                );
-              }}
-            />
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <div className="title" onClick={() => setIsEdit(true)}>
-              {title}
-            </div>
-            <div className="buttons">
-              <DeleteIcon color="info" onClick={(event) => showDeleteModal(event)} />
-            </div>
-          </React.Fragment>
-        )}
-      </div>
-      <div className="tasks">
-        {column.tasks && column.tasks.length !== 0 ? (
-          column.tasks.map((task) => {
-            return (
-              <div className="task" key={task._id}>
-                <div className="task-placeholder"></div>
-                <BoardTask
-                  task={task}
-                  onDelete={(taskId) => deleteTask(taskId)}
-                  onEdit={(taskId) => editTask(taskId)}
+    <Draggable draggableId={column._id} index={index}>
+      {(provided) => (
+        <div
+          className="boardColumn"
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <div className="column-title">
+            {isEdit ? (
+              <React.Fragment>
+                <input value={title} onChange={(event) => handleChange(event)} />
+                <CheckCircleOutlineIcon color="info" onClick={() => changeTitle()} />
+                <HighlightOffIcon
+                  color="info"
+                  onClick={() => {
+                    setIsEdit(false);
+                    setTitle(column.title);
+                    dispatch(
+                      showToast({
+                        isOpen: true,
+                        severity: 'warning',
+                        message: `${t('INFO.CANCELLED')}`,
+                      })
+                    );
+                  }}
                 />
-              </div>
-            );
-          })
-        ) : (
-          <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
-        )}
-      </div>
-      <Button
-        color="primary"
-        startIcon={'+'}
-        onClick={() => {
-          setModalTaskState(true);
-          setEditedItem(null);
-        }}
-      >
-        {t('BUTTONS.ADD_TASK')}
-      </Button>
-      <ConfirmationModal
-        modalState={modalState}
-        applyYes={() => deleteItem()}
-        applyNo={() => setModalState(false)}
-      />
-      <BasicModal isOpen={modalTaskState}>
-        <CreateTaskForm
-          handleClose={() => setModalTaskState(false)}
-          columnId={column._id || ''}
-          taskOrder={column.tasks && column.tasks?.length !== 0 ? column.tasks!.length : 0}
-          boardId={id || ''}
-          task={editedItem}
-        />
-      </BasicModal>
-    </div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <div className="title" onClick={() => setIsEdit(true)}>
+                  {title}
+                </div>
+                <div className="buttons">
+                  <DeleteIcon color="info" onClick={(event) => showDeleteModal(event)} />
+                </div>
+              </React.Fragment>
+            )}
+          </div>
+          <div className="tasks">
+            {column.tasks && column.tasks.length !== 0 ? (
+              column.tasks.map((task) => {
+                return (
+                  <div className="task" key={task._id}>
+                    <div className="task-placeholder"></div>
+                    <BoardTask
+                      task={task}
+                      onDelete={(taskId) => deleteTask(taskId)}
+                      onEdit={(taskId) => editTask(taskId)}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
+            )}
+          </div>
+          <Button
+            color="primary"
+            startIcon={'+'}
+            onClick={() => {
+              setModalTaskState(true);
+              setEditedItem(null);
+            }}
+          >
+            {t('BUTTONS.ADD_TASK')}
+          </Button>
+          <ConfirmationModal
+            modalState={modalState}
+            applyYes={() => deleteItem()}
+            applyNo={() => setModalState(false)}
+          />
+          <BasicModal isOpen={modalTaskState}>
+            <CreateTaskForm
+              handleClose={() => setModalTaskState(false)}
+              columnId={column._id || ''}
+              taskOrder={column.tasks && column.tasks?.length !== 0 ? column.tasks!.length : 0}
+              boardId={id || ''}
+              task={editedItem}
+            />
+          </BasicModal>
+        </div>
+      )}
+    </Draggable>
   );
 };
