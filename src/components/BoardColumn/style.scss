@@ -3,6 +3,7 @@
 .boardColumn {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-shrink: 0;
   width: 275px;
   max-height: 401px;
@@ -25,11 +26,12 @@
       padding: 2px 4px;
       border: none;
       outline: none;
+      width: 75%;
     }
 
     .title {
       color: $white-color;
-      width: 75%;
+      padding: 0 0.5rem;
       max-height: 40px;
       overflow: hidden;
       text-overflow: ellipsis;

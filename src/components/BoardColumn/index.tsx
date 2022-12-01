@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -9,7 +9,11 @@ import { Draggable } from '@hello-pangea/dnd';
 import { BoardTask } from '../BoardTask';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
 import { showToast } from '../../redux/features/toastSlice';
-import { useDeleteTaskMutation, useUpdateTasksSetMutation } from '../../redux/features/api/taskApi';
+import {
+  useDeleteTaskMutation,
+  useGetColumnTasksMutation,
+  useUpdateTasksSetMutation,
+} from '../../redux/features/api/taskApi';
 import { useTypedDispatch } from '../../redux/store';
 import { ColumnData, NewColumnData, TaskData, UpdateTasksSet } from '../../models';
 import { CreateTaskForm } from '../CreateTaskForm';
@@ -17,7 +21,7 @@ import { BasicModal } from '../Modal/Modal';
 import './style.scss';
 
 type BoardColumnProps = {
-  column: Partial<ColumnData>;
+  column: ColumnData;
   onDeleteColumn: (columnId: string) => void;
   onUpdateTitle: (columnId: string, columnInfo: NewColumnData) => void;
   index: number;
@@ -33,8 +37,10 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   const { id } = useParams();
   const dispatch = useTypedDispatch();
 
-  const [daleteTaskById] = useDeleteTaskMutation();
+  const [deleteTaskById] = useDeleteTaskMutation();
   const [updateTasksOrder] = useUpdateTasksSetMutation();
+  const [getTasks] = useGetColumnTasksMutation();
+
   const [isEdit, setIsEdit] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalTaskState, setModalTaskState] = useState(false);
@@ -51,20 +57,20 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   const deleteItem = async () => {
     if (column._id && deletedItem === 'column') {
       if (column.tasks && column.tasks?.length !== 0) {
-        column.tasks!.forEach(async (task: Partial<TaskData>) => {
+        column.tasks!.forEach(async (task: TaskData) => {
           if (column._id && id && task._id)
-            await daleteTaskById({ boardId: id, columnId: column._id, taskId: task._id });
+            await deleteTaskById({ boardId: id, columnId: column._id, taskId: task._id });
         });
       }
       onDeleteColumn(column._id);
     }
 
     if (column._id && id && deletedItem !== 'column') {
-      await daleteTaskById({ boardId: id, columnId: column._id, taskId: deletedItem });
+      await deleteTaskById({ boardId: id, columnId: column._id, taskId: deletedItem });
 
-      const newTasks = column.tasks!.filter((task: Partial<TaskData>) => task._id !== deletedItem);
+      const newTasks = column.tasks!.filter((task: TaskData) => task._id !== deletedItem);
       const updatedTasks = newTasks.map(
-        (task: Partial<TaskData>, idx: number): UpdateTasksSet => ({
+        (task: TaskData, idx: number): UpdateTasksSet => ({
           _id: task._id || '',
           order: idx,
           columnId: column._id || '',
@@ -109,6 +115,14 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
     const taskData = column.tasks!.find((task) => task._id === taskId);
     setEditedItem(taskData || null);
   };
+
+  const fetchData = useCallback(async () => {
+    await getTasks({ boardId: id || '', columnId: column._id });
+  }, [column._id, getTasks, id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <Draggable draggableId={column._id!} index={index}>
@@ -187,7 +201,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
             <CreateTaskForm
               handleClose={() => setModalTaskState(false)}
               columnId={column._id || ''}
-              taskOrder={column.tasks && column.tasks?.length !== 0 ? column.tasks!.length : 0}
+              taskOrder={column.tasks?.length ? column.tasks!.length : 0}
               boardId={id || ''}
               task={editedItem}
             />

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, Box } from '@mui/material';
+import { CircularProgress, Backdrop } from '@mui/material';
 import { BoardItem } from '../../components/BoardItem';
 import {
   useGetUserBoardsMutation,
@@ -20,21 +20,24 @@ import './style.scss';
 
 export const Main = () => {
   const { t } = useTranslation();
+
   const [mount, setMount] = useState(false);
-  const [getBoards] = useGetUserBoardsMutation();
+
+  const [getBoards, { isLoading: boardsLoading }] = useGetUserBoardsMutation();
   const [getColumns] = useGetBoardColumnsMutation();
   const [getTasks] = useGetColumnTasksMutation();
   const [getUsers] = useGetAllUsersMutation();
   const [deleteBoardById] = useDeleteBoardMutation();
   const [deleteColumnById] = useDeleteColumnMutation();
   const [deleteTaskById] = useDeleteTaskMutation();
+
   const userInfo = useAppSelector(selectUserInfo);
   const allUsers = useAppSelector(selectUses);
   const boards = useAppSelector(selectBoards);
 
   const fetchBoards = useCallback(async () => {
     if (userInfo && userInfo._id) {
-      await getBoards(userInfo._id).unwrap();
+      if (!boards.length) await getBoards(userInfo._id).unwrap();
       if (boards.length !== 0) {
         const columnPromises = boards!.map(async (board) => {
           if (!board.columns || board.columns?.length === 0) {
@@ -87,11 +90,7 @@ export const Main = () => {
         <h1>{t('HEADERS.BOARDS')}</h1>
       </div>
       <div className="allBoards">
-        {!mount ? (
-          <Box className="loader">
-            <CircularProgress />
-          </Box>
-        ) : boards.length && allUsers.length ? (
+        {boards.length && allUsers.length ? (
           boards.map((board, idx) => {
             const foundBoardUsers = allUsers
               .filter((user) => board.users.includes(user.id))
@@ -116,9 +115,12 @@ export const Main = () => {
             );
           })
         ) : (
-          <p>{t('INFO.NO_BOARDS')}</p>
+          <p>{!boardsLoading ? t('INFO.NO_BOARDS') : null}</p>
         )}
       </div>
+      <Backdrop sx={{ color: '#fff' }} open={boardsLoading}>
+        <CircularProgress color="inherit" size={60} />
+      </Backdrop>
     </section>
   );
 };
