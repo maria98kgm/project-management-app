@@ -8,20 +8,21 @@ import { BoardColumn } from '../../components/BoardColumn';
 import { BasicModal } from '../../components/Modal/Modal';
 import { CreateColumnForm } from '../../components/CreateColumnForm';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectBoards, setColumns } from '../../redux/features/boardSlice';
+import { selectBoards, setColumns, setTasks } from '../../redux/features/boardSlice';
 import {
   useDeleteColumnMutation,
   useUpdateSetOfColumnsMutation,
   useUpdateColumnMutation,
   useGetBoardColumnsMutation,
 } from '../../redux/features/api/columnApi';
-import { ColumnData, UpdateColumnsSet, NewColumnData } from '../../models';
+import { ColumnData, UpdateColumnsSet, NewColumnData, TaskData } from '../../models';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import './style.scss';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { selectUserInfo } from '../../redux/features/userSlice';
 import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
 import { showToast } from '../../redux/features/toastSlice';
+import { useUpdateTasksSetMutation } from '../../redux/features/api/taskApi';
 
 export const Board = () => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ export const Board = () => {
   const [updateColumnsOrder, { isLoading: updating }] = useUpdateSetOfColumnsMutation();
   const [getUsers] = useGetAllUsersMutation();
   const [updateColumn] = useUpdateColumnMutation();
+  const [updateTasksOrder, { isLoading: updatingTasks }] = useUpdateTasksSetMutation();
 
   const [modalState, setModalState] = useState(false);
 
@@ -102,7 +104,81 @@ export const Board = () => {
           message: `${t('INFO.APPLIED')}`,
         })
       );
+
+      return;
     }
+
+    const start = source.droppableId;
+    const finish = destination.droppableId;
+
+    if (start === finish) {
+      const columnIndex = columns.findIndex((column) => column._id === start);
+      const column = columns[columnIndex];
+      const newColumnTasks = [...(column.tasks as TaskData[])];
+      const movedColumn = newColumnTasks.splice(source.index, 1)[0];
+      newColumnTasks.splice(destination.index, 0, movedColumn);
+
+      const newTasks = newColumnTasks.map((task, index) => {
+        return { ...task, order: index };
+      });
+      const patchNewTasks = newColumnTasks.map((task, index) => {
+        return { _id: task._id, order: index, columnId: source.droppableId };
+      });
+
+      dispatch(setTasks({ tasks: newTasks, boardId: column.boardId, columnId: column._id }));
+      await updateTasksOrder(patchNewTasks);
+
+      dispatch(
+        showToast({
+          isOpen: true,
+          severity: 'success',
+          message: `${t('INFO.APPLIED')}`,
+        })
+      );
+
+      return;
+    }
+
+    const startColumnIndex = columns.findIndex((column) => column._id === start);
+    const startColumn = columns[startColumnIndex];
+    const startColumnTasks = [...(startColumn.tasks as TaskData[])];
+    const movedColumn = startColumnTasks.splice(source.index, 1)[0];
+
+    const finishColumnIndex = columns.findIndex((column) => column._id === finish);
+    const finishColumn = columns[finishColumnIndex];
+    const finishColumnTasks = finishColumn.tasks ? [...finishColumn.tasks] : [];
+    finishColumnTasks.splice(destination.index, 0, movedColumn);
+
+    const newStartTasks = startColumnTasks.map((task, index) => {
+      return { ...task, order: index };
+    });
+    const patchNewStartTasks = startColumnTasks.map((task, index) => {
+      return { _id: task._id, order: index, columnId: source.droppableId };
+    });
+    const newFinishTasks = finishColumnTasks.map((task, index) => {
+      return { ...task, order: index };
+    });
+    const patchNewFinishTasks = finishColumnTasks.map((task, index) => {
+      return { _id: task._id, order: index, columnId: destination.droppableId };
+    });
+
+    dispatch(
+      setTasks({ tasks: newStartTasks, boardId: startColumn.boardId, columnId: startColumn._id })
+    );
+    dispatch(
+      setTasks({ tasks: newFinishTasks, boardId: finishColumn.boardId, columnId: finishColumn._id })
+    );
+
+    if (patchNewStartTasks.length) await updateTasksOrder(patchNewStartTasks);
+    await updateTasksOrder(patchNewFinishTasks);
+
+    dispatch(
+      showToast({
+        isOpen: true,
+        severity: 'success',
+        message: `${t('INFO.APPLIED')}`,
+      })
+    );
   };
 
   const fetchData = useCallback(async () => {
@@ -174,7 +250,10 @@ export const Board = () => {
           }}
         />
       </BasicModal>
-      <Backdrop sx={{ color: '#fff' }} open={deleting || updating || gettingColumns}>
+      <Backdrop
+        sx={{ color: '#fff' }}
+        open={deleting || updating || gettingColumns || updatingTasks}
+      >
         <CircularProgress color="inherit" size={60} />
       </Backdrop>
     </div>
