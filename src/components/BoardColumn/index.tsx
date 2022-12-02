@@ -164,8 +164,12 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
             )}
           </div>
           <Droppable droppableId={column._id} type="task">
-            {(provided) => (
-              <div className="tasks" {...provided.droppableProps} ref={provided.innerRef}>
+            {(provided, snapshot) => (
+              <div
+                className={`tasks ${snapshot.isDraggingOver ? 'tasksIsDraggingOver' : ''}`}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
                 {column.tasks && column.tasks.length !== 0 ? (
                   column.tasks.map((task, index) => {
                     return (

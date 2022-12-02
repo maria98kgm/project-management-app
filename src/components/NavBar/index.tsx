@@ -74,6 +74,8 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
                 sx: {
                   width: 240,
                   height: 260,
+                  borderRadius: '0 0 0 4px',
+                  background: 'transparent',
                 },
               }}
             >
@@ -137,6 +139,8 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
               sx: {
                 width: 240,
                 height: 380,
+                borderRadius: '0 0 0 4px',
+                background: 'transparent',
               },
             }}
           >

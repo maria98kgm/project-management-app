@@ -19,9 +19,9 @@ export const BoardTask: React.FC<TaskProps> = ({ task, onDelete, onEdit, index }
 
   return (
     <Draggable draggableId={task._id} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
-          className="boardTask"
+          className={`boardTask ${snapshot.isDragging ? 'taskIsDragging' : ''}`}
           onClick={() => onEdit(task._id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
