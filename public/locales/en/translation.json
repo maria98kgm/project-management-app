@@ -71,7 +71,8 @@
     "YES": "Yes",
     "NO": "No",
     "SAVE_CHANGES": "Save changes",
-    "DELETE": "Delete account"
+    "DELETE": "Delete account",
+    "MAIN_IN": "Go to main page"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
