@@ -63,7 +63,7 @@ export const Header = () => {
       <header>
         <div className={header ? 'header sticky' : 'header'}>
           <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
-          <SearchBar />
+          <SearchBar isToken={isToken} />
           <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
         </div>
       </header>

@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import { useDebounce } from '../../share/utils';
 import './style.scss';
 
-export const SearchBar = () => {
+export const SearchBar: React.FC<{ isToken: boolean }> = ({ isToken }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchQuery, setQuery] = useState('');
@@ -19,7 +19,7 @@ export const SearchBar = () => {
     return () => setQuery('');
   }, [debouncedSearchQuery, navigate]);
 
-  return (
+  return isToken ? (
     <TextField
       id="search-bar"
       className="text"
@@ -35,5 +35,5 @@ export const SearchBar = () => {
         startAdornment: <SearchIcon color="secondary" />,
       }}
     />
-  );
+  ) : null;
 };
