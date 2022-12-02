@@ -1,6 +1,7 @@
-import { UpdateUser, UserData } from '../../../models';
+import { UpdateUser, UserData, UserName } from '../../../models';
 import { getCookieToken } from '../../../share/cookieToken';
 import { apiSlice } from '../apiSlice';
+import { setAllUsers } from '../userSlice';
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -14,6 +15,21 @@ export const userApi = apiSlice.injectEndpoints({
         };
       },
       transformResponse: (response: UserData[]) => response,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const names: UserName[] = [];
+          data.forEach((user) => {
+            names.push({
+              id: user._id,
+              name: user.name,
+            });
+          });
+          dispatch(setAllUsers(names));
+        } catch (err) {
+          console.error(err);
+        }
+      },
     }),
     getUser: build.mutation<UserData, string>({
       query(userId) {

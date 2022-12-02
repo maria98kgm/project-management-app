@@ -8,7 +8,7 @@ export interface NewBoardData {
 
 export interface BoardData extends NewBoardData {
   _id: string;
-  columns?: ColumnData[];
+  columns: ColumnData[];
 }
 
 export interface UpdateBoard {

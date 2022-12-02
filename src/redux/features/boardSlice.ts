@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BoardData, ColumnData, DeleteColumn } from '../../models';
+import { BoardData, ColumnData, DeleteColumn, TaskData, DeleteTask } from '../../models';
 import { RootState } from '../store';
 
 interface IBoardState {
@@ -40,7 +40,7 @@ export const boardSlice = createSlice({
     },
     deleteColumn: (state, action: PayloadAction<DeleteColumn>) => {
       const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
-      if (state.boards[currentBoard].columns) {
+      if (currentBoard !== -1 && state.boards[currentBoard].columns) {
         state.boards[currentBoard].columns = state.boards[currentBoard].columns!.filter(
           (column: ColumnData) => column._id !== action.payload.columnId
         );
@@ -55,6 +55,82 @@ export const boardSlice = createSlice({
             return column;
           }
         );
+      }
+    },
+    updateColumnsOrder: (
+      state,
+      action: PayloadAction<{ columns: ColumnData[]; boardId: string }>
+    ) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      if (state.boards[currentBoard].columns) {
+        state.boards[currentBoard].columns = state.boards[currentBoard].columns!.map(
+          (column: ColumnData) => {
+            action.payload.columns.forEach((col) => {
+              if (column._id === col._id) column.order = col.order;
+            });
+            return column;
+          }
+        );
+      }
+    },
+    setTasks: (
+      state,
+      action: PayloadAction<{ tasks: TaskData[]; boardId: string; columnId: string }>
+    ) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+
+      if (state.boards[currentBoard].columns) {
+        const currentColumn = state.boards[currentBoard].columns.findIndex(
+          (column) => column._id === action.payload.columnId
+        );
+        state.boards[currentBoard].columns![currentColumn].tasks = [...action.payload.tasks];
+      }
+    },
+    addTask: (state, action: PayloadAction<TaskData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      const currentColumn = state.boards[currentBoard].columns!.findIndex(
+        (column) => column._id === action.payload.columnId
+      );
+      if (currentBoard !== -1 && currentColumn !== -1) {
+        if (!state.boards[currentBoard].columns![currentColumn].tasks) {
+          state.boards[currentBoard].columns![currentColumn].tasks = [action.payload];
+        } else {
+          state.boards[currentBoard].columns![currentColumn].tasks = [
+            ...(state.boards[currentBoard].columns![currentColumn].tasks as TaskData[]),
+            action.payload,
+          ];
+        }
+      }
+    },
+    deleteTask: (state, action: PayloadAction<DeleteTask>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      const currentColumn = state.boards[currentBoard].columns!.findIndex(
+        (column) => column._id === action.payload.columnId
+      );
+      if (state.boards[currentBoard].columns![currentColumn].tasks) {
+        state.boards[currentBoard].columns![currentColumn].tasks = state.boards[
+          currentBoard
+        ].columns![currentColumn].tasks!.filter(
+          (task: Partial<TaskData>) => task._id !== action.payload.taskId
+        );
+      }
+    },
+    updateTaskInfo: (state, action: PayloadAction<TaskData>) => {
+      const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
+      const currentColumn = state.boards[currentBoard].columns!.findIndex(
+        (column) => column._id === action.payload.columnId
+      );
+      if (state.boards[currentBoard].columns![currentColumn].tasks) {
+        state.boards[currentBoard].columns![currentColumn].tasks = state.boards[
+          currentBoard
+        ].columns![currentColumn].tasks!.map((task: TaskData) => {
+          if (task._id === action.payload._id) {
+            task.title = action.payload.title;
+            task.description = action.payload.description;
+            task.users = [...action.payload.users];
+          }
+          return task;
+        });
       }
     },
   },
@@ -72,4 +148,9 @@ export const {
   addColumn,
   deleteColumn,
   updateColumnInfo,
+  updateColumnsOrder,
+  setTasks,
+  addTask,
+  deleteTask,
+  updateTaskInfo,
 } = boardSlice.actions;

@@ -1,56 +1,48 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { CircularProgress, Box } from '@mui/material';
+import { CircularProgress, Backdrop } from '@mui/material';
 import { BoardColumn } from '../../components/BoardColumn';
 import { BasicModal } from '../../components/Modal/Modal';
 import { CreateColumnForm } from '../../components/CreateColumnForm';
-import { useAppSelector } from '../../redux/hooks';
-import { selectBoards } from '../../redux/features/boardSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectBoards, setColumns } from '../../redux/features/boardSlice';
 import {
-  useGetBoardColumnsMutation,
   useDeleteColumnMutation,
   useUpdateSetOfColumnsMutation,
   useUpdateColumnMutation,
+  useGetBoardColumnsMutation,
 } from '../../redux/features/api/columnApi';
 import { ColumnData, UpdateColumnsSet, NewColumnData } from '../../models';
+import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import './style.scss';
 import { useGetUserBoardsMutation } from '../../redux/features/api/boardApi';
 import { selectUserInfo } from '../../redux/features/userSlice';
+import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
+import { showToast } from '../../redux/features/toastSlice';
 
 export const Board = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const userInfo = useAppSelector(selectUserInfo);
   const boards = useAppSelector(selectBoards);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const [getBoards] = useGetUserBoardsMutation();
-  const [getColumns] = useGetBoardColumnsMutation();
-  const [deleteColumnById] = useDeleteColumnMutation();
-  const [updateColumnsOrder] = useUpdateSetOfColumnsMutation();
+  const [getColumns, { isLoading: gettingColumns }] = useGetBoardColumnsMutation();
+  const [deleteColumnById, { isLoading: deleting }] = useDeleteColumnMutation();
+  const [updateColumnsOrder, { isLoading: updating }] = useUpdateSetOfColumnsMutation();
+  const [getUsers] = useGetAllUsersMutation();
   const [updateColumn] = useUpdateColumnMutation();
 
-  const [mount, setMount] = useState(false);
   const [modalState, setModalState] = useState(false);
 
-  const currentBoard = boards.findIndex((board) => board._id === id);
-
-  const fetchColumns = useCallback(async () => {
-    if (id && userInfo) {
-      await getBoards(userInfo._id);
-      await getColumns(id).unwrap();
-    }
-  }, [getBoards, getColumns, id, userInfo]);
-
-  useEffect(() => {
-    if (!mount) {
-      fetchColumns().then(() => setMount(true));
-    }
-  }, [fetchColumns, mount]);
+  const currentBoard = boards?.findIndex((board) => board._id === id);
+  const columns = boards[currentBoard]?.columns;
 
   const deleteColumn = async (columnId: string) => {
     if (id) {
@@ -80,62 +72,111 @@ export const Board = () => {
     }
   };
 
-  if (boards[currentBoard])
-    return (
-      <div className="board-columns container">
-        <div className="boards-header">
-          <ArrowBackIosIcon color="primary" onClick={() => navigate(-1)} />
-          <h1>{boards[currentBoard].title}</h1>
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={'+'}
-            onClick={() => setModalState(true)}
-          >
-            {t('BUTTONS.ADD_COLUMN')}
-          </Button>
-        </div>
-        <div className="columns">
-          {!mount ? (
-            <Box className="loader">
-              <CircularProgress />
-            </Box>
-          ) : boards[currentBoard]?.columns && boards[currentBoard].columns?.length !== 0 ? (
-            boards[currentBoard].columns!.map((column: ColumnData) => {
-              return (
-                <div className="column" key={column._id}>
-                  <BoardColumn
-                    column={column}
-                    onDelete={(columnId) => deleteColumn(columnId)}
-                    onUpdateTitle={(columnId, columnInfo) => {
-                      updateColumnTitle(columnId, columnInfo);
-                    }}
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <p>{t('INFO.NO_COLUMNS')}</p>
-          )}
-        </div>
-        <BasicModal isOpen={modalState}>
-          <CreateColumnForm
-            columnOrder={
-              boards[currentBoard]?.columns && boards[currentBoard].columns?.length !== 0
-                ? boards[currentBoard].columns!.length
-                : 0
-            }
-            boardId={id!}
-            onCreateColumn={async () => {
-              setModalState(false);
-            }}
-            handleClose={() => {
-              setModalState(false);
-            }}
-          />
-        </BasicModal>
-      </div>
-    );
+  const onDragEnd = async (result: DropResult) => {
+    const { source, destination, type } = result;
 
-  return null;
+    if (!destination) return;
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index)
+      return;
+
+    if (type === 'column') {
+      const newColumnOrder = [...boards[currentBoard].columns];
+      newColumnOrder.splice(source.index, 1);
+      newColumnOrder.splice(destination.index, 0, boards[currentBoard].columns[source.index]);
+
+      const newColumns = newColumnOrder.map((column, index) => {
+        return { ...column, order: index };
+      });
+      const patchNewColumns = newColumnOrder.map((column, index) => {
+        return { _id: column._id, order: index };
+      });
+
+      dispatch(setColumns({ columns: newColumns, boardId: id as string }));
+      await updateColumnsOrder(patchNewColumns);
+
+      dispatch(
+        showToast({
+          isOpen: true,
+          severity: 'success',
+          message: `${t('INFO.APPLIED')}`,
+        })
+      );
+    }
+  };
+
+  const fetchData = useCallback(async () => {
+    if (id && userInfo && !boards.length) {
+      await getBoards(userInfo._id);
+      await getColumns(id);
+      await getUsers(null);
+    }
+  }, [boards, getBoards, getColumns, getUsers, id, userInfo]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, getBoards, id]);
+
+  return (
+    <div className="board-columns container">
+      <div className="boards-header">
+        <ArrowBackIosIcon color="primary" onClick={() => navigate(-1)} />
+        <h1>{boards[currentBoard]?.title}</h1>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={'+'}
+          onClick={() => setModalState(true)}
+        >
+          {t('BUTTONS.ADD_COLUMN')}
+        </Button>
+      </div>
+      <div className="columns">
+        {columns?.length ? (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="allColumns" direction="horizontal" type="column">
+              {(provided) => {
+                return (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{ display: 'flex' }}
+                  >
+                    {columns!.map((column: ColumnData, index: number) => {
+                      return (
+                        <BoardColumn
+                          key={column._id}
+                          index={index}
+                          column={column}
+                          onDeleteColumn={(columnId) => deleteColumn(columnId)}
+                          onUpdateTitle={(columnId, columnInfo) => {
+                            updateColumnTitle(columnId, columnInfo);
+                          }}
+                        />
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                );
+              }}
+            </Droppable>
+          </DragDropContext>
+        ) : (
+          <p>{t('INFO.NO_COLUMNS')}</p>
+        )}
+      </div>
+      <BasicModal isOpen={modalState}>
+        <CreateColumnForm
+          columnOrder={columns?.length ? columns!.length : 0}
+          boardId={id!}
+          handleClose={() => {
+            setModalState(false);
+          }}
+        />
+      </BasicModal>
+      <Backdrop sx={{ color: '#fff' }} open={deleting || updating || gettingColumns}>
+        <CircularProgress color="inherit" size={60} />
+      </Backdrop>
+    </div>
+  );
 };

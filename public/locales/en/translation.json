@@ -60,11 +60,13 @@
     "ADD_BOARD": "Add board",
     "ADD_COLUMN": "Add column",
     "ADD_TASK": "Add task",
+    "EDIT_TASK": "Edit task",
     "MAIN": "Main page",
     "NEWBOARD": "New board",
     "EDITPROFILE": "Edit profile",
     "SIGNOUT": "Sign out",
     "CREATE": "Create",
+    "EDIT": "Edit",
     "CANCEL": "Cancel",
     "YES": "Yes",
     "NO": "No",
@@ -90,10 +92,13 @@
   "HEADERS": {
     "BOARDS": "Boards",
     "TITLE": "Title",
+    "DESCRIPTION": "Description",
     "USERS": "Users",
     "REGISTER": "Register",
     "LOG_IN": "Log in",
-    "USER_PROFILE": "User profile"
+    "USER_PROFILE": "User profile",
+    "COLUMNS": "Columns",
+    "TASKS": "Tasks"
   },
   "FIELDS": {
     "NAME": "Name",
