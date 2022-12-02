@@ -12,6 +12,7 @@ import teamImg from '../../assets/main-page/team.svg';
 import mobileImg from '../../assets/main-page/mobile.svg';
 import teamPurple from '../../assets/main-page/team-purple.svg';
 import teamYellow from '../../assets/main-page/team-yellow.svg';
+import { getCookieToken } from '../../share/cookieToken';
 import './style.scss';
 
 const ANIMATION_CLASS = 'element-animation';
@@ -131,24 +132,39 @@ export const Welcome = () => {
           </div>
         </div>
       </section>
-      <section className="question-block">
-        <div className="container feature-title question-content element-animation left">
-          <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
-          <div className="question-buttons">
-            <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
-              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
-            </Button>
+      {!getCookieToken() ? (
+        <section className="question-block">
+          <div className="container feature-title question-content element-animation left">
+            <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
+            <div className="question-buttons">
+              <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
+                {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                onClick={() => navigate(Paths.SIGNUP)}
+              >
+                {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
+              </Button>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="question-block">
+          <div className="container feature-title question-content">
             <Button
               variant="contained"
               color="secondary"
               size="large"
-              onClick={() => navigate(Paths.SIGNUP)}
+              onClick={() => navigate(Paths.MAIN)}
             >
-              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
+              {t('BUTTONS.MAIN_IN')}
             </Button>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </React.Fragment>
   );
 };
