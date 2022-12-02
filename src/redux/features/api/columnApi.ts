@@ -32,11 +32,8 @@ export const columnApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           const columns = [...data];
-          columns.sort((a, b) => {
-            if (a.order > b.order) return 1;
-            if (a.order < b.order) return -1;
-            return 0;
-          });
+          columns.sort((a, b) => a.order - b.order);
+
           if (data.length) dispatch(setColumns({ columns: columns, boardId: data[0].boardId }));
         } catch (err) {
           console.error(err);

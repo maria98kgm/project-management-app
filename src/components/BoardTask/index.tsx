@@ -2,33 +2,45 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TaskData } from '../../models';
 import './style.scss';
+import { Draggable } from '@hello-pangea/dnd';
 
 type TaskProps = {
   task: TaskData;
   onDelete: (taskId: string) => void;
   onEdit: (taskId: string) => void;
+  index: number;
 };
 
-export const BoardTask: React.FC<TaskProps> = ({ task, onDelete, onEdit }) => {
+export const BoardTask: React.FC<TaskProps> = ({ task, onDelete, onEdit, index }) => {
   const deleteTask = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
     onDelete(task._id);
   };
 
   return (
-    <div className="boardTask" onClick={() => onEdit(task._id)}>
-      <div className="task-header">
-        <h3 className="title">{task.title}</h3>
-        <IconButton
-          aria-label="delete"
-          size="large"
-          color="secondary"
-          onClick={(event) => deleteTask(event)}
+    <Draggable draggableId={task._id} index={index}>
+      {(provided) => (
+        <div
+          className="boardTask"
+          onClick={() => onEdit(task._id)}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
         >
-          <DeleteIcon fontSize="inherit" />
-        </IconButton>
-      </div>
-      <p className="description">{task.description}</p>
-    </div>
+          <div className="task-header">
+            <h3 className="title">{task.title}</h3>
+            <IconButton
+              aria-label="delete"
+              size="large"
+              color="secondary"
+              onClick={(event) => deleteTask(event)}
+            >
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+          </div>
+          <p className="description">{task.description}</p>
+        </div>
+      )}
+    </Draggable>
   );
 };

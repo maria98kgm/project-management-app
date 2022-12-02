@@ -26,9 +26,12 @@ export const taskApi = apiSlice.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          const tasks = [...data];
+          tasks.sort((a, b) => a.order - b.order);
+
           if (data[0]?.boardId && data[0].columnId) {
             dispatch(
-              setTasks({ tasks: data, boardId: data[0].boardId, columnId: data[0].columnId })
+              setTasks({ tasks: tasks, boardId: data[0].boardId, columnId: data[0].columnId })
             );
           }
         } catch (err) {
