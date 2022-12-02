@@ -37,15 +37,15 @@
       "TEAMMATE": [
         {
           "NAME": "Tanya",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Create application design. Implements the main application page, add/remove/create partitions, columns and a shuffle. Created a global search and other application features."
         },
         {
           "NAME": "Aliaksei",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Implemented header and footer for pages. Login page functionality, 404. Edit user data, delete account and other functionality."
         },
         {
           "NAME": "Maria",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Created the initial build of the project. Deploy backend. Routing project. Implemented user registration page, drag&drop application functionality. Tim-lead command."
         }
       ]
     },

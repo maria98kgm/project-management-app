@@ -40,15 +40,15 @@
       "TEAMMATE": [
         {
           "NAME": "Таня",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Создание дизайна приложения. Реализовала главную страницу приложения, добавление/удаление/создание досок, колонок и тасок. Создала глобальный поиск и другие функции приложения."
         },
         {
           "NAME": "Алексей",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Реализовал хедер и футер для страниц. Функционал страницы входа, 404. Редактирования данных пользователя, удаление аккаунта и другой функционал."
         },
         {
           "NAME": "Мария",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Создала первоначальную сборку проекта. Задеплоила бекенд. Роутинг проекта. Реализовала страницу регистрации пользователя, drag&drop функционал приложения. Тим-лид команды."
         }
       ]
     },
