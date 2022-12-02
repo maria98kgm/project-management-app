@@ -2,8 +2,11 @@ import React from 'react';
 import { Paths } from '../../models';
 import { Button } from '@mui/material';
 import './style.scss';
+import { useTranslation } from 'react-i18next';
 
 export const NotFound = () => {
+  const { t } = useTranslation();
+
   return (
     <React.Fragment>
       <div className="center">
@@ -30,7 +33,7 @@ export const NotFound = () => {
         <div className="text">Oops. The page you`re looking for doesn`t exist.</div>
         <div className="button">
           <Button className="button-home" variant="contained" href={Paths.WELCOME}>
-            Back Home
+            {t('BUTTONS.MAIN')}
           </Button>
         </div>
       </div>

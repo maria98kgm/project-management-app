@@ -10,14 +10,12 @@ import './style.scss';
 type CreateColumnFormProps = {
   columnOrder: number;
   boardId: string;
-  onCreateColumn: () => void;
   handleClose: () => void;
 };
 
 export const CreateColumnForm: React.FC<CreateColumnFormProps> = ({
   columnOrder,
   boardId,
-  onCreateColumn,
   handleClose,
 }) => {
   const { t } = useTranslation();
@@ -45,7 +43,7 @@ export const CreateColumnForm: React.FC<CreateColumnFormProps> = ({
         message: `${t('INFO.APPLIED')}`,
       })
     );
-    onCreateColumn();
+    handleClose();
   };
 
   return (

@@ -3,19 +3,27 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
-import { useDeleteBoardMutation } from '../../redux/features/api/boardApi';
 import './style.scss';
 
 type BoardItemProp = {
   boardId: string;
   title: string;
   users: string[];
+  colCount: number;
+  taskCount: number;
+  onDelete: (boardId: string) => void;
 };
 
-export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) => {
+export const BoardItem: React.FC<BoardItemProp> = ({
+  boardId,
+  title,
+  users,
+  colCount,
+  taskCount,
+  onDelete,
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [deleteBoardById] = useDeleteBoardMutation();
   const [modalState, setModalState] = useState(false);
 
   const showDeleteModal = (event: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
@@ -23,9 +31,9 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) =>
     setModalState(true);
   };
 
-  const deleteBoard = async (id: string): Promise<void> => {
+  const deleteBoard = (id: string): void => {
     setModalState(false);
-    await deleteBoardById(id);
+    onDelete(id);
   };
 
   return (
@@ -41,7 +49,9 @@ export const BoardItem: React.FC<BoardItemProp> = ({ boardId, title, users }) =>
           <h3>{t('HEADERS.USERS')}:</h3>
           <p>{users.join(', ')}</p>
         </div>
-        <p className="boardItem-columns-tasks">Columns: 4, Tasks: 10</p>
+        <p className="boardItem-columns-tasks">
+          {t('HEADERS.COLUMNS')}: {colCount}, {t('HEADERS.TASKS')}: {taskCount}
+        </p>
       </div>
       <ConfirmationModal
         modalState={modalState}

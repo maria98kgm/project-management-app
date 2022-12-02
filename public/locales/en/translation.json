@@ -60,14 +60,18 @@
     "ADD_BOARD": "Add board",
     "ADD_COLUMN": "Add column",
     "ADD_TASK": "Add task",
+    "EDIT_TASK": "Edit task",
     "MAIN": "Main page",
     "NEWBOARD": "New board",
     "EDITPROFILE": "Edit profile",
     "SIGNOUT": "Sign out",
     "CREATE": "Create",
+    "EDIT": "Edit",
     "CANCEL": "Cancel",
     "YES": "Yes",
-    "NO": "No"
+    "NO": "No",
+    "SAVE_CHANGES": "Save changes",
+    "DELETE": "Delete account"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
@@ -80,7 +84,13 @@
     "LOG_OUT": "You have successfully logged out!",
     "TASK_SEARCH": "Task search",
     "FOUND_TASKS": "The following tasks were found for the query ",
-    "NOTHING_FOUND": "Not a single task was found"
+    "NOTHING_FOUND": "Not a single task was found",
+    "REQUIRED_TEXT": "This field is required!",
+    "MESSAGE_MIN": "Min length is ",
+    "MESSAGE_MAX": "Max length is ",
+    "MESSAGE_DELETE": "You have successfully delete user!",
+    "PASSWORD_MATCH": "Password is not the same!",
+    "PASSWORD_VALID": "The password should contain only numbers and letters!"
   },
   "HEADERS": {
     "BOARDS": "Boards",
@@ -91,12 +101,18 @@
     "USERS": "Users",
     "REGISTER": "Register",
     "LOG_IN": "Log in",
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "USER_PROFILE": "User profile",
+    "COLUMNS": "Columns",
+    "TASKS": "Tasks"
   },
   "FIELDS": {
     "NAME": "Name",
     "LOGIN": "Login",
     "PASSWORD": "Password",
-    "REPEAT_PASSWORD": "Repeat Password"
+    "REPEAT_PASSWORD": "Repeat Password",
+    "CHANGE_NAME": "Change your name",
+    "CHANGE_LOGIN": "Change your login",
+    "CHANGE_PASSWORD": "Change your password"
   }
 }

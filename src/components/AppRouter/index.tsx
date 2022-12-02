@@ -11,6 +11,7 @@ import { SignUp } from '../../pages/SignUp';
 import { Welcome } from '../../pages/Welcome';
 import { Search } from '../../pages/Search';
 import { NotFound } from '../../pages/NotFound';
+import { EditProfile } from '../../pages/EditProfile';
 
 export const AppRouter = () => {
   const userInfo = useAppSelector(selectUserInfo);
@@ -30,6 +31,7 @@ export const AppRouter = () => {
           <Route path={Paths.SEARCH} element={<Search />} />
         </Route>
         <Route path={Paths.NOT_FOUND} element={<NotFound />} />
+        <Route path={Paths.EDITPROFILE} element={<EditProfile />} />
       </Route>
     </Routes>
   );

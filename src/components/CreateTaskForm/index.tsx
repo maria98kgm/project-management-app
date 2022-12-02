@@ -1,12 +1,12 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
   TextField,
+  FormControl,
   InputLabel,
   MenuItem,
-  FormControl,
   OutlinedInput,
   Checkbox,
   ListItemText,
@@ -14,58 +14,81 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
-import { useGetAllUsersMutation } from '../../redux/features/api/userApi';
-import { useCreateBoardMutation } from '../../redux/features/api/boardApi';
+import { useCreateTaskMutation, useUpdateTaskMutation } from '../../redux/features/api/taskApi';
 import { showToast } from '../../redux/features/toastSlice';
 import { useTypedDispatch } from '../../redux/store';
-import { BoardData, NewBoardData } from '../../models';
+import { TaskData, TaskCreateData } from '../../models';
 import './style.scss';
 
-type CreateBoardFormProps = {
-  onCreateBoard: () => void;
+type CreateTaskFormProps = {
+  taskOrder: number;
+  boardId: string;
+  columnId: string;
+  task: TaskData | null;
   handleClose: () => void;
 };
 
-export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard, handleClose }) => {
-  const [mount, setMount] = useState(false);
-  const [personName, setPersonName] = useState<string[]>([]);
+export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
+  handleClose,
+  taskOrder,
+  boardId,
+  columnId,
+  task,
+}) => {
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
-  const [getUsers] = useGetAllUsersMutation();
-  const [createBoard] = useCreateBoardMutation();
   const user = useAppSelector((state: RootState) => state.user.userInfo);
   const names = useAppSelector((state: RootState) => state.user.allUsers);
+  const [personName, setPersonName] = useState<string[]>([]);
+  const [createTask] = useCreateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     getFieldState,
-  } = useForm<Partial<BoardData>>({ mode: 'onChange' });
-
-  const fetchUsers = useCallback(async () => {
-    await getUsers(null).unwrap();
-  }, [getUsers]);
+    setValue,
+    setFocus,
+  } = useForm<Partial<TaskData>>({ mode: 'onChange' });
 
   useEffect(() => {
-    if (!mount) {
-      setMount(true);
-      fetchUsers();
+    if (task) {
+      setValue('title', task.title);
+      setValue('description', task.description);
+      setFocus('title');
+      const taskNames = names
+        .filter((name) => task.users.includes(name.id))
+        .map((name) => name.name);
+      setPersonName(taskNames);
+      setValue('users', taskNames);
     }
-  }, [fetchUsers, mount]);
+  }, [task, setValue, setFocus, names]);
 
-  const onSubmit = async (data: Partial<BoardData>): Promise<void> => {
+  const onSubmit = async (data: Partial<TaskData>): Promise<void> => {
     const userIds: string[] = names
       .filter((user) => data.users!.includes(user.name))
       .map((user) => user.id);
 
-    const newBoard: NewBoardData = {
+    const taskInfo: TaskCreateData = {
       title: data.title || '',
-      users: userIds || [],
-      owner: user && user._id ? user._id : '',
+      order: taskOrder,
+      description: data.description || '',
+      userId: user?._id || '',
+      users: userIds,
     };
 
-    await createBoard(newBoard);
+    if (task) {
+      await updateTask({
+        boardId,
+        columnId,
+        taskId: task._id,
+        taskInfo: { ...taskInfo, columnId },
+      });
+    } else {
+      await createTask({ boardId, columnId, taskInfo });
+    }
+
     dispatch(
       showToast({
         isOpen: true,
@@ -73,7 +96,8 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
         message: `${t('INFO.APPLIED')}`,
       })
     );
-    onCreateBoard();
+
+    handleClose();
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>): void => {
@@ -84,8 +108,8 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="create-board">
-      <h2>{t('BUTTONS.ADD_BOARD')}</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="create-task">
+      <h2>{task ? t('BUTTONS.EDIT_TASK') : t('BUTTONS.ADD_TASK')}</h2>
       <TextField
         {...register('title', {
           required: 'This field is required!',
@@ -98,6 +122,20 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
         autoComplete="title"
         required
         fullWidth
+      />
+      <TextField
+        {...register('description', {
+          required: 'This field is required!',
+          minLength: { value: 2, message: 'Min length is 2!' },
+        })}
+        variant="standard"
+        label={t('HEADERS.DESCRIPTION')}
+        error={!!getFieldState('description').error}
+        helperText={errors['description']?.message}
+        rows={4}
+        required
+        fullWidth
+        multiline
       />
       <FormControl variant="standard" sx={{ m: 1 }}>
         <InputLabel variant="standard" htmlFor="select-users">
@@ -123,7 +161,7 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
       </FormControl>
       <div className="buttons">
         <Button variant="contained" type="submit">
-          {t('BUTTONS.CREATE')}
+          {task ? t('BUTTONS.EDIT') : t('BUTTONS.CREATE')}
         </Button>
         <Button
           variant="contained"
