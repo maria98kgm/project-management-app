@@ -50,7 +50,7 @@ export const BoardItem: React.FC<BoardItemProp> = ({
           <p>{users.join(', ')}</p>
         </div>
         <p className="boardItem-columns-tasks">
-          Columns: {colCount}, Tasks: {taskCount}
+          {t('HEADERS.COLUMNS')}: {colCount}, {t('HEADERS.TASKS')}: {taskCount}
         </p>
       </div>
       <ConfirmationModal

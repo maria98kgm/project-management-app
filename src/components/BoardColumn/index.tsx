@@ -55,6 +55,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
   };
 
   const deleteItem = async () => {
+    setModalState(false);
     if (column._id && deletedItem === 'column') {
       if (column.tasks && column.tasks?.length !== 0) {
         column.tasks!.forEach(async (task: TaskData) => {
@@ -81,8 +82,6 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
         await updateTasksOrder(updatedTasks);
       }
     }
-
-    setModalState(false);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

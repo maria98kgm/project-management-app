@@ -96,7 +96,9 @@
     "USERS": "Users",
     "REGISTER": "Register",
     "LOG_IN": "Log in",
-    "USER_PROFILE": "User profile"
+    "USER_PROFILE": "User profile",
+    "COLUMNS": "Columns",
+    "TASKS": "Tasks"
   },
   "FIELDS": {
     "NAME": "Name",
