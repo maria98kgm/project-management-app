@@ -30,9 +30,7 @@ export const taskApi = apiSlice.injectEndpoints({
           tasks.sort((a, b) => a.order - b.order);
 
           if (data[0]?.boardId && data[0].columnId) {
-            dispatch(
-              setTasks({ tasks: tasks, boardId: data[0].boardId, columnId: data[0].columnId })
-            );
+            dispatch(setTasks({ tasks, boardId: data[0].boardId, columnId: data[0].columnId }));
           }
         } catch (err) {
           console.error(err);

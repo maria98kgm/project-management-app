@@ -191,24 +191,6 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
               </div>
             )}
           </Droppable>
-          {/* <div className="tasks">
-            {column.tasks && column.tasks.length !== 0 ? (
-              column.tasks.map((task) => {
-                return (
-                  <div className="task" key={task._id}>
-                    <div className="task-placeholder"></div>
-                    <BoardTask
-                      task={task}
-                      onDelete={(taskId) => deleteTask(taskId)}
-                      onEdit={(taskId) => editTask(taskId)}
-                    />
-                  </div>
-                );
-              })
-            ) : (
-              <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
-            )}
-          </div> */}
           <Button
             color="primary"
             startIcon={'+'}

@@ -51,10 +51,16 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
   };
 
   const signOut = (): void => {
+    setOpenBurgerMenu(false);
     dispatch(setUser(null));
     deleteCookieToken();
     navigate(Paths.WELCOME);
     dispatch(showToast({ isOpen: true, severity: 'success', message: t('INFO.LOG_OUT') }));
+  };
+
+  const createBoard = (): void => {
+    setOpenBurgerMenu(false);
+    createNewBoard();
   };
 
   if (!isToken) {
@@ -162,7 +168,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
                   </Button>
                 </ListItemButton>
                 <ListItemButton sx={menuButtonStyle}>
-                  <Button sx={{ color: 'white' }} onClick={createNewBoard}>
+                  <Button sx={{ color: 'white' }} onClick={createBoard}>
                     {t('BUTTONS.NEWBOARD')}
                   </Button>
                 </ListItemButton>
@@ -188,7 +194,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Button variant="contained" onClick={createNewBoard}>
+          <Button variant="contained" onClick={createBoard}>
             {t('BUTTONS.NEWBOARD')}
           </Button>
           <Button variant="contained" onClick={() => navigate(Paths.EDITPROFILE)}>
