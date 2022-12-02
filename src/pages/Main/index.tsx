@@ -99,7 +99,11 @@ export const Main = () => {
               <BoardItem
                 key={`${board.title}-${idx}`}
                 title={board.title}
-                users={foundBoardUsers}
+                users={
+                  foundBoardUsers.length
+                    ? foundBoardUsers
+                    : [allUsers.find((user) => user.id === board.owner)?.name || '']
+                }
                 boardId={board._id || ''}
                 colCount={(board.columns && board.columns.length) || 0}
                 taskCount={

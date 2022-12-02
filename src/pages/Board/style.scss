@@ -7,7 +7,7 @@
 
   .boards-header {
     @include flex-start-center;
-    height: 100px;
+    margin-bottom: 20px;
 
     h1 {
       font-weight: 600;

@@ -20,20 +20,20 @@ export const SearchBar: React.FC<{ isToken: boolean }> = ({ isToken }) => {
   }, [debouncedSearchQuery, navigate]);
 
   return isToken ? (
-    <TextField
-      id="search-bar"
-      className="text"
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(event.target.value);
-      }}
-      label={t('INFO.TASK_SEARCH')}
-      variant="outlined"
-      placeholder={t('HEADERS.SEARCH')}
-      size="small"
-      color="secondary"
-      InputProps={{
-        startAdornment: <SearchIcon color="secondary" />,
-      }}
-    />
+    <div className="search-bar">
+      <TextField
+        className="text"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setQuery(event.target.value);
+        }}
+        variant="outlined"
+        placeholder={t('HEADERS.SEARCH')}
+        size="small"
+        color="secondary"
+        InputProps={{
+          startAdornment: <SearchIcon color="secondary" />,
+        }}
+      />
+    </div>
   ) : null;
 };

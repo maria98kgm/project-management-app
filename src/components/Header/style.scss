@@ -17,25 +17,43 @@
     $purple-color-footer 100.74%
   );
 
+  @media (max-width: $breakpoint1099) {
+    padding: 16px 30px;
+  }
+
+  @media (max-width: $breakpoint550) {
+    padding: 16px 20px;
+  }
+
   &.sticky {
     padding: 14px 90px;
 
     @media (max-width: $breakpoint1099) {
-      padding: 16px 50px;
+      padding: 14px 30px;
+    }
+
+    @media (max-width: $breakpoint550) {
+      padding: 10px 20px;
     }
   }
 
   img {
-    width: 150px;
-    height: 30px;
+    width: 180px;
+    height: 36px;
     height: fit-content;
 
     &:hover {
       cursor: pointer;
     }
-  }
 
-  @media (max-width: $breakpoint1099) {
-    padding: 20px 30px;
+    @media (max-width: $breakpoint550) {
+      width: 150px;
+      height: 28px;
+    }
+
+    @media (max-width: $breakpoint370) {
+      width: 120px;
+      height: 23px;
+    }
   }
 }

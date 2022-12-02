@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
 import { showToast } from '../../redux/features/toastSlice';
 import { Paths } from '../../models';
-import appLogo from '../../assets/img/app_logo.png';
+import appLogo from '../../assets/img/logo.png';
 import './style.scss';
 
 export const Header = () => {
@@ -71,6 +71,7 @@ export const Header = () => {
         <CreateBoardForm
           onCreateBoard={async () => {
             setModalState(false);
+            navigate(Paths.MAIN);
           }}
           handleClose={() => {
             setModalState(false);
