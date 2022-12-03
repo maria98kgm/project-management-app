@@ -119,7 +119,7 @@ export const Welcome = () => {
               description={t('MAINPAGE.TEAMS.TEAMMATE.2.DESCRIPTION')}
             />
           </div>
-          <div className="text feature-title element-animation right">
+          <div className="feature-title element-animation right">
             <FeatureCard
               imageUrl={teamPurple}
               title={t('MAINPAGE.TEAMS.TITLE')}

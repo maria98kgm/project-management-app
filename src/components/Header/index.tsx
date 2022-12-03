@@ -6,6 +6,7 @@ import appLogo from '../../assets/img/app_logo.png';
 import { NavBar } from '../NavBar';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { BasicModal } from '../../components/Modal/Modal';
+import { ThemeToggler } from '../../components/ThemeToggler';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
 import { Paths } from '../../models';
@@ -62,6 +63,7 @@ export const Header = () => {
       <header>
         <div className={header ? 'header sticky' : 'header'}>
           <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
+          <ThemeToggler />
           <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
         </div>
       </header>

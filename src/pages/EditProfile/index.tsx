@@ -116,87 +116,89 @@ export const EditProfile = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <div className="editProfile">
-          <form className="editProfile-form" onSubmit={handleSubmit(onEditUserSubmit)}>
-            <h2>{t('HEADERS.USER_PROFILE')}</h2>
-            <TextField
-              {...register('userName', {
-                required: `${t('INFO.REQUIRED_TEXT')}`,
-                minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
-                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
-              })}
-              label={t('FIELDS.CHANGE_NAME')}
-              defaultValue={userData.name}
-              variant="standard"
-              error={!!getFieldState('userName').error}
-              helperText={errors['userName']?.message}
-              autoComplete="nickname"
-              required
-              fullWidth
-            />
-            <TextField
-              {...register('login', {
-                required: `${t('INFO.REQUIRED_TEXT')}`,
-                minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
-                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
-              })}
-              label={t('FIELDS.CHANGE_LOGIN')}
-              defaultValue={userData.login}
-              variant="standard"
-              error={!!getFieldState('login').error}
-              helperText={errors['login']?.message}
-              autoComplete="username"
-              required
-              fullWidth
-            />
-            <TextField
-              {...register('password', {
-                required: `${t('INFO.REQUIRED_TEXT')}`,
-                minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
-                maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
-                validate: validatePassword,
-              })}
-              label={t('FIELDS.CHANGE_PASSWORD')}
-              variant="standard"
-              error={!!getFieldState('password').error}
-              helperText={errors['password']?.message}
-              type="password"
-              autoComplete="new-password"
-              required
-              fullWidth
-            />
-            <TextField
-              {...register('repeatPassword', {
-                required: `${t('INFO.REQUIRED_TEXT')}`,
-                validate: validateRepeatPassword,
-              })}
-              label={t('FIELDS.REPEAT_PASSWORD')}
-              variant="standard"
-              error={!!getFieldState('repeatPassword').error}
-              helperText={errors['repeatPassword']?.message}
-              type="password"
-              autoComplete="new-password"
-              required
-              fullWidth
-            />
-            <Button variant="contained" type="submit">
-              {t('BUTTONS.SAVE_CHANGES')}
+        <Box sx={{ bgcolor: 'info.main' }}>
+          <div className="editProfile">
+            <form className="editProfile-form" onSubmit={handleSubmit(onEditUserSubmit)}>
+              <h2>{t('HEADERS.USER_PROFILE')}</h2>
+              <TextField
+                {...register('userName', {
+                  required: `${t('INFO.REQUIRED_TEXT')}`,
+                  minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+                  maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+                })}
+                label={t('FIELDS.CHANGE_NAME')}
+                defaultValue={userData.name}
+                variant="standard"
+                error={!!getFieldState('userName').error}
+                helperText={errors['userName']?.message}
+                autoComplete="nickname"
+                required
+                fullWidth
+              />
+              <TextField
+                {...register('login', {
+                  required: `${t('INFO.REQUIRED_TEXT')}`,
+                  minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
+                  maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+                })}
+                label={t('FIELDS.CHANGE_LOGIN')}
+                defaultValue={userData.login}
+                variant="standard"
+                error={!!getFieldState('login').error}
+                helperText={errors['login']?.message}
+                autoComplete="username"
+                required
+                fullWidth
+              />
+              <TextField
+                {...register('password', {
+                  required: `${t('INFO.REQUIRED_TEXT')}`,
+                  minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
+                  maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+                  validate: validatePassword,
+                })}
+                label={t('FIELDS.CHANGE_PASSWORD')}
+                variant="standard"
+                error={!!getFieldState('password').error}
+                helperText={errors['password']?.message}
+                type="password"
+                autoComplete="new-password"
+                required
+                fullWidth
+              />
+              <TextField
+                {...register('repeatPassword', {
+                  required: `${t('INFO.REQUIRED_TEXT')}`,
+                  validate: validateRepeatPassword,
+                })}
+                label={t('FIELDS.REPEAT_PASSWORD')}
+                variant="standard"
+                error={!!getFieldState('repeatPassword').error}
+                helperText={errors['repeatPassword']?.message}
+                type="password"
+                autoComplete="new-password"
+                required
+                fullWidth
+              />
+              <Button variant="contained" type="submit">
+                {t('BUTTONS.SAVE_CHANGES')}
+              </Button>
+            </form>
+            <Button
+              variant="contained"
+              type="submit"
+              className="delete-user"
+              onClick={(event) => showDeleteModal(event)}
+            >
+              {t('BUTTONS.DELETE')}
             </Button>
-          </form>
-          <Button
-            variant="contained"
-            type="submit"
-            className="delete-user"
-            onClick={(event) => showDeleteModal(event)}
-          >
-            {t('BUTTONS.DELETE')}
-          </Button>
-          <ConfirmationModal
-            modalState={modalState}
-            applyYes={() => deleteUser(userData._id)}
-            applyNo={() => setModalState(false)}
-          />
-        </div>
+            <ConfirmationModal
+              modalState={modalState}
+              applyYes={() => deleteUser(userData._id)}
+              applyNo={() => setModalState(false)}
+            />
+          </div>
+        </Box>
       )}
     </section>
   );
