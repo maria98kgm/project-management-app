@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { Draggable } from '@hello-pangea/dnd';
+import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { BoardTask } from '../BoardTask';
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal';
 import { showToast } from '../../redux/features/toastSlice';
@@ -163,24 +163,34 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
               </React.Fragment>
             )}
           </div>
-          <div className="tasks">
-            {column.tasks && column.tasks.length !== 0 ? (
-              column.tasks.map((task) => {
-                return (
-                  <div className="task" key={task._id}>
-                    <div className="task-placeholder"></div>
-                    <BoardTask
-                      task={task}
-                      onDelete={(taskId) => deleteTask(taskId)}
-                      onEdit={(taskId) => editTask(taskId)}
-                    />
-                  </div>
-                );
-              })
-            ) : (
-              <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
+          <Droppable droppableId={column._id} type="task">
+            {(provided, snapshot) => (
+              <div
+                className={`tasks ${snapshot.isDraggingOver ? 'tasksIsDraggingOver' : ''}`}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {column.tasks && column.tasks.length !== 0 ? (
+                  column.tasks.map((task, index) => {
+                    return (
+                      <div className="task" key={task._id}>
+                        <div className="task-placeholder"></div>
+                        <BoardTask
+                          task={task}
+                          onDelete={(taskId) => deleteTask(taskId)}
+                          onEdit={(taskId) => editTask(taskId)}
+                          index={index}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="no-tasks">{t('INFO.NO_TASKS')}</p>
+                )}
+                {provided.placeholder}
+              </div>
             )}
-          </div>
+          </Droppable>
           <Button
             color="primary"
             startIcon={'+'}

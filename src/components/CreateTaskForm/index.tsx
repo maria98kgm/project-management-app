@@ -66,6 +66,8 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
   }, [task, setValue, setFocus, names]);
 
   const onSubmit = async (data: Partial<TaskData>): Promise<void> => {
+    handleClose();
+
     const userIds: string[] = names
       .filter((user) => data.users!.includes(user.name))
       .map((user) => user.id);
@@ -96,8 +98,6 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
         message: `${t('INFO.APPLIED')}`,
       })
     );
-
-    handleClose();
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>): void => {
