@@ -4,8 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, Box } from '@mui/material';
 import { useGetTasksBySearchMutation } from '../../redux/features/api/taskApi';
+import { selectUserInfo } from '../../redux/features/userSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+import { showToast } from '../../redux/features/toastSlice';
+import { useTypedDispatch } from '../../redux/store';
 import { SearchItem } from '../../components/SearchItem';
 import { TaskData } from '../../models';
 
@@ -13,8 +16,10 @@ export const Search = () => {
   const { t } = useTranslation();
   const { query } = useParams();
   const navigate = useNavigate();
+  const dispatch = useTypedDispatch();
 
   const names = useAppSelector((state: RootState) => state.user.allUsers);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const [searchTasks] = useGetTasksBySearchMutation();
   const [searchResults, setSearchResults] = useState<TaskData[]>([]);
@@ -34,6 +39,20 @@ export const Search = () => {
   useEffect(() => {
     fetchTasks().then(() => setMount(true));
   }, [fetchTasks, query]);
+
+  const navigateToBoard = (ownerId: string, boardId: string) => {
+    if (userInfo?._id === ownerId) {
+      navigate(`/board/${boardId}`);
+    } else {
+      dispatch(
+        showToast({
+          isOpen: true,
+          severity: 'error',
+          message: `${t('INFO.NO_ACCESS')}`,
+        })
+      );
+    }
+  };
 
   return !mount ? (
     <Box className="loader">
@@ -56,7 +75,7 @@ export const Search = () => {
                   .map((name) => name.name)
                   .join(', ') || 'no users'
               }
-              handleClick={() => navigate(`/board/${task.boardId}`)}
+              handleClick={() => navigateToBoard(task.userId, task.boardId)}
             />
           ))
         ) : (
