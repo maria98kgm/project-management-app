@@ -93,17 +93,14 @@ export const Main = () => {
         {boards.length && allUsers.length ? (
           boards.map((board, idx) => {
             const foundBoardUsers = allUsers
-              .filter((user) => board.users.includes(user.id))
+              .filter((user) => board.users.includes(user.id) && user.id !== board.owner)
               .map((user) => user.name);
             return (
               <BoardItem
                 key={`${board.title}-${idx}`}
                 title={board.title}
-                users={
-                  foundBoardUsers.length
-                    ? foundBoardUsers
-                    : [allUsers.find((user) => user.id === board.owner)?.name || '']
-                }
+                users={foundBoardUsers}
+                owner={allUsers.find((user) => user.id === board.owner)?.name || ''}
                 boardId={board._id || ''}
                 colCount={(board.columns && board.columns.length) || 0}
                 taskCount={

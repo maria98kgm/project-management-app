@@ -113,12 +113,15 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
           input={<OutlinedInput label={t('HEADERS.USERS')} />}
           renderValue={(selected: string[]) => selected.join(', ')}
         >
-          {names.map((user, idx) => (
-            <MenuItem key={`${user.name}-${idx}`} value={user.name}>
-              <Checkbox checked={personName.indexOf(user.name) > -1} />
-              <ListItemText primary={user.name} />
-            </MenuItem>
-          ))}
+          {names.map((name, idx) => {
+            if (name.id === user?._id) return null;
+            return (
+              <MenuItem key={`${name.name}-${idx}`} value={name.name}>
+                <Checkbox checked={personName.indexOf(name.name) > -1} />
+                <ListItemText primary={name.name} />
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <div className="buttons">
