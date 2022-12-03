@@ -72,9 +72,13 @@ export const Welcome = () => {
             title={t('MAINPAGE.FEATURETEXT.TITLE')}
             description={t('MAINPAGE.FEATURETEXT.DESCRIPTION')}
           />
-          <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
-            {t('MAINPAGE.FEATURETEXT.BUTTON')}
-          </Button>
+          {!userInfo ? (
+            <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
+              {t('MAINPAGE.FEATURETEXT.BUTTON')}
+            </Button>
+          ) : (
+            <React.Fragment></React.Fragment>
+          )}
         </div>
       </section>
       <section className="feature-content">
