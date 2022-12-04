@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
 import { showToast } from '../../redux/features/toastSlice';
-import { Box, TextField, Button, CircularProgress } from '@mui/material';
+import { Box, TextField, Button, CircularProgress, Backdrop } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ConfirmationModal } from '../../components/ConfirmationModal/ConfirmationModal';
 import { Paths, UserData } from '../../models';
@@ -39,7 +39,7 @@ export const EditProfile = () => {
 
   const [userData, setUserData] = useState<UserData>({ _id: '', name: '', login: '' });
   const [getUser] = useGetUserMutation();
-  const [updateUserData] = useUpdateUserMutation();
+  const [updateUserData, { isLoading: updateUserLoading }] = useUpdateUserMutation();
   const [deleteUserID] = useDeleteUserMutation();
   const userInfo = useAppSelector(selectUserInfo);
   const [mount, setMount] = useState(false);
@@ -198,6 +198,9 @@ export const EditProfile = () => {
               applyNo={() => setModalState(false)}
             />
           </div>
+          <Backdrop sx={{ color: '#fff' }} open={updateUserLoading}>
+            <CircularProgress color="inherit" size={60} />
+          </Backdrop>
         </Box>
       )}
     </section>
