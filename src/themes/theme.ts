@@ -37,24 +37,3 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     fontFamily: 'Lato, sans-serif',
   },
 });
-
-// export const darkTheme = createTheme({
-//   palette: {
-//     mode: 'dark',
-//     primary: {
-//       main: '#F1E6EA',
-//     },
-//     secondary: {
-//       main: '#EBC20C',
-//     },
-//     background: {
-//       default: '#6C3ED4',
-//     },
-//     info: {
-//       main: '#261436',
-//     },
-//   },
-//   typography: {
-//     fontFamily: 'Lato, sans-serif',
-//   },
-// });
