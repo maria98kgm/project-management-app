@@ -192,7 +192,7 @@ export const BoardColumn: React.FC<BoardColumnProps> = ({
             )}
           </Droppable>
           <Button
-            color="primary"
+            color="secondary"
             startIcon={'+'}
             onClick={() => {
               setModalTaskState(true);

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../NavBar';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { BasicModal } from '../../components/Modal/Modal';
+import { ThemeToggler } from '../../components/ThemeToggler';
 import { SearchBar } from '../SearchBar';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
@@ -62,7 +63,8 @@ export const Header = () => {
     <React.Fragment>
       <header>
         <div className={header ? 'header sticky' : 'header'}>
-          <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
+          <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} alt="logo" />
+          <ThemeToggler />
           <SearchBar isToken={isToken} />
           <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
         </div>

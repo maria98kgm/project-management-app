@@ -30,6 +30,9 @@
         }
       ]
     },
+    "VIDEO": {
+      "TITLE": "Watch how to use the app"
+    },
     "TEAMS": {
       "TITLE": "Our perspective team",
       "DESCRIPTION": "A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox",
