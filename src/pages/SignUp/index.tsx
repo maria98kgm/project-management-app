@@ -7,6 +7,7 @@ import { Paths, SignInData, SignUpData } from '../../models';
 import { useSignInMutation, useSignUpMutation } from '../../redux/features/api/authApi';
 import { showToast } from '../../redux/features/toastSlice';
 import { useAppDispatch } from '../../redux/hooks';
+import { useState } from 'react';
 
 interface FormInputs {
   userName: string;
@@ -25,6 +26,13 @@ export const SignUp = () => {
     trigger,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
+  const [allValid, setAllValid] = useState({
+    userName: false,
+    login: false,
+    password: false,
+    repeatPassword: false,
+  });
+
   const [registerUser, { isLoading }] = useSignUpMutation();
   const [loginUser, { isLoading: loginIsLoading }] = useSignInMutation();
 
@@ -32,18 +40,68 @@ export const SignUp = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
+  const validateName = (val: string): string | boolean => {
+    if (val.length < 2) {
+      setAllValid({ ...allValid, userName: false });
+      return `${t('INFO.MESSAGE_MIN')} 2!`;
+    }
+    if (val.length > 20) {
+      setAllValid({ ...allValid, userName: false });
+      return `${t('INFO.MESSAGE_MAX')} 20!`;
+    }
+
+    setAllValid({ ...allValid, userName: true });
+    return true;
+  };
+
+  const validateLogin = (val: string): string | boolean => {
+    if (/\s/.test(val)) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.WITHOUT_WHITESPACES')}`;
+    }
+    if (val.length < 2) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.MESSAGE_MIN')} 2!`;
+    }
+    if (val.length > 20) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.MESSAGE_MAX')} 20!`;
+    }
+
+    setAllValid({ ...allValid, login: true });
+    return true;
+  };
+
   const validatePassword = (password: string): string | boolean => {
     const repeatPasswordState = getFieldState('repeatPassword');
 
-    if (repeatPasswordState.isTouched) {
-      trigger('repeatPassword');
+    if (password.length < 6) {
+      setAllValid({ ...allValid, password: false });
+      return `${t('INFO.MESSAGE_MIN')} 6!`;
+    }
+    if (password.length > 20) {
+      setAllValid({ ...allValid, password: false });
+      return `${t('INFO.MESSAGE_MAX')} 20!`;
     }
 
-    return /^[a-z0-9]*$/i.test(password) || `${t('INFO.PASSWORD_VALID')}`;
+    const isValid = /^[a-z0-9]*$/i.test(password);
+    setAllValid({ ...allValid, password: isValid });
+
+    if (repeatPasswordState.isTouched) {
+      trigger('repeatPassword');
+
+      const isRepeatValid = getValues('repeatPassword') === password;
+      setAllValid({ ...allValid, password: isValid, repeatPassword: isRepeatValid });
+    }
+
+    return isValid || `${t('INFO.PASSWORD_VALID')}`;
   };
 
   const validateRepeatPassword = (password: string): string | boolean => {
-    return password === getValues('password') || `${t('INFO.PASSWORD_MATCH')}`;
+    const isValid = password === getValues('password');
+    setAllValid({ ...allValid, repeatPassword: isValid });
+
+    return isValid || `${t('INFO.PASSWORD_MATCH')}`;
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
@@ -75,8 +133,7 @@ export const SignUp = () => {
           <TextField
             {...register('userName', {
               required: `${t('INFO.REQUIRED_TEXT')}`,
-              minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
-              maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+              validate: validateName,
             })}
             label={t('FIELDS.NAME')}
             variant="standard"
@@ -89,8 +146,7 @@ export const SignUp = () => {
           <TextField
             {...register('login', {
               required: `${t('INFO.REQUIRED_TEXT')}`,
-              minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
-              maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+              validate: validateLogin,
             })}
             label={t('FIELDS.LOGIN')}
             variant="standard"
@@ -103,8 +159,6 @@ export const SignUp = () => {
           <TextField
             {...register('password', {
               required: `${t('INFO.REQUIRED_TEXT')}`,
-              minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
-              maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
               validate: validatePassword,
             })}
             label={t('FIELDS.PASSWORD')}
@@ -130,7 +184,16 @@ export const SignUp = () => {
             required
             fullWidth
           />
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={
+              !allValid.userName ||
+              !allValid.login ||
+              !allValid.password ||
+              !allValid.repeatPassword
+            }
+          >
             {t('BUTTONS.SIGNUP')}
           </Button>
         </form>

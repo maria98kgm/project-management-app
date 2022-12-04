@@ -96,7 +96,8 @@
     "MESSAGE_MAX": "Max length is ",
     "MESSAGE_DELETE": "You have successfully delete user!",
     "PASSWORD_MATCH": "Password is not the same!",
-    "PASSWORD_VALID": "The password should contain only numbers and letters!"
+    "PASSWORD_VALID": "The password should contain only numbers and latin letters!",
+    "WITHOUT_WHITESPACES": "Login shouldn't contain whitespaces!"
   },
   "HEADERS": {
     "BOARDS": "Boards",
