@@ -33,7 +33,7 @@ export const NotFound = () => {
         <div className="text">Oops. The page you`re looking for doesn`t exist.</div>
         <div className="button">
           <Button className="button-home" variant="contained" href={Paths.WELCOME}>
-            {t('BUTTONS.MAIN')}
+            {t('BUTTONS.MAIN_IN')}
           </Button>
         </div>
       </div>
