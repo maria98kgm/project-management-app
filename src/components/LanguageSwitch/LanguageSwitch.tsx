@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 export const LanguageSwitch: React.FC = () => {
   const { i18n, ready } = useTranslation();
-  const [lang, setLang] = useState(ready ? i18n.language : 'en');
+  const [lang, setLang] = useState(ready && i18n.language ? i18n.language : 'en');
 
   const changeLanguage = (event: SelectChangeEvent) => {
     const lng = event.target.value as string;

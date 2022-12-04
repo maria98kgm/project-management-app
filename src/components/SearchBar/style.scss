@@ -2,7 +2,7 @@
 
 .search-bar {
 
-  @media (max-width: $breakpoint550) {
+  @media (max-width: $breakpoint670) {
     width: 120px;
   }
 
@@ -20,12 +20,12 @@
         padding: 3.5px 14px;
       }
 
-      @media (max-width: $breakpoint370) {
+      @media (max-width: $breakpoint480) {
         height: 1.1em;
       }
     }
 
-    @media (max-width: $breakpoint370) {
+    @media (max-width: $breakpoint480) {
       svg {
         display: none;
       }
