@@ -1,8 +1,8 @@
 {
   "MAINPAGE": {
     "BANNER": {
-      "TITLE": "Make Business Flow Easyer With Us",
-      "DESCRIPTION": "Your amazing product deserves an easy way to manage it. Our app will provide you with a nessesary instruments no matter what your idea is about."
+      "TITLE": "Make Business Flow Easier With Us",
+      "DESCRIPTION": "Your amazing product deserves an easy way to manage it. Our app will provide you with a necessary instruments no matter what your idea is about."
     },
     "FEATURETEXT": {
       "TITLE": "A complete feature stack ready to help you",
@@ -13,7 +13,7 @@
       "TITLE": "One platform to manage work",
       "CARDS": [
         {
-          "TITLE": "It’s free",
+          "TITLE": "It's free",
           "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
         },
         {
@@ -40,15 +40,15 @@
       "TEAMMATE": [
         {
           "NAME": "Tanya",
-          "DESCRIPTION": "Create application design. Implements the main application page, add/remove/create partitions, columns and a shuffle. Created a global search and other application features."
+          "DESCRIPTION": "Created application design. Built the Main page, add/remove/create logic for boards, columns and tasks. Added global search and dark theme. "
         },
         {
-          "NAME": "Aliaksei",
-          "DESCRIPTION": "Implemented header and footer for pages. Login page functionality, 404. Edit user data, delete account and other functionality."
+          "NAME": "Alexei",
+          "DESCRIPTION": "Built header and footer. Added Log In, 404 and Profile page. Implemented edit/delete logic for user information, as well as other functionality."
         },
         {
           "NAME": "Maria",
-          "DESCRIPTION": "Created the initial build of the project. Deploy backend. Routing project. Implemented user registration page, drag&drop application functionality. Tim-lead command."
+          "DESCRIPTION": "Done initial build, backend deploy, routing, RTK Query endpoints, DND logic. Built Sign Up page. Fixed bugs and styles. Team Lead."
         }
       ]
     },
@@ -78,7 +78,7 @@
     "MAIN_IN": "Go to main page"
   },
   "INFO": {
-    "NO_COLUMNS": "There are no columns on the board",
+    "NO_COLUMNS": "There are no columns in the board",
     "NO_TASKS": "There are no tasks in the column",
     "NO_BOARDS": "Create your first board",
     "NO_USERS": "no users",
