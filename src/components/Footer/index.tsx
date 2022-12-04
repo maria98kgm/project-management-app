@@ -36,7 +36,7 @@ export const Footer = () => {
             Tanya Samal
           </a>
         </div>
-        <a href="https://rs.school/react/" target="_blank" rel="noreferrer">
+        <a className="rs-logo" href="https://rs.school/react/" target="_blank" rel="noreferrer">
           <img src={rssLogo} alt="RSSchol logo" />
         </a>
       </div>

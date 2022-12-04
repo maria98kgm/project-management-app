@@ -8,6 +8,7 @@ import './style.scss';
 type BoardItemProp = {
   boardId: string;
   title: string;
+  owner: string;
   users: string[];
   colCount: number;
   taskCount: number;
@@ -18,6 +19,7 @@ export const BoardItem: React.FC<BoardItemProp> = ({
   boardId,
   title,
   users,
+  owner,
   colCount,
   taskCount,
   onDelete,
@@ -46,8 +48,14 @@ export const BoardItem: React.FC<BoardItemProp> = ({
       </div>
       <div className="boardItem-bottom">
         <div className="boardItem-description">
-          <h3>{t('HEADERS.USERS')}:</h3>
-          <p>{users.join(', ')}</p>
+          <p>
+            <strong>{t('HEADERS.OWNER')}: </strong>
+            {owner}
+          </p>
+          <p>
+            <strong>{t('HEADERS.USERS')}: </strong>
+            {users.length ? users.join(', ') : t('INFO.NO_USERS')}
+          </p>
         </div>
         <p className="boardItem-columns-tasks">
           {t('HEADERS.COLUMNS')}: {colCount}, {t('HEADERS.TASKS')}: {taskCount}
