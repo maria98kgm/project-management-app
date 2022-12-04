@@ -46,7 +46,7 @@ export const BasicModal: React.FC<ModalProps> = ({ isOpen, children }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={modalStyle}>
+      <Box sx={{ ...modalStyle, bgcolor: 'info.main', borderColor: 'info.main' }}>
         <div className="modal-content">{children}</div>
       </Box>
     </Modal>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
@@ -9,6 +9,8 @@ import handsImg from '../../assets/main-page/hands.svg';
 import freeImg from '../../assets/main-page/free.svg';
 import uiImg from '../../assets/main-page/UI.svg';
 import teamImg from '../../assets/main-page/team.svg';
+import videoImg from '../../assets/main-page/video.svg';
+import videoPreview from '../../assets/main-page/video.png';
 import mobileImg from '../../assets/main-page/mobile.svg';
 import teamPurple from '../../assets/main-page/team-purple.svg';
 import teamYellow from '../../assets/main-page/team-yellow.svg';
@@ -18,11 +20,13 @@ import './style.scss';
 
 const ANIMATION_CLASS = 'element-animation';
 const ANIMATION_SHOW_CLASS = 'element-show';
+const VIDEO_URL = 'https://www.youtube.com/embed/tVooja0Ta5I?autoplay=1';
 
 export const Welcome = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const userInfo = useAppSelector(selectUserInfo);
+  const [shownVideo, setShownVideo] = useState(false);
 
   useEffect(() => {
     let observer: IntersectionObserver | undefined = undefined;
@@ -108,6 +112,30 @@ export const Welcome = () => {
           </div>
         </div>
       </section>
+      <section className="block-video">
+        <div className="container element-animation scale ">
+          <div className="feature-title">
+            <FeatureCard imageUrl={videoImg} title={t('MAINPAGE.VIDEO.TITLE')} />
+          </div>
+          <div
+            className={`app-video ${!shownVideo ? 'image' : ''}`}
+            onClick={() => setShownVideo(true)}
+          >
+            {shownVideo ? (
+              <iframe
+                src={VIDEO_URL}
+                frameBorder="0"
+                allow="autoplay"
+                width="1005"
+                height="512"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <img src={videoPreview} alt="project video" width="1005" height="512" />
+            )}
+          </div>
+        </div>
+      </section>
       <section className="block-teams">
         <div className="container teams-items">
           <div className="teams element-animation left">
@@ -124,7 +152,7 @@ export const Welcome = () => {
               description={t('MAINPAGE.TEAMS.TEAMMATE.2.DESCRIPTION')}
             />
           </div>
-          <div className="text feature-title element-animation right">
+          <div className="feature-title element-animation right">
             <FeatureCard
               imageUrl={teamPurple}
               title={t('MAINPAGE.TEAMS.TITLE')}
