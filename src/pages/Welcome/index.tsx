@@ -14,6 +14,8 @@ import videoPreview from '../../assets/main-page/video.png';
 import mobileImg from '../../assets/main-page/mobile.svg';
 import teamPurple from '../../assets/main-page/team-purple.svg';
 import teamYellow from '../../assets/main-page/team-yellow.svg';
+import { useAppSelector } from '../../redux/hooks';
+import { selectUserInfo } from '../../redux/features/userSlice';
 import './style.scss';
 
 const ANIMATION_CLASS = 'element-animation';
@@ -23,6 +25,7 @@ const VIDEO_URL = 'https://www.youtube.com/embed/tVooja0Ta5I?autoplay=1';
 export const Welcome = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const userInfo = useAppSelector(selectUserInfo);
   const [shownVideo, setShownVideo] = useState(false);
 
   useEffect(() => {
@@ -73,9 +76,13 @@ export const Welcome = () => {
             title={t('MAINPAGE.FEATURETEXT.TITLE')}
             description={t('MAINPAGE.FEATURETEXT.DESCRIPTION')}
           />
-          <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
-            {t('MAINPAGE.FEATURETEXT.BUTTON')}
-          </Button>
+          {!userInfo ? (
+            <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
+              {t('MAINPAGE.FEATURETEXT.BUTTON')}
+            </Button>
+          ) : (
+            <React.Fragment></React.Fragment>
+          )}
         </div>
       </section>
       <section className="feature-content">
@@ -161,20 +168,32 @@ export const Welcome = () => {
       </section>
       <section className="question-block">
         <div className="container feature-title question-content element-animation left">
-          <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
-          <div className="question-buttons">
-            <Button variant="contained" color="secondary" onClick={() => navigate(Paths.SIGNIN)}>
-              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
+          {!userInfo ? (
+            <React.Fragment>
+              <FeatureCard imageUrl={teamYellow} title={t('MAINPAGE.QUESTIONBLOCK.TITLE')} />
+              <div className="question-buttons">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => navigate(Paths.SIGNIN)}
+                >
+                  {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.0')}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => navigate(Paths.SIGNUP)}
+                >
+                  {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <Button variant="contained" color="secondary" onClick={() => navigate(Paths.MAIN)}>
+              {t('BUTTONS.MAIN_IN')}
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={() => navigate(Paths.SIGNUP)}
-            >
-              {t('MAINPAGE.QUESTIONBLOCK.BUTTONS.1')}
-            </Button>
-          </div>
+          )}
         </div>
       </section>
     </React.Fragment>

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './style.scss';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import appLogo from '../../assets/img/app_logo.png';
 import { NavBar } from '../NavBar';
 import { CreateBoardForm } from '../../components/CreateBoardForm';
 import { BasicModal } from '../../components/Modal/Modal';
 import { ThemeToggler } from '../../components/ThemeToggler';
+import { SearchBar } from '../SearchBar';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectUserInfo, setUser } from '../../redux/features/userSlice';
-import { Paths } from '../../models';
 import { showToast } from '../../redux/features/toastSlice';
+import { Paths } from '../../models';
+import appLogo from '../../assets/img/logo.png';
+import './style.scss';
 
 export const Header = () => {
   const userInfo = useAppSelector(selectUserInfo);
@@ -64,6 +65,7 @@ export const Header = () => {
         <div className={header ? 'header sticky' : 'header'}>
           <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
           <ThemeToggler />
+          <SearchBar isToken={isToken} />
           <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
         </div>
       </header>
@@ -71,6 +73,7 @@ export const Header = () => {
         <CreateBoardForm
           onCreateBoard={async () => {
             setModalState(false);
+            navigate(Paths.MAIN);
           }}
           handleClose={() => {
             setModalState(false);

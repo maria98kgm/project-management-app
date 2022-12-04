@@ -40,15 +40,15 @@
       "TEAMMATE": [
         {
           "NAME": "Tanya",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Create application design. Implements the main application page, add/remove/create partitions, columns and a shuffle. Created a global search and other application features."
         },
         {
           "NAME": "Aliaksei",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Implemented header and footer for pages. Login page functionality, 404. Edit user data, delete account and other functionality."
         },
         {
           "NAME": "Maria",
-          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+          "DESCRIPTION": "Created the initial build of the project. Deploy backend. Routing project. Implemented user registration page, drag&drop application functionality. Tim-lead command."
         }
       ]
     },
@@ -74,17 +74,23 @@
     "YES": "Yes",
     "NO": "No",
     "SAVE_CHANGES": "Save changes",
-    "DELETE": "Delete account"
+    "DELETE": "Delete account",
+    "MAIN_IN": "Go to main page"
   },
   "INFO": {
     "NO_COLUMNS": "There are no columns on the board",
     "NO_TASKS": "There are no tasks in the column",
     "NO_BOARDS": "Create your first board",
+    "NO_USERS": "no users",
+    "NO_ACCESS": "Access denied",
     "CANCELLED": "Changes canceled",
     "APPLIED": "Changes applied",
     "CONFIRMATION": "Are you sure you want to do this?",
     "TOKEN_EXPIRED": "Your token has expired! Sign in again!",
     "LOG_OUT": "You have successfully logged out!",
+    "TASK_SEARCH": "Task search",
+    "FOUND_TASKS": "The following tasks were found for the query ",
+    "NOTHING_FOUND": "Not a single task was found",
     "REQUIRED_TEXT": "This field is required!",
     "MESSAGE_MIN": "Min length is ",
     "MESSAGE_MAX": "Max length is ",
@@ -96,9 +102,12 @@
     "BOARDS": "Boards",
     "TITLE": "Title",
     "DESCRIPTION": "Description",
+    "OWNER": "Owner",
+    "RESPONSIBLE": "Responsible users",
     "USERS": "Users",
     "REGISTER": "Register",
     "LOG_IN": "Log in",
+    "SEARCH": "Search",
     "USER_PROFILE": "User profile",
     "COLUMNS": "Columns",
     "TASKS": "Tasks"
