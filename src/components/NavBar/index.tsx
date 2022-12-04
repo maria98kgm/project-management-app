@@ -153,7 +153,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
                   PaperProps={{
                     sx: {
                       width: 240,
-                      height: 380,
+                      height: location.pathname === Paths.WELCOME ? 260 : 380,
                       borderRadius: '0 0 0 4px',
                       background: 'transparent',
                     },
