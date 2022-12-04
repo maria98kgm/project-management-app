@@ -76,9 +76,7 @@ export const Welcome = () => {
             <Button variant="contained" color="primary" onClick={() => navigate(Paths.SIGNUP)}>
               {t('MAINPAGE.FEATURETEXT.BUTTON')}
             </Button>
-          ) : (
-            <React.Fragment></React.Fragment>
-          )}
+          ) : null}
         </div>
       </section>
       <section className="feature-content">
