@@ -19,13 +19,9 @@
       @media (max-width: $breakpoint550) {
         padding: 3.5px 14px;
       }
-
-      @media (max-width: $breakpoint480) {
-        height: 1.1em;
-      }
     }
 
-    @media (max-width: $breakpoint480) {
+    @media (max-width: $breakpoint370) {
       svg {
         display: none;
       }

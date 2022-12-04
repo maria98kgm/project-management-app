@@ -25,12 +25,6 @@
     padding: 16px 20px;
   }
 
-  @media (max-width: $breakpoint370) {
-    .theme-mode {
-      display: none;
-    }
-  }
-
   &.sticky {
     padding: 14px 50px;
 
@@ -53,13 +47,11 @@
     }
 
     @media (max-width: $breakpoint550) {
-      width: 150px;
+      width: 43px;
       height: 28px;
-    }
-
-    @media (max-width: $breakpoint480) {
-      width: 120px;
-      height: 23px;
+      object-fit: cover;
+      object-position: 0 100%;
+      border-radius: 4px;
     }
   }
 }
