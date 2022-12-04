@@ -63,7 +63,7 @@ export const Header = () => {
     <React.Fragment>
       <header>
         <div className={header ? 'header sticky' : 'header'}>
-          <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} />
+          <img src={appLogo} onClick={() => navigate(Paths.WELCOME)} alt="logo" />
           <ThemeToggler />
           <SearchBar isToken={isToken} />
           <NavBar isToken={isToken} showBurger={showBurger} createNewBoard={createNewBoard} />
