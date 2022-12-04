@@ -7,6 +7,7 @@
   background-color: $white-color;
   border-radius: 5px;
   cursor: pointer;
+  box-sizing: border-box;
 
   .task-header {
     @include flex-center-between;
@@ -35,4 +36,8 @@
     text-overflow: ellipsis;
     margin: 0;
   }
+}
+
+.taskIsDragging {
+  border: 2px solid $primary-color;
 }
