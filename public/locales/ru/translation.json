@@ -40,15 +40,15 @@
       "TEAMMATE": [
         {
           "NAME": "Таня",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Создание дизайна приложения. Реализовала главную страницу приложения, добавление/удаление/создание досок, колонок и тасок. Создала глобальный поиск и другие функции приложения."
         },
         {
           "NAME": "Алексей",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Реализовал хедер и футер для страниц. Функционал страницы входа, 404. Редактирования данных пользователя, удаление аккаунта и другой функционал."
         },
         {
           "NAME": "Мария",
-          "DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscig elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim adi minim veniam, quis nostrud exercitation"
+          "DESCRIPTION": "Создала первоначальную сборку проекта. Задеплоила бекенд. Роутинг проекта. Реализовала страницу регистрации пользователя, drag&drop функционал приложения. Тим-лид команды."
         }
       ]
     },
@@ -64,9 +64,9 @@
     "ADD_COLUMN": "Добавить колонку",
     "ADD_TASK": "Добавить задачу",
     "EDIT_TASK": "Редактировать задачу",
-    "MAIN": "Главная страница",
+    "MAIN": "Главная",
     "NEWBOARD": "Новая доска",
-    "EDITPROFILE": "Редактировать профиль",
+    "EDITPROFILE": "Изменить профиль",
     "SIGNOUT": "Выйти",
     "CREATE": "Создать",
     "EDIT": "Редактировать",
@@ -74,17 +74,23 @@
     "YES": "Да",
     "NO": "Нет",
     "SAVE_CHANGES": "Сохранить изменения",
-    "DELETE": "Удалить аккаунт"
+    "DELETE": "Удалить аккаунт",
+    "MAIN_IN": "Перейти на главную страницу"
   },
   "INFO": {
     "NO_COLUMNS": "На доске нет колонок",
     "NO_TASKS": "В колонке нет задач",
     "NO_BOARDS": "Создай свою первую доску",
+    "NO_USERS": "нет пользователей",
+    "NO_ACCESS": "Доступ запрещен",
     "CANCELLED": "Изменения отменены",
     "APPLIED": "Изменения сохранены",
     "CONFIRMATION": "Вы уверены, что хотите сделать это?",
     "TOKEN_EXPIRED": "Ваш токен истек! Войдите снова!",
     "LOG_OUT": "Вы успешно вышли!",
+    "TASK_SEARCH": "Поиск по таскам",
+    "FOUND_TASKS": "Следующие таски были найдены по запросу ",
+    "NOTHING_FOUND": "Ни одного таска не найдено",
     "REQUIRED_TEXT": "Заполните поле!",
     "MESSAGE_MIN": "Минимальная длина ",
     "MESSAGE_MAX": "Максимальная длина ",
@@ -96,9 +102,12 @@
     "BOARDS": "Доски",
     "TITLE": "Заголовок",
     "DESCRIPTION": "Описание",
+    "OWNER": "Владелец",
+    "RESPONSIBLE": "Ответственные",
     "USERS": "Пользователи",
     "REGISTER": "Регистрация",
     "LOG_IN": "Вход",
+    "SEARCH": "Поиск",
     "USER_PROFILE": "Профиль пользователя",
     "COLUMNS": "Колонки",
     "TASKS": "Задания"
