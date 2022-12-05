@@ -14,6 +14,9 @@ export const boardSlice = createSlice({
   initialState,
   name: 'boardSlice',
   reducers: {
+    clearBoards: (state) => {
+      state.boards = [];
+    },
     setBoards: (state, action: PayloadAction<BoardData[]>) => {
       state.boards = [...action.payload];
     },
@@ -143,6 +146,7 @@ export default boardSlice.reducer;
 export const selectBoards = (store: RootState) => store.board.boards;
 
 export const {
+  clearBoards,
   setBoards,
   addBoard,
   deleteBoard,

@@ -11,6 +11,7 @@ import { setUser } from '../../redux/features/userSlice';
 import { Paths } from '../../models';
 import { showToast } from '../../redux/features/toastSlice';
 import { deleteCookieToken } from '../../share/cookieToken';
+import { clearBoards } from '../../redux/features/boardSlice';
 
 interface NavBarProps {
   isToken: boolean;
@@ -53,6 +54,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isToken, showBurger, createNewBo
   const signOut = (): void => {
     setOpenBurgerMenu(false);
     dispatch(setUser(null));
+    dispatch(clearBoards());
     deleteCookieToken();
     navigate(Paths.WELCOME);
     dispatch(showToast({ isOpen: true, severity: 'success', message: t('INFO.LOG_OUT') }));
