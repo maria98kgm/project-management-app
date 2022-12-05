@@ -27,7 +27,7 @@ export const userApi = apiSlice.injectEndpoints({
           });
           dispatch(setAllUsers(names));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
