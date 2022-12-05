@@ -1,0 +1,29 @@
+@import 'src/styles/style-import';
+
+.create-board {
+  @include flex-center-center;
+  width: 100%;
+  flex-direction: column;
+  row-gap: 1.4rem;
+
+  .MuiFormControl-root {
+    width: 100%;
+  }
+
+  fieldset {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  }
+
+  h2 {
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0.6rem;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}

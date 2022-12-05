@@ -1,0 +1,125 @@
+{
+  "MAINPAGE": {
+    "BANNER": {
+      "TITLE": "Make Business Flow Easier With Us",
+      "DESCRIPTION": "Your amazing product deserves an easy way to manage it. Our app will provide you with a necessary instruments no matter what your idea is about."
+    },
+    "FEATURETEXT": {
+      "TITLE": "A complete feature stack ready to help you",
+      "DESCRIPTION": "This application will help you to achieve the set goals for an individual in a team or group of developers.",
+      "BUTTON": "Sign up for free"
+    },
+    "FEATURES": {
+      "TITLE": "One platform to manage work",
+      "CARDS": [
+        {
+          "TITLE": "It's free",
+          "DESCRIPTION": "You can use all the functions of the application absolutely free: no trial periods and bank card binding"
+        },
+        {
+          "TITLE": "Easy UI",
+          "DESCRIPTION": "The application interface is designed to make it as easy as possible to interact with it and make everything intuitive."
+        },
+        {
+          "TITLE": "Available for all team",
+          "DESCRIPTION": "All of your teammates have access to all data on the current state of development of your project. In addition, each participant has the opportunity to edit them."
+        },
+        {
+          "TITLE": "For all devices",
+          "DESCRIPTION": "The application is adapted for the screens of tablets and mobile phones, so you can find out what your team is doing at any time and in any place."
+        }
+      ]
+    },
+    "VIDEO": {
+      "TITLE": "Watch how to use the app"
+    },
+    "TEAMS": {
+      "TITLE": "Our perspective team",
+      "DESCRIPTION": "A team of three people worked on the development of the application: students of the React framework course from RSSchool under the close supervision of the curator - LostFox",
+      "BUTTON": "Contact us",
+      "TEAMMATE": [
+        {
+          "NAME": "Tanya",
+          "DESCRIPTION": "Created application design. Built the Main page, add/remove/create logic for boards, columns and tasks. Added global search and dark theme. "
+        },
+        {
+          "NAME": "Alexei",
+          "DESCRIPTION": "Built header and footer. Added Log In, 404 and Profile page. Implemented edit/delete logic for user information, as well as other functionality."
+        },
+        {
+          "NAME": "Maria",
+          "DESCRIPTION": "Done initial build, backend deploy, routing, RTK Query endpoints, DND logic. Built Sign Up page. Fixed bugs and styles. Team Lead."
+        }
+      ]
+    },
+    "QUESTIONBLOCK": {
+      "TITLE": "Are you ready?",
+      "BUTTONS": ["Sign in", "Join now"]
+    }
+  },
+  "BUTTONS": {
+    "SIGNIN": "Sign in",
+    "SIGNUP": "Sign up",
+    "ADD_BOARD": "Add board",
+    "ADD_COLUMN": "Add column",
+    "ADD_TASK": "Add task",
+    "EDIT_TASK": "Edit task",
+    "MAIN": "Main page",
+    "NEWBOARD": "New board",
+    "EDITPROFILE": "Edit profile",
+    "SIGNOUT": "Sign out",
+    "CREATE": "Create",
+    "EDIT": "Edit",
+    "CANCEL": "Cancel",
+    "YES": "Yes",
+    "NO": "No",
+    "SAVE_CHANGES": "Save changes",
+    "DELETE": "Delete account",
+    "MAIN_IN": "Go to main page"
+  },
+  "INFO": {
+    "NO_COLUMNS": "There are no columns in the board",
+    "NO_TASKS": "There are no tasks in the column",
+    "NO_BOARDS": "Create your first board",
+    "NO_USERS": "no users",
+    "NO_ACCESS": "Access denied",
+    "CANCELLED": "Changes canceled",
+    "APPLIED": "Changes applied",
+    "CONFIRMATION": "Are you sure you want to do this?",
+    "TOKEN_EXPIRED": "Your token has expired! Sign in again!",
+    "LOG_OUT": "You have successfully logged out!",
+    "TASK_SEARCH": "Task search",
+    "FOUND_TASKS": "The following tasks were found for the query ",
+    "NOTHING_FOUND": "Not a single task was found",
+    "REQUIRED_TEXT": "This field is required!",
+    "MESSAGE_MIN": "Min length is ",
+    "MESSAGE_MAX": "Max length is ",
+    "MESSAGE_DELETE": "You have successfully delete user!",
+    "PASSWORD_MATCH": "Password is not the same!",
+    "PASSWORD_VALID": "The password should contain only numbers and latin letters!",
+    "WITHOUT_WHITESPACES": "Login shouldn't contain whitespaces!"
+  },
+  "HEADERS": {
+    "BOARDS": "Boards",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "OWNER": "Owner",
+    "RESPONSIBLE": "Responsible users",
+    "USERS": "Users",
+    "REGISTER": "Register",
+    "LOG_IN": "Log in",
+    "SEARCH": "Search",
+    "USER_PROFILE": "User profile",
+    "COLUMNS": "Columns",
+    "TASKS": "Tasks"
+  },
+  "FIELDS": {
+    "NAME": "Name",
+    "LOGIN": "Login",
+    "PASSWORD": "Password",
+    "REPEAT_PASSWORD": "Repeat Password",
+    "CHANGE_NAME": "Change your name",
+    "CHANGE_LOGIN": "Change your login",
+    "CHANGE_PASSWORD": "Change your password"
+  }
+}

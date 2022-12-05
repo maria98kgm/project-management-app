@@ -1,0 +1,30 @@
+@import 'src/styles/style-import';
+
+.search-bar {
+
+  @media (max-width: $breakpoint670) {
+    width: 120px;
+  }
+
+  fieldset.MuiOutlinedInput-notchedOutline {
+    border-color: $secondary-color;
+    top: -9px;
+  }
+
+  .MuiFormControl-root {
+    input {
+      color: $white-color;
+      padding: 6.5px 14px;
+
+      @media (max-width: $breakpoint550) {
+        padding: 3.5px 14px;
+      }
+    }
+
+    @media (max-width: $breakpoint370) {
+      svg {
+        display: none;
+      }
+    }
+  }
+}

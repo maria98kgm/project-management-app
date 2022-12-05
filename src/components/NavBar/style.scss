@@ -1,0 +1,23 @@
+@import 'src/styles/style-import';
+
+.control {
+  @include flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.language {
+  .MuiFormControl-root {
+    margin: 0;
+  }
+
+  .MuiInputBase-root {
+    color: $secondary-color;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border-color: $secondary-color;
+    top: -8px;
+    bottom: 2px;
+  }
+}
