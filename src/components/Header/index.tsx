@@ -34,7 +34,7 @@ export const Header = () => {
   };
 
   const handleResize = (): void => {
-    if (window.innerWidth <= 1190) setShowBurger(true);
+    if (window.innerWidth <= 1225) setShowBurger(true);
     else setShowBurger(false);
   };
 
