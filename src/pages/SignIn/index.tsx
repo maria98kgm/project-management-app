@@ -7,6 +7,7 @@ import { Paths } from '../../models';
 import { useSignInMutation } from '../../redux/features/api/authApi';
 import { showToast } from '../../redux/features/toastSlice';
 import { useAppDispatch } from '../../redux/hooks';
+import { useState } from 'react';
 
 interface FormInputs {
   login: string;
@@ -21,14 +22,49 @@ export const SignIn = () => {
     getFieldState,
   } = useForm<FormInputs>({ mode: 'onChange' });
 
+  const [allValid, setAllValid] = useState({
+    login: false,
+    password: false,
+  });
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const [loginUser, { isLoading }] = useSignInMutation();
 
+  const validateLogin = (val: string): string | boolean => {
+    if (/\s/.test(val)) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.WITHOUT_WHITESPACES')}`;
+    }
+    if (val.length < 2) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.MESSAGE_MIN')} 2!`;
+    }
+    if (val.length > 20) {
+      setAllValid({ ...allValid, login: false });
+      return `${t('INFO.MESSAGE_MAX')} 20!`;
+    }
+
+    setAllValid({ ...allValid, login: true });
+    return true;
+  };
+
   const validatePassword = (password: string): string | boolean => {
-    return /^[a-z0-9]*$/i.test(password) || `${t('INFO.PASSWORD_VALID')}`;
+    if (password.length < 6) {
+      setAllValid({ ...allValid, password: false });
+      return `${t('INFO.MESSAGE_MIN')} 6!`;
+    }
+    if (password.length > 20) {
+      setAllValid({ ...allValid, password: false });
+      return `${t('INFO.MESSAGE_MAX')} 20!`;
+    }
+
+    const isValid = /^[a-z0-9]*$/i.test(password);
+    setAllValid({ ...allValid, password: isValid });
+
+    return isValid || `${t('INFO.PASSWORD_VALID')}`;
   };
 
   const onSubmit = async (data: FormInputs): Promise<void> => {
@@ -43,13 +79,12 @@ export const SignIn = () => {
   return (
     <section className="signIn-content">
       <Box sx={{ bgcolor: 'info.main' }}>
-        <form onSubmit={handleSubmit(onSubmit)} className="signIn-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="signIn-form" autoComplete="off">
           <h2>{t('HEADERS.LOG_IN')}</h2>
           <TextField
             {...register('login', {
               required: `${t('INFO.REQUIRED_TEXT')}`,
-              minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
-              maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
+              validate: validateLogin,
             })}
             label={t('FIELDS.LOGIN')}
             variant="standard"
@@ -62,8 +97,6 @@ export const SignIn = () => {
           <TextField
             {...register('password', {
               required: `${t('INFO.REQUIRED_TEXT')}`,
-              minLength: { value: 6, message: `${t('INFO.MESSAGE_MIN')} 6!` },
-              maxLength: { value: 20, message: `${t('INFO.MESSAGE_MAX')} 20!` },
               validate: validatePassword,
             })}
             label={t('FIELDS.PASSWORD')}
@@ -75,7 +108,11 @@ export const SignIn = () => {
             required
             fullWidth
           />
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={!allValid.login || !allValid.password}
+          >
             {t('BUTTONS.SIGNIN')}
           </Button>
         </form>
