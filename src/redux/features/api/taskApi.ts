@@ -33,7 +33,7 @@ export const taskApi = apiSlice.injectEndpoints({
             dispatch(setTasks({ tasks, boardId: data[0].boardId, columnId: data[0].columnId }));
           }
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -54,7 +54,7 @@ export const taskApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(addTask(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -85,7 +85,7 @@ export const taskApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(updateTaskInfo(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -107,7 +107,7 @@ export const taskApi = apiSlice.injectEndpoints({
           } = await queryFulfilled;
           dispatch(deleteTask({ boardId, columnId, taskId }));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -158,7 +158,7 @@ export const taskApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(setTasks({ tasks: data, boardId: data[0].boardId, columnId: data[0].columnId }));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
