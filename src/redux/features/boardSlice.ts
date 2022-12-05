@@ -104,15 +104,17 @@ export const boardSlice = createSlice({
     },
     deleteTask: (state, action: PayloadAction<DeleteTask>) => {
       const currentBoard = state.boards.findIndex((board) => board._id === action.payload.boardId);
-      const currentColumn = state.boards[currentBoard].columns!.findIndex(
-        (column) => column._id === action.payload.columnId
-      );
-      if (state.boards[currentBoard].columns![currentColumn].tasks) {
-        state.boards[currentBoard].columns![currentColumn].tasks = state.boards[
-          currentBoard
-        ].columns![currentColumn].tasks!.filter(
-          (task: Partial<TaskData>) => task._id !== action.payload.taskId
+      if (currentBoard !== -1 && state.boards[currentBoard].columns) {
+        const currentColumn = state.boards[currentBoard].columns.findIndex(
+          (column) => column._id === action.payload.columnId
         );
+        if (currentColumn !== -1 && state.boards[currentBoard].columns[currentColumn].tasks) {
+          state.boards[currentBoard].columns![currentColumn].tasks = state.boards[
+            currentBoard
+          ].columns![currentColumn].tasks!.filter(
+            (task: Partial<TaskData>) => task._id !== action.payload.taskId
+          );
+        }
       }
     },
     updateTaskInfo: (state, action: PayloadAction<TaskData>) => {
