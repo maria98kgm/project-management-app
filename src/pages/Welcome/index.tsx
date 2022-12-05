@@ -20,7 +20,7 @@ import './style.scss';
 
 const ANIMATION_CLASS = 'element-animation';
 const ANIMATION_SHOW_CLASS = 'element-show';
-const VIDEO_URL = 'https://www.youtube.com/embed/tVooja0Ta5I?autoplay=1';
+const VIDEO_URL = 'https://youtu.be/aq5dXwo0T0o';
 
 export const Welcome = () => {
   const navigate = useNavigate();
