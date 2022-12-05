@@ -34,7 +34,7 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(setUser(userData));
           setCookieToken(data, tokenExpDate.toUTCString());
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),

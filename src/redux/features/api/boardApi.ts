@@ -32,7 +32,7 @@ export const boardApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(addBoard(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -73,7 +73,7 @@ export const boardApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(deleteBoard(data._id));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -102,7 +102,7 @@ export const boardApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(setBoards(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),

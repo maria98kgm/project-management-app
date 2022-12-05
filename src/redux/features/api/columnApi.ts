@@ -36,7 +36,7 @@ export const columnApi = apiSlice.injectEndpoints({
 
           if (data.length) dispatch(setColumns({ columns: columns, boardId: data[0].boardId }));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -57,7 +57,7 @@ export const columnApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(addColumn(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -88,7 +88,7 @@ export const columnApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(updateColumnInfo(data));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -107,7 +107,7 @@ export const columnApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(deleteColumn({ boardId: data.boardId, columnId: data._id }));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
@@ -148,7 +148,7 @@ export const columnApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(updateColumnsOrder({ columns: data, boardId: data[0].boardId }));
         } catch (err) {
-          console.error(err);
+          if (err instanceof Error) console.error(err.message);
         }
       },
     }),
