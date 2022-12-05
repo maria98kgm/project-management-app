@@ -26,13 +26,19 @@ const boxStyle = {
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
+const currentMode = (localStorage.getItem('themeMode') || 'light') as PaletteMode;
+
 export const App = () => {
   const toast = useAppSelector(selectToast);
-  const [mode, setMode] = useState<PaletteMode>('light');
+  const [mode, setMode] = useState<PaletteMode>(currentMode);
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode: PaletteMode) => {
+          const currentMode = prevMode === 'light' ? 'dark' : 'light';
+          localStorage.setItem('themeMode', currentMode);
+          return currentMode;
+        });
       },
     }),
     []

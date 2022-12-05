@@ -112,8 +112,8 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       <h2>{task ? t('BUTTONS.EDIT_TASK') : t('BUTTONS.ADD_TASK')}</h2>
       <TextField
         {...register('title', {
-          required: 'This field is required!',
-          minLength: { value: 2, message: 'Min length is 2!' },
+          required: `${t('INFO.REQUIRED_TEXT')}`,
+          minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
         })}
         label={t('HEADERS.TITLE')}
         variant="standard"
@@ -125,8 +125,8 @@ export const CreateTaskForm: React.FC<CreateTaskFormProps> = ({
       />
       <TextField
         {...register('description', {
-          required: 'This field is required!',
-          minLength: { value: 2, message: 'Min length is 2!' },
+          required: `${t('INFO.REQUIRED_TEXT')}`,
+          minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
         })}
         variant="standard"
         label={t('HEADERS.DESCRIPTION')}

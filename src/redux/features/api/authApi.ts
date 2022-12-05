@@ -43,4 +43,3 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const { useSignUpMutation, useSignInMutation } = authApi;
-// Bearer=(.*?);

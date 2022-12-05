@@ -88,8 +88,8 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({ onCreateBoard,
       <h2>{t('BUTTONS.ADD_BOARD')}</h2>
       <TextField
         {...register('title', {
-          required: 'This field is required!',
-          minLength: { value: 2, message: 'Min length is 2!' },
+          required: `${t('INFO.REQUIRED_TEXT')}`,
+          minLength: { value: 2, message: `${t('INFO.MESSAGE_MIN')} 2!` },
         })}
         label={t('HEADERS.TITLE')}
         variant="standard"
