@@ -1,0 +1,27 @@
+@import 'src/styles/style-import';
+
+.signIn-content {
+  @include flex-center-center;
+  margin: 4rem 0;
+}
+
+.signIn-form {
+  @include flex-center-center;
+  min-width: 460px;
+  flex-direction: column;
+  row-gap: 1.4rem;
+  padding: 32px 52px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+  h2 {
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .signIn-form {
+    min-width: auto;
+  }
+}

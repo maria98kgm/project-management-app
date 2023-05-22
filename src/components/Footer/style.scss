@@ -1,0 +1,68 @@
+@import 'src/styles/style-import';
+
+.footer {
+  @include flex-center-between;
+  background-color: $purple-color-footer;
+  color: $white-color;
+  min-height: $footer-height;
+  gap: 2rem;
+  padding: 0.8rem 4rem;
+
+  @media (max-width: $breakpoint735) {
+    padding: 0.8rem 2rem;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: $breakpoint550) {
+    font-size: 14px;
+    padding: 0.8rem 1rem;
+  }
+
+  @media (max-width: $breakpoint480) {
+    font-size: 12px;
+    padding: 0.8rem 0.6rem;
+  }
+
+  .year {
+    margin: 0;
+  }
+
+  .git_links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    @media (max-width: $breakpoint480) {
+      gap: 0.5rem;
+    }
+
+    .git_link {
+      @include flex;
+
+      img {
+        padding-right: 8px;
+
+        @media (max-width: $breakpoint550) {
+          display: none;
+        }
+      }
+
+      text-decoration: none;
+      color: $white-color;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+  .rs-logo img {
+    @media (max-width: $breakpoint735) {
+      width: 60px;
+    }
+
+    @media (max-width: $breakpoint480) {
+      width: 40px;
+    }
+  }
+}

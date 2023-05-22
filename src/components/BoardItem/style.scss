@@ -1,0 +1,65 @@
+@import 'src/styles/style-import';
+
+.boardItem {
+  position: relative;
+  box-sizing: border-box;
+  width: 308px;
+  background-color: $board-background-color;
+  border: solid $board-primary-color;
+  border-radius: 3px;
+  transition-duration: .3s;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: $breakpoint370) {
+    width: 260px;
+  }
+}
+
+.boardItem-top {
+  display: flex;
+  justify-content: space-between;
+  background-color: $board-primary-color;
+  padding: 6px 12px;
+
+  .boardItem-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    letter-spacing: 1px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .boardItem-tools {
+    display: flex;
+    column-gap: 1rem;
+
+    svg:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.boardItem-bottom {
+  padding: 0 0.4rem 1rem;
+
+  .boardItem-description {
+    margin: 0;
+    height: 55px;
+    font-size: 14px;
+    color: $primary-text-color;
+  }
+
+  .boardItem-columns-tasks {
+    font-size: 14px;
+    color: $dark-grey-color;
+    margin: 0;
+    margin-top: 1rem;
+  }
+}

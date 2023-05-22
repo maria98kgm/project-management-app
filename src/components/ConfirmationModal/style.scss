@@ -1,0 +1,11 @@
+@import 'src/styles/style-import';
+
+.modal-content {
+  h3 {
+    text-align: center;
+  }
+
+  .modal-buttons {
+    @include flex-center-between;
+  }
+}
